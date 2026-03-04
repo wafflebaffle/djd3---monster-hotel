@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Movement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private float gravity = 9.81f;
@@ -28,17 +28,22 @@ public class Movement : MonoBehaviour
     private void HandleMovement()
     {
         _direction = _move.ReadValue<Vector2>();
-        Vector3 direction3D = new Vector3(_direction.x,0,_direction.y);
+        Vector3 motion = Vector3.zero;
         
-        if (_direction.x > 0)
-            _controller.Move(transform.right*speed*Time.fixedDeltaTime);
-        else if (_direction.x < 0)
-            _controller.Move(-transform.right*speed*Time.fixedDeltaTime);
-
         if (_direction.y > 0)
-            _controller.Move(transform.forward*speed*Time.fixedDeltaTime);
+            motion += transform.forward;
         else if (_direction.y < 0)
-            _controller.Move(-transform.forward*speed*Time.fixedDeltaTime);
+            motion += -transform.forward;
+
+        if (_direction.x > 0)
+            motion += transform.right;
+        else if (_direction.x < 0)
+            motion += -transform.right;
+
+        motion = motion.normalized;
+        motion *= speed*Time.fixedDeltaTime;
+
+        _controller.Move(transform.TransformVector(motion));
     }
 
     private void HandleGravity()
