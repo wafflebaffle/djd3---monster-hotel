@@ -13,6 +13,12 @@ public class MousePos : MonoBehaviour
 
     private void Update()
     {
-        transform.position = _cam.ScreenToWorldPoint(_mouse.position.ReadValue());
+        RaycastHit hit;
+        Ray raycast = _cam.ScreenPointToRay(_mouse.position.ReadValue());
+
+        if (Physics.Raycast(raycast, out hit))
+        {
+            transform.position = hit.point;
+        }
     }
 }

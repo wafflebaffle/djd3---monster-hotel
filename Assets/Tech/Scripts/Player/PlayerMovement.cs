@@ -6,8 +6,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float speed = 5.0f;
     [SerializeField] private float gravity = 9.81f;
     [SerializeField] private string moveInput = "Move";
-    
-    private float _velocity;
     private Vector2 _direction;
     private CharacterController _controller;
     private InputAction _move;
@@ -43,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         motion = motion.normalized;
         motion *= speed*Time.fixedDeltaTime;
 
-        _controller.Move(transform.TransformVector(motion));
+        _controller.Move(motion);
     }
 
     private void HandleGravity()

@@ -6,7 +6,8 @@ public class PlayerRotation : MonoBehaviour
     private Vector3 _mousePos;
     private Camera _cam;
     private Mouse _mouse;
-    private CharacterController _controller;
+    private Vector3 _point;
+
     private void Start()
     {
         _cam = Camera.main;
@@ -15,11 +16,29 @@ public class PlayerRotation : MonoBehaviour
 
     private void Update()
     {
-        _mousePos = _cam.ScreenToWorldPoint(_mouse.position.ReadValue());
-        Debug.Log(_mousePos);
-        float angle = Vector3.Angle(transform.forward, _mousePos);
-        Debug.Log("Angle: " + angle);
+        _mousePos = ScreenToWorld();
+        
+        Vector3 direction = _mousePos - transform.position;
+        direction.y = 0;
 
-        transform.rotation = Quaternion.Euler(0, angle,0);
+        if(direction != Vector3.zero)
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            Debug.Log(lookRotation);
+            transform.rotation = lookRotation;
+        }
+    }
+
+    private Vector3 ScreenToWorld()
+    {
+        RaycastHit hit;
+        Ray raycast = _cam.ScreenPointToRay(_mouse.position.ReadValue());
+
+        if (Physics.Raycast(raycast, out hit))
+        {
+            _point = hit.point;
+        }
+
+        return _point;
     }
 }
