@@ -18,4 +18,9 @@ public class Main_Menu : MonoBehaviour
     {
         settingsScreen.SetActive(false);
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }
