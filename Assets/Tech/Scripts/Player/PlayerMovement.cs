@@ -29,14 +29,14 @@ public class PlayerMovement : MonoBehaviour
         Vector3 motion = Vector3.zero;
         
         if (_direction.y > 0)
-            motion += transform.forward;
+            motion += Vector3.forward;
         else if (_direction.y < 0)
-            motion += -transform.forward;
+            motion += -Vector3.forward;
 
         if (_direction.x > 0)
-            motion += transform.right;
+            motion += Vector3.right;
         else if (_direction.x < 0)
-            motion += -transform.right;
+            motion += -Vector3.right;
 
         motion = motion.normalized;
         motion *= speed*Time.fixedDeltaTime;
