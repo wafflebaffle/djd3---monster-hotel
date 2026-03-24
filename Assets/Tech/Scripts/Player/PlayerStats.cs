@@ -3,17 +3,20 @@ using UnityEngine.SceneManagement;
 
 public class PlayerStats : MonoBehaviour
 {
-    [SerializeField] private float maxHealth = 10.0f;
-    //For Damage
-    [SerializeField] private int powerLevel = 1;
-    //To reduce second ability
-    [SerializeField] private float cooldownReduction = 0.0f;
-
+    [SerializeField] private StatsData stats;
+    private float _maxHealth;
     private float _health;
+    //For Damage
+    private int _powerLevel;
+    //To reduce second ability
+    private float _cooldownReduction ;
     private PlayerMovement _playerMovement;
 
     //Propriedades
     public float CurrentHealth => _health;
+    public float MaxHealth => _maxHealth;
+    public int PowerLevel => _powerLevel;
+    public float CooldownReduction => _cooldownReduction;
 
     private void Start()
     {
@@ -22,7 +25,12 @@ public class PlayerStats : MonoBehaviour
         // Se não, vai buscar os valores lá.
 
         //else
-        _health = maxHealth;
+        _maxHealth = stats.maxHealth;
+        _powerLevel = stats.powerLevel;
+        _cooldownReduction = stats.cooldownReduction;
+        _playerMovement.SetSpeed(stats.moveSpeed);
+
+        _health = _maxHealth;
         _playerMovement = GetComponent<PlayerMovement>();
     }
 
@@ -39,9 +47,9 @@ public class PlayerStats : MonoBehaviour
     public void Heal(float heal)
     {
         _health += heal;
-        if(_health >= maxHealth)
+        if(_health >= _maxHealth)
         {
-            _health = maxHealth;
+            _health = _maxHealth;
         }
     }
 
@@ -55,21 +63,35 @@ public class PlayerStats : MonoBehaviour
 
     public void IncrementHealth(float bonusHealth)
     {
-        maxHealth += bonusHealth;
+        _maxHealth += bonusHealth;
     }
 
     public void IncrementDamage(int bonusDamage)
     {
-        powerLevel += bonusDamage;
+        _powerLevel += bonusDamage;
     }
 
     public void MultiplyVelocity(float value)
     {
-        _playerMovement.MultiplyVelocity(value);
+        _playerMovement.SetSpeed(_playerMovement.Speed*value);
     }
 
     public void DecrementCooldown(int timeToReduce)
     {
-        cooldownReduction += timeToReduce;
+        _cooldownReduction += timeToReduce;
+    }
+
+    public void SaveStats()
+    {
+        //Send to PlayerPrefs
+    }
+
+    public void SaveTempStats()
+    {
+        stats.maxHealth = MaxHealth;
+        stats.currentHealth = CurrentHealth;
+        stats.powerLevel = PowerLevel;
+        stats.cooldownReduction = CooldownReduction;
+        stats.moveSpeed = _playerMovement.Speed;
     }
 }

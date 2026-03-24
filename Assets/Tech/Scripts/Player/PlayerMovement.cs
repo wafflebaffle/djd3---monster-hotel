@@ -3,9 +3,9 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 5.0f;
     [SerializeField] private float gravity = 9.81f;
     [SerializeField] private string moveInput = "Move";
+    public float Speed{ get; private set; }
     private Vector2 _direction;
     private CharacterController _controller;
     private InputAction _move;
@@ -39,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
             motion += -Vector3.right;
 
         motion = motion.normalized;
-        motion *= speed*Time.fixedDeltaTime;
+        motion *= Speed*Time.fixedDeltaTime;
 
         _controller.Move(motion);
     }
@@ -49,8 +49,8 @@ public class PlayerMovement : MonoBehaviour
         _controller.Move(Vector3.up*gravity*Time.fixedDeltaTime);
     }
 
-    public void MultiplyVelocity(float value)
+    public void SetSpeed(float value)
     {
-        speed *= value;
+        Speed = value;
     }
 }
