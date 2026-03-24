@@ -48,4 +48,9 @@ public class PlayerMovement : MonoBehaviour
     {
         _controller.Move(Vector3.up*gravity*Time.fixedDeltaTime);
     }
+
+    public void MultiplyVelocity(float value)
+    {
+        speed *= value;
+    }
 }
