@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerStats : MonoBehaviour
+public class PlayerStats : MonoBehaviour, IHealable
 {
     [SerializeField] private StatsData stats;
     private float _maxHealth;
@@ -11,6 +11,7 @@ public class PlayerStats : MonoBehaviour
     //To reduce second ability
     private float _cooldownReduction ;
     private PlayerMovement _playerMovement;
+    private bool canHeal;
 
     //Propriedades
     public float CurrentHealth => _health;
@@ -18,20 +19,21 @@ public class PlayerStats : MonoBehaviour
     public int PowerLevel => _powerLevel;
     public float CooldownReduction => _cooldownReduction;
 
-    private void Start()
+    public float Speed => stats.moveSpeed;
+
+    private void Awake()
     {
         // Fazer um if para checkar se os valores 
         // do player prefs são zero. 
         // Se não, vai buscar os valores lá.
 
         //else
-        _maxHealth = stats.maxHealth;
-        _powerLevel = stats.powerLevel;
-        _cooldownReduction = stats.cooldownReduction;
-        _playerMovement.SetSpeed(stats.moveSpeed);
+
+        _playerMovement = GetComponent<PlayerMovement>();
+
+        UpdateTempStats();
 
         _health = _maxHealth;
-        _playerMovement = GetComponent<PlayerMovement>();
     }
 
     public void TakeDamage(float damage)
@@ -61,6 +63,11 @@ public class PlayerStats : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    public bool CanHeal()
+    {
+        return _health < _maxHealth;
+    }
+
     public void IncrementHealth(float bonusHealth)
     {
         _maxHealth += bonusHealth;
@@ -84,6 +91,14 @@ public class PlayerStats : MonoBehaviour
     public void SaveStats()
     {
         //Send to PlayerPrefs
+    }
+
+    private void UpdateTempStats()
+    {
+        _maxHealth = stats.maxHealth;
+        _powerLevel = stats.powerLevel;
+        _cooldownReduction = stats.cooldownReduction;
+        _playerMovement.SetSpeed(stats.moveSpeed);
     }
 
     public void SaveTempStats()
