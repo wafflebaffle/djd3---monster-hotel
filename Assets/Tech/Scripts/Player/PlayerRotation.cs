@@ -24,7 +24,6 @@ public class PlayerRotation : MonoBehaviour
         if(direction != Vector3.zero)
         {
             Quaternion lookRotation = Quaternion.LookRotation(direction);
-            Debug.Log(lookRotation);
             transform.rotation = lookRotation;
         }
     }

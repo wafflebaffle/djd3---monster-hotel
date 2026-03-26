@@ -1,25 +1,28 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PlayerStats : MonoBehaviour, IHealable
 {
     [SerializeField] private StatsData stats;
-    private float _maxHealth;
     private float _health;
-    //For Damage
-    private int _powerLevel;
-    //To reduce second ability
-    private float _cooldownReduction ;
     private PlayerMovement _playerMovement;
     private bool canHeal;
 
     //Propriedades
     public float CurrentHealth => _health;
-    public float MaxHealth => _maxHealth;
-    public int PowerLevel => _powerLevel;
-    public float CooldownReduction => _cooldownReduction;
-
+    public float MaxHealth => stats.maxHealth;
+    public int PowerLevel => stats.powerLevel;
+    public float CooldownReduction => stats.cooldownReduction;
     public float Speed => stats.moveSpeed;
+    
+    //Eventos
+    public event Action OnHealthChanged;
+
+    private void DispatchHealthChanged()
+    {
+        OnHealthChanged?.Invoke();
+    }
 
     private void Awake()
     {
@@ -30,15 +33,14 @@ public class PlayerStats : MonoBehaviour, IHealable
         //else
 
         _playerMovement = GetComponent<PlayerMovement>();
-
-        UpdateTempStats();
-
-        _health = _maxHealth;
+        _playerMovement.SetSpeed(stats.moveSpeed);
+        _health = stats.maxHealth;
     }
 
     public void TakeDamage(float damage)
     {
         _health -= damage;
+        DispatchHealthChanged();
         if(_health <= 0)
         {
             _health = 0;
@@ -49,9 +51,10 @@ public class PlayerStats : MonoBehaviour, IHealable
     public void Heal(float heal)
     {
         _health += heal;
-        if(_health >= _maxHealth)
+        DispatchHealthChanged();
+        if(_health >= stats.maxHealth)
         {
-            _health = _maxHealth;
+            _health = stats.maxHealth;
         }
     }
 
@@ -65,17 +68,18 @@ public class PlayerStats : MonoBehaviour, IHealable
 
     public bool CanHeal()
     {
-        return _health < _maxHealth;
+        return _health < stats.maxHealth;
     }
 
     public void IncrementHealth(float bonusHealth)
     {
-        _maxHealth += bonusHealth;
+        stats.maxHealth += bonusHealth;
+        DispatchHealthChanged();
     }
 
     public void IncrementDamage(int bonusDamage)
     {
-        _powerLevel += bonusDamage;
+        stats.powerLevel += bonusDamage;
     }
 
     public void MultiplyVelocity(float value)
@@ -85,20 +89,12 @@ public class PlayerStats : MonoBehaviour, IHealable
 
     public void DecrementCooldown(int timeToReduce)
     {
-        _cooldownReduction += timeToReduce;
+        stats.cooldownReduction += timeToReduce;
     }
 
     public void SaveStats()
     {
         //Send to PlayerPrefs
-    }
-
-    private void UpdateTempStats()
-    {
-        _maxHealth = stats.maxHealth;
-        _powerLevel = stats.powerLevel;
-        _cooldownReduction = stats.cooldownReduction;
-        _playerMovement.SetSpeed(stats.moveSpeed);
     }
 
     public void SaveTempStats()

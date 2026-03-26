@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float gravity = 9.81f;
     [SerializeField] private string moveInput = "Move";
-    public float Speed{ get; private set; }
+    public float Speed { get; private set; }
     private Vector2 _direction;
     private CharacterController _controller;
     private InputAction _move;
