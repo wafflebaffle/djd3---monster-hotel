@@ -7,12 +7,13 @@ public class PlayerStats : MonoBehaviour, IHealable
     [SerializeField] private StatsData stats;
     private float _health;
     private PlayerMovement _playerMovement;
-    private bool canHeal;
+    private PlayerCombat _playerCombat;
+    private bool _canHeal;
 
     //Propriedades
     public float CurrentHealth => _health;
     public float MaxHealth => stats.maxHealth;
-    public int PowerLevel => stats.powerLevel;
+    public int AttackDamage => stats.attackDamage;
     public float CooldownReduction => stats.cooldownReduction;
     public float Speed => stats.moveSpeed;
     
@@ -31,7 +32,8 @@ public class PlayerStats : MonoBehaviour, IHealable
         // Se não, vai buscar os valores lá.
 
         //else
-
+        _playerCombat = GetComponent<PlayerCombat>();
+        _playerCombat.SetDamage(stats.attackDamage);
         _playerMovement = GetComponent<PlayerMovement>();
         _playerMovement.SetSpeed(stats.moveSpeed);
         _health = stats.maxHealth;
@@ -79,7 +81,7 @@ public class PlayerStats : MonoBehaviour, IHealable
 
     public void IncrementDamage(int bonusDamage)
     {
-        stats.powerLevel += bonusDamage;
+        stats.attackDamage += bonusDamage;
     }
 
     public void MultiplyVelocity(float value)
@@ -101,7 +103,7 @@ public class PlayerStats : MonoBehaviour, IHealable
     {
         stats.maxHealth = MaxHealth;
         stats.currentHealth = CurrentHealth;
-        stats.powerLevel = PowerLevel;
+        stats.attackDamage = AttackDamage;
         stats.cooldownReduction = CooldownReduction;
         stats.moveSpeed = _playerMovement.Speed;
     }

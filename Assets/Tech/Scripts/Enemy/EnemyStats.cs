@@ -11,7 +11,7 @@ public class EnemyStats : MonoBehaviour
     //Propriedades
     public float CurrentHealth => _health;
     public float MaxHealth => stats.maxHealth;
-    public int PowerLevel => stats.powerLevel;
+    public int AttackDamage => stats.attackDamage;
     public float CooldownReduction => stats.cooldownReduction;
     public float Speed => stats.moveSpeed;
     

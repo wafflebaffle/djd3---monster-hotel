@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class PlayerMelee : MonoBehaviour
+public class PlayerCombat : MonoBehaviour
 {
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 1.5f;
-    [SerializeField] private int attackDamage = 25;
+    private int attackDamage = 25;
     [SerializeField] private float attackCooldown = 0.5f;
+
+    public float AttackDamage { get; private set; }
+    public float AttackCooldown { get; private set; }
 
     [Header("References")]
     [SerializeField] private Transform attackPoint;
@@ -47,6 +50,11 @@ public class PlayerMelee : MonoBehaviour
                 damageable.TakeDamage(attackDamage);
             }
         }
+    }
+
+    public void SetDamage(int damage)
+    {
+        attackDamage = damage;
     }
 
     private void OnDrawGizmosSelected()

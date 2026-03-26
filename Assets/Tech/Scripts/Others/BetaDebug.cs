@@ -24,6 +24,6 @@ public class BetaDebug : MonoBehaviour
 
     private void DisplayDebug()
     {
-        debugText.text = $"{playerStats.CurrentHealth}/{playerStats.MaxHealth} \n {playerStats.PowerLevel} \n {playerStats.CooldownReduction} \n {playerStats.Speed}";
+        debugText.text = $"{playerStats.CurrentHealth}/{playerStats.MaxHealth} \n {playerStats.AttackDamage} \n {playerStats.CooldownReduction} \n {playerStats.Speed}";
     }
 }
