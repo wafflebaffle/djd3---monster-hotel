@@ -7,6 +7,7 @@ public class EnemyStats : MonoBehaviour
     [SerializeField] private StatsData stats;
     private float _health;
     private EnemyMovement _enemyMovement;
+    private EnemySight _enemySight;
 
     //Propriedades
     public float CurrentHealth => _health;
@@ -26,6 +27,7 @@ public class EnemyStats : MonoBehaviour
     private void Awake()
     {
         _enemyMovement = GetComponent<EnemyMovement>();
+        _enemySight = GetComponent<EnemySight>();
         _enemyMovement.SetSpeed(stats.moveSpeed);
         _health = stats.maxHealth;
     }
@@ -45,5 +47,10 @@ public class EnemyStats : MonoBehaviour
         //Play death animation;
         //for tests purposes
         gameObject.SetActive(false);
+    }
+
+    public Transform GetTarget()
+    {
+        return _enemySight.Target;
     }
 }
