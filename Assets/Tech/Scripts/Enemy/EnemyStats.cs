@@ -29,6 +29,7 @@ public class EnemyStats : MonoBehaviour
         _enemyMovement = GetComponent<EnemyMovement>();
         _enemySight = GetComponent<EnemySight>();
         _enemyMovement.SetSpeed(stats.moveSpeed);
+        _enemyMovement.SetAngularSpeed(stats.moveSpeed);
         _health = stats.maxHealth;
     }
 
