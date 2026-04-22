@@ -15,6 +15,7 @@ public class EnemyStats : MonoBehaviour
     public int AttackDamage => stats.attackDamage;
     public float CooldownReduction => stats.cooldownReduction;
     public float Speed => stats.moveSpeed;
+    public float AngularSpeed => stats.angularSpeed;
     
     //Eventos
     public event Action OnHealthChanged;
@@ -29,13 +30,15 @@ public class EnemyStats : MonoBehaviour
         _enemyMovement = GetComponent<EnemyMovement>();
         _enemySight = GetComponent<EnemySight>();
         _enemyMovement.SetSpeed(stats.moveSpeed);
-        _enemyMovement.SetAngularSpeed(stats.moveSpeed);
+        _enemyMovement.SetAngularSpeed(stats.angularSpeed);
         _health = stats.maxHealth;
     }
 
     public void TakeDamage(float damage)
     {
         _health -= damage;
+        //_enemySight.SetTarget()
+        
         DispatchHealthChanged();
         if(_health <= 0)
         {

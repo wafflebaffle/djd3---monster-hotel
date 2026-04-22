@@ -22,10 +22,10 @@ public class RoomArea : MonoBehaviour
     }
 
     // Determine random position within game area
-    public Vector2 RandomPosition(float margin)
+    public Vector3 RandomPosition(float margin)
     {
-        return new Vector2(
-            Random.Range(Xmin * margin, Xmax * margin),
+        return new Vector3(
+            Random.Range(Xmin * margin, Xmax * margin), 0,
             Random.Range(Zmin * margin, Zmax * margin));
     }
 

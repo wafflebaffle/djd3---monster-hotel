@@ -1,12 +1,16 @@
-using Unity.VisualScripting;
+using System.Linq;
+using System.Collections.Generic;
 using UnityEngine;
+using NUnit.Framework;
+using System.Threading;
+using Unity.VisualScripting;
 
 public class EnemySight : MonoBehaviour
 {
-    [SerializeField] private float sightRange;
-    [SerializeField] private LayerMask walls;
-    [SerializeField] private float obstaclesAvoidanceDistance;
-    [SerializeField] private float checkTimer = 2.0f;
+    [SerializeField] private Vector3 sightRange;
+    [SerializeField] private Transform sightTrans;
+    [SerializeField] private LayerMask playerMask;
+    [SerializeField] private float timeUntilLoseTarget;
     private float _timer;
     private RoomNotifier _respectiveRoom;
     private bool _canFollowPlayer;
@@ -20,31 +24,34 @@ public class EnemySight : MonoBehaviour
 
     private void Update()
     {
-        _timer += Time.deltaTime;
+        Collider[] colliders = new Collider[1];
 
-        RaycastHit hit;
-
-        if(_timer >= checkTimer)
+        if(_canFollowPlayer)
         {
-        if (Physics.Raycast(transform.position, transform.forward, out hit,sightRange))
-        {
-            if (hit.collider.TryGetComponent(out PlayerStats player))
+            if (Physics.OverlapBoxNonAlloc(sightTrans.position, sightRange, colliders, Quaternion.identity,playerMask) > 0)
             {
-                Target = player.transform;
+                Target = colliders[0].transform;
+                _timer = 0;
             }
             else
             {
-                if (hit.transform.gameObject.layer == walls)
-                    Target = hit.transform;
+                _timer += Time.deltaTime;
+
+                if(_timer >= timeUntilLoseTarget)
+                    Target = null;
             }
         }
-        _timer = 0;
-        }
+        else Target = null;
     }
 
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, transform.position + transform.forward*sightRange);
+        Gizmos.DrawCube(sightTrans.position, sightRange);
+    }
+
+    private void SetTarget(Transform target)
+    {
+        Target = target;
     }
 }
