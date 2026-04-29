@@ -3,28 +3,17 @@ using UnityEngine.InputSystem;
 
 public class PlayerCombat : Combat
 {
-    private CharacterController _controller;
     private InputAction _attack;
-
-    [Header("Attack Settings")]
-    [SerializeField] private float attackRange = 1.5f;
-    private int attackDamage = 25;
-    [SerializeField] private float attackCooldown = 0.5f;
 
     public float AttackDamage => attackDamage;
     public float AttackCooldown => attackCooldown;
 
     [Header("References")]
-    [SerializeField] private Transform attackPoint;
     [SerializeField] private string AttackInput = "Attack";
-
-    private float lastAttackTime;
 
 
     void Start()
     {
-        _controller = GetComponent<CharacterController>();
-
         _attack = InputSystem.actions.FindAction(AttackInput);
     }
     void Update()
@@ -71,7 +60,7 @@ public class PlayerCombat : Combat
         }
     }
 
-    public override void SetDamage(int damage)
+    public override void SetDamage(float damage)
     {
         attackDamage = damage;
     }

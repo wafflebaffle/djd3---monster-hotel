@@ -12,7 +12,7 @@ public class EnemyStats : MonoBehaviour
     //Propriedades
     public float CurrentHealth => _health;
     public float MaxHealth => stats.maxHealth;
-    public int AttackDamage => stats.attackDamage;
+    public float AttackDamage => stats.attackDamage;
     public float CooldownReduction => stats.cooldownReduction;
     public float Speed => stats.moveSpeed;
     public float AngularSpeed => stats.angularSpeed;
@@ -59,4 +59,7 @@ public class EnemyStats : MonoBehaviour
     {
         return _enemySight.Target;
     }
+
+    public float DistanceToTarget()
+    { return _enemyMovement.DistanceToTarget(); }
 }

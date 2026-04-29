@@ -56,4 +56,9 @@ public class EnemyMovement : MonoBehaviour
             _agent.destination = _room.RandomPosition(marginToMove);
         }
     }
+
+    public float DistanceToTarget()
+    {
+        return Vector3.Distance(transform.position, _currentTarget.position);
+    }
 }
