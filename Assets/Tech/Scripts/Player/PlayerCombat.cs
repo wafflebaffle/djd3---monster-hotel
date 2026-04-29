@@ -1,24 +1,36 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerCombat : MonoBehaviour
 {
+    private CharacterController _controller;
+    private InputAction _attack;
+
     [Header("Attack Settings")]
     [SerializeField] private float attackRange = 1.5f;
     private int attackDamage = 25;
     [SerializeField] private float attackCooldown = 0.5f;
 
-    public float AttackDamage { get; private set; }
-    public float AttackCooldown { get; private set; }
+    public float AttackDamage => attackDamage;
+    public float AttackCooldown => attackCooldown;
 
     [Header("References")]
     [SerializeField] private Transform attackPoint;
+    [SerializeField] private string AttackInput = "Attack";
 
     private float lastAttackTime;
 
+
+    void Start()
+    {
+        _controller = GetComponent<CharacterController>();
+
+        _attack = InputSystem.actions.FindAction(AttackInput);
+    }
     void Update()
     {
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        
+        if (_attack.WasPressedThisFrame())
         {
             TryAttack();
         }
@@ -42,13 +54,19 @@ public class PlayerCombat : MonoBehaviour
 
         foreach (Collider hit in hits)
         {
-            // Skip self
             if (hit.transform == transform) continue;
-            IDamageable damageable = hit.GetComponent<IDamageable>();
 
-            if (damageable != null)
+            Vector3 directionToTarget = (hit.transform.position - transform.position).normalized;
+            float dot = Vector3.Dot(transform.forward, directionToTarget);
+
+            if (dot > 0.5f) // (0.5 ≈ 60)
             {
-                damageable.TakeDamage(attackDamage);
+                IDamageable damageable;
+
+                if (hit.TryGetComponent<IDamageable>(out damageable))
+                {
+                    damageable.TakeDamage(attackDamage);
+                }
             }
         }
     }
@@ -60,9 +78,11 @@ public class PlayerCombat : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (attackPoint == null) return;
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        if (_attack.WasPressedThisFrame())
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        }
+        
     }
 }

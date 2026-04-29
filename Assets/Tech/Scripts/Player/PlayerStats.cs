@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerStats : MonoBehaviour, IHealable
+public class PlayerStats : MonoBehaviour, IHealable, IDamageable
 {
     [SerializeField] private StatsData stats;
     private float _health;
@@ -39,16 +39,6 @@ public class PlayerStats : MonoBehaviour, IHealable
         _health = stats.maxHealth;
     }
 
-    public void TakeDamage(float damage)
-    {
-        _health -= damage;
-        DispatchHealthChanged();
-        if(_health <= 0)
-        {
-            _health = 0;
-            Death();
-        }
-    }
 
     public void Heal(float heal)
     {
@@ -106,5 +96,16 @@ public class PlayerStats : MonoBehaviour, IHealable
         stats.attackDamage = AttackDamage;
         stats.cooldownReduction = CooldownReduction;
         stats.moveSpeed = _playerMovement.Speed;
+    }
+
+    public void TakeDamage(float damage)
+    {
+        _health -= damage;
+        DispatchHealthChanged();
+        if (_health <= 0)
+        {
+            _health = 0;
+            Death();
+        }
     }
 }
