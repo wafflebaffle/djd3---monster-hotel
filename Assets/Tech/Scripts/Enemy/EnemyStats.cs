@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class EnemyStats : MonoBehaviour
+public class EnemyStats : MonoBehaviour, IDamageable
 {
     [SerializeField] private StatsData stats;
     private float _health;
@@ -37,9 +37,10 @@ public class EnemyStats : MonoBehaviour
     public void TakeDamage(float damage, Combat combat)
     {
         if (combat is EnemyCombat) return;
+        Debug.Log(combat.transform.name);
 
         _health -= damage;
-        //_enemySight.SetTarget()
+        _enemySight.SetTarget(combat.transform);
         
         DispatchHealthChanged();
         if(_health <= 0)
@@ -52,6 +53,7 @@ public class EnemyStats : MonoBehaviour
     {
         //Play death animation;
         //for tests purposes
+        Debug.Log("morre logo");
         gameObject.SetActive(false);
     }
 

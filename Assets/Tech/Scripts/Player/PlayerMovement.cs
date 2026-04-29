@@ -17,10 +17,10 @@ public class PlayerMovement : MonoBehaviour
         _move = InputSystem.actions.FindAction(moveInput);
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         HandleMovement();
-        HandleGravity();
+        //HandleGravity();
     }
 
     private void HandleMovement()

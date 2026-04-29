@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class BetaDebug : MonoBehaviour
 {
     [SerializeField] private PlayerStats playerStats;
+    [SerializeField] private EnemyStats enemyStats;
     [SerializeField] private TextMeshProUGUI debugText;
 
     void Start()
@@ -20,6 +21,6 @@ public class BetaDebug : MonoBehaviour
 
     private void DisplayDebug()
     {
-        debugText.text = $"{playerStats.CurrentHealth}/{playerStats.MaxHealth} \n {playerStats.AttackDamage} \n {playerStats.CooldownReduction} \n {playerStats.Speed}";
+        debugText.text = $"{playerStats.CurrentHealth}/{playerStats.MaxHealth} \n {playerStats.AttackDamage} \n {playerStats.CooldownReduction} \n {playerStats.Speed} \n {"Enemy"} \n {enemyStats.CurrentHealth}/{enemyStats.MaxHealth}";
     }
 }

@@ -50,7 +50,7 @@ public class EnemySight : MonoBehaviour
         Gizmos.DrawCube(sightTrans.position, sightRange);
     }
 
-    private void SetTarget(Transform target)
+    public void SetTarget(Transform target)
     {
         Target = target;
     }

@@ -21,6 +21,7 @@ public class PlayerCombat : Combat
         
         if (_attack.WasPressedThisFrame())
         {
+            Debug.Log("Hi");
             TryAttack();
         }
     }
@@ -54,6 +55,7 @@ public class PlayerCombat : Combat
 
                 if (hit.TryGetComponent<IDamageable>(out damageable))
                 {
+                    Debug.Log(hit.name);
                     damageable.TakeDamage(attackDamage, this);
                 }
             }
@@ -64,10 +66,12 @@ public class PlayerCombat : Combat
     {
         attackDamage = damage;
     }
-
     private void OnDrawGizmosSelected()
     {
-       
-        
+        if (attackPoint == null) return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
+    
 }
