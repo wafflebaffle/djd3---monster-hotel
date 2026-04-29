@@ -59,6 +59,7 @@ public class EnemyMovement : MonoBehaviour
 
     public float DistanceToTarget()
     {
-        return Vector3.Distance(transform.position, _currentTarget.position);
+        if(_currentTarget) return Vector3.Distance(transform.position, _currentTarget.position);
+        return float.NaN;
     }
 }

@@ -12,7 +12,7 @@ public class EnemyCombat : Combat
 
     private void Update()
     {
-        if (_enemy.DistanceToTarget() <= attackTreshold)
+        if (_enemy.GetTarget() && _enemy.DistanceToTarget() <= attackTreshold)
         {
             TryAttack();
         }
@@ -32,7 +32,6 @@ public class EnemyCombat : Combat
 
         foreach (Collider hit in hits)
         {
-            if (hit.transform == transform) continue;
 
             Vector3 directionToTarget = (hit.transform.position - transform.position).normalized;
             float dot = Vector3.Dot(transform.forward, directionToTarget);
@@ -56,5 +55,13 @@ public class EnemyCombat : Combat
 
         lastAttackTime = Time.time;
         Attack();
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null) return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }
