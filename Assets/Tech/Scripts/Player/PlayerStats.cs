@@ -98,7 +98,7 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable
         stats.moveSpeed = _playerMovement.Speed;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, Combat combat)
     {
         _health -= damage;
         DispatchHealthChanged();

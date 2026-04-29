@@ -34,8 +34,10 @@ public class EnemyStats : MonoBehaviour
         _health = stats.maxHealth;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, Combat combat)
     {
+        if (combat is EnemyCombat) return;
+
         _health -= damage;
         //_enemySight.SetTarget()
         

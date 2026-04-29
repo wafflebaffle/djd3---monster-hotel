@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerCombat : MonoBehaviour
+public class PlayerCombat : Combat
 {
     private CharacterController _controller;
     private InputAction _attack;
@@ -36,7 +36,7 @@ public class PlayerCombat : MonoBehaviour
         }
     }
 
-    private void TryAttack()
+    protected override void TryAttack()
     {
         if (Time.time < lastAttackTime + attackCooldown)
             return;
@@ -45,7 +45,7 @@ public class PlayerCombat : MonoBehaviour
         Attack();
     }
 
-    private void Attack()
+    protected override void Attack()
     {
         Collider[] hits = Physics.OverlapSphere(
             attackPoint.position,
@@ -65,24 +65,20 @@ public class PlayerCombat : MonoBehaviour
 
                 if (hit.TryGetComponent<IDamageable>(out damageable))
                 {
-                    damageable.TakeDamage(attackDamage);
+                    damageable.TakeDamage(attackDamage, this);
                 }
             }
         }
     }
 
-    public void SetDamage(int damage)
+    public override void SetDamage(int damage)
     {
         attackDamage = damage;
     }
 
     private void OnDrawGizmosSelected()
     {
-        if (_attack.WasPressedThisFrame())
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-        }
+       
         
     }
 }
