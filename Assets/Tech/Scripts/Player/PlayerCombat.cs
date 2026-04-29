@@ -44,20 +44,17 @@ public class PlayerCombat : Combat
 
         foreach (Collider hit in hits)
         {
-            if (hit.transform == transform) continue;
+            IDamageable damageable;
 
+            if (hit.TryGetComponent<IDamageable>(out damageable))
+            {  
             Vector3 directionToTarget = (hit.transform.position - transform.position).normalized;
             float dot = Vector3.Dot(transform.forward, directionToTarget);
 
             if (dot > 0.5f) // (0.5 ≈ 60)
             {
-                IDamageable damageable;
-
-                if (hit.TryGetComponent<IDamageable>(out damageable))
-                {
-                    Debug.Log(hit.name);
-                    damageable.TakeDamage(attackDamage, this);
-                }
+                damageable.TakeDamage(attackDamage, this);
+            }
             }
         }
     }
