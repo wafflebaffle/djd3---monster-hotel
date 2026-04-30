@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: Assembly-CSharp::StatsData
   maxHealth: 50
-  currentHealth: 0
-  moveSpeed: 2
+  currentHealth: 45
+  moveSpeed: 3
   angularSpeed: 0
   attackDamage: 10
   attackRange: 1.5

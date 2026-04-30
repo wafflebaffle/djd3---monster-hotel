@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daad0a398b87d5a45968465826378358, type: 3}
   m_Name: SpicyData
   m_EditorClassIdentifier: Assembly-CSharp::BuffsData
-  damageBuffAmount: 0
-  velocityBuff: 0
-  attackCooldownBuff: 0
-  duration: 0
-  destroyTimer: 0
+  damageBuffAmount: 10
+  velocityBuff: 1.5
+  attackCooldownBuff: 0.25
+  duration: 5
+  destroyTimer: 1

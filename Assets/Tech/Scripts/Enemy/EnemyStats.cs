@@ -1,14 +1,18 @@
 using System;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class EnemyStats : MonoBehaviour, IDamageable
 {
     [SerializeField] private StatsData stats;
+    [SerializeField] private string takeDamageAnimName = "TakeDamage";
+    [SerializeField] private string deathAnimName = "Death";
+    [SerializeField] private float deathAnimTime = 0.5f;
     private float _health;
     private EnemyMovement _enemyMovement;
     private EnemySight _enemySight;
     private EnemyCombat _enemyCombat;
+    private Animator _enemyAnim;
 
     //Propriedades
     public float CurrentHealth => _health;
@@ -28,6 +32,8 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
     private void Awake()
     {
+        _enemyAnim = GetComponent<Animator>();
+
         _enemyMovement = GetComponent<EnemyMovement>();
         _enemySight = GetComponent<EnemySight>();
         _enemyMovement.SetSpeed(stats.moveSpeed);
@@ -44,6 +50,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
         if (combat is EnemyCombat) return;
 
         _health -= damage;
+        _enemyAnim.SetTrigger(takeDamageAnimName);
         _enemySight.SetTarget(combat.transform);
         
         DispatchHealthChanged();
@@ -56,7 +63,17 @@ public class EnemyStats : MonoBehaviour, IDamageable
     private void Death()
     {
         //Play death animation;
-        //for tests purposes
+        _enemyAnim.SetTrigger(deathAnimName);
+
+        StartCoroutine(Died());
+    }
+
+    private IEnumerator Died()
+    {
+        YieldInstruction wfs = new WaitForSeconds(deathAnimTime);
+
+        yield return wfs;
+
         gameObject.SetActive(false);
     }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,12 +12,14 @@ public class PlayerCombat : Combat
     public float AttackCooldown => attackCooldown;
 
     [Header("References")]
-    [SerializeField] private string AttackInput = "Attack";
+    [SerializeField] private string attackInput = "Attack";
+    [SerializeField] private Animator attackAnim;
+    [SerializeField] private string attackAnimName = "Punch";
 
 
     void Start()
     {
-        _attack = InputSystem.actions.FindAction(AttackInput);
+        _attack = InputSystem.actions.FindAction(attackInput);
         _stats = GetComponent<PlayerStats>();
     }
     void Update()
@@ -34,6 +37,7 @@ public class PlayerCombat : Combat
             return;
 
         lastAttackTime = Time.time;
+        attackAnim.SetTrigger(attackAnimName);
         Attack();
     }
 
