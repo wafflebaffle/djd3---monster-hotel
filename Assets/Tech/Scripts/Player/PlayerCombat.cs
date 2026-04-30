@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerCombat : Combat
 {
     private InputAction _attack;
+    private IDamageable _stats;
 
     public float AttackDamage => attackDamage;
     public float AttackCooldown => attackCooldown;
@@ -15,13 +17,13 @@ public class PlayerCombat : Combat
     void Start()
     {
         _attack = InputSystem.actions.FindAction(AttackInput);
+        _stats = GetComponent<PlayerStats>();
     }
     void Update()
     {
         
         if (_attack.WasPressedThisFrame())
         {
-            Debug.Log("Hi");
             TryAttack();
         }
     }
@@ -37,6 +39,12 @@ public class PlayerCombat : Combat
 
     protected override void Attack()
     {
+        Vector3 directionToTarget;
+        Vector3 closestTargetPosition = Vector3.zero;
+        IDamageable closestTarget = null;
+        float closestDistance = Mathf.Infinity;
+
+        
         Collider[] hits = Physics.OverlapSphere(
             attackPoint.position,
             attackRange
@@ -44,25 +52,33 @@ public class PlayerCombat : Combat
 
         foreach (Collider hit in hits)
         {
-            IDamageable damageable;
-
-            if (hit.TryGetComponent<IDamageable>(out damageable))
+            if (hit.TryGetComponent<IDamageable>(out IDamageable damageableTarget))
             {  
-            Vector3 directionToTarget = (hit.transform.position - transform.position).normalized;
+                if(damageableTarget == _stats) continue;
+
+                float distance = Vector3.Distance(hit.transform.position, transform.position);
+        
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestTarget = damageableTarget;
+                    closestTargetPosition = hit.transform.position;
+                }
+            }
+        }
+
+        if (closestTarget != null)
+        {
+            directionToTarget = (closestTargetPosition - transform.position).normalized;
             float dot = Vector3.Dot(transform.forward, directionToTarget);
 
             if (dot > 0.5f) // (0.5 ≈ 60)
             {
-                damageable.TakeDamage(attackDamage, this);
-            }
+                closestTarget.TakeDamage(attackDamage, this);
             }
         }
     }
 
-    public override void SetDamage(float damage)
-    {
-        attackDamage = damage;
-    }
     private void OnDrawGizmosSelected()
     {
         if (attackPoint == null) return;

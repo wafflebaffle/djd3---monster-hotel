@@ -8,6 +8,7 @@ public class StatsData : ScriptableObject
     public float moveSpeed;
     public float angularSpeed;
     public float attackDamage;
-    public float attackSpeed;
+    public float attackRange;
+    public float attackCooldown;
     public float cooldownReduction;
 }

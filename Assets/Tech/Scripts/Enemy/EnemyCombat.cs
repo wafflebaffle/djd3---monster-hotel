@@ -18,11 +18,6 @@ public class EnemyCombat : Combat
         }
     }
 
-    public override void SetDamage(float damage)
-    {
-        attackDamage = damage;
-    }
-
     protected override void Attack()
     {
         Collider[] hits = Physics.OverlapSphere(

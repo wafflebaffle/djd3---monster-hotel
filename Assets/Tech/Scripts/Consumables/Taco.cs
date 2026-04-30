@@ -4,6 +4,7 @@ using UnityEngine;
 public class Taco : MonoBehaviour
 {
     [SerializeField] private float healAmount;
+    [SerializeField] private float destroyTimer = 1;
     void OnTriggerEnter(Collider other)
     {
         IHealable target = other.GetComponent<IHealable>();
@@ -12,7 +13,7 @@ public class Taco : MonoBehaviour
         {
             target.Heal(healAmount);
 
-            Destroy(gameObject, 1.0f);
+            Destroy(gameObject, destroyTimer);
         }
     }
 }

@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f65e63ae7edcad4a927b2483dffb1b0, type: 3}
   m_Name: EnemyData
   m_EditorClassIdentifier: Assembly-CSharp::StatsData
-  maxHealth: 3
+  maxHealth: 15
   currentHealth: 0
   moveSpeed: 2
   angularSpeed: 90
-  attackDamage: 3
+  attackDamage: 10
+  attackRange: 1
+  attackCooldown: 0.5
   cooldownReduction: 0

@@ -1,17 +1,30 @@
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public abstract class Combat : MonoBehaviour
 {
     [Header("Attack Settings")]
-    [SerializeField] protected float attackRange = 1.5f;
-    [SerializeField] protected float attackDamage = 25;
-    [SerializeField] protected float attackCooldown = 0.5f;
     [SerializeField] protected Transform attackPoint;
+    protected float attackRange;
+    protected float attackDamage;
+    protected float attackCooldown;
     protected float lastAttackTime;
 
     protected abstract void TryAttack();
     protected abstract void Attack();
 
-    public abstract void SetDamage(float damage);
+    public void SetDamage(float damage)
+    {
+        attackDamage = damage;
+    }
 
+    public void SetRange(float value)
+    {
+        attackRange = value;
+    }
+
+    public void SetCooldown(float value)
+    {
+        attackCooldown = value;
+    }
 }

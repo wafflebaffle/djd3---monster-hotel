@@ -12,11 +12,7 @@ public class BetaDebug : MonoBehaviour
     {
         DisplayDebug();
         playerStats.OnHealthChanged += DisplayDebug;
-    }
-
-    private void Update()
-    {
-        
+        playerStats.OnBuff += DisplayDebug;
     }
 
     private void DisplayDebug()

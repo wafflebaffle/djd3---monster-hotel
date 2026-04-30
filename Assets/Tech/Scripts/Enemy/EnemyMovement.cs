@@ -5,6 +5,7 @@ public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private float timerPerDecision = 1.0f;
     [SerializeField] private float marginToMove = 0.9f;
+    [SerializeField] private float pursuitVelocityMultiplier = 1.5f;
     private float _timer;
     private RoomArea _room;
     public float Speed { get; private set; }
@@ -49,10 +50,12 @@ public class EnemyMovement : MonoBehaviour
 
         if (_currentTarget)
         {
+            _agent.speed = Speed*pursuitVelocityMultiplier;
             _agent.destination = _currentTarget.position;
         }
         else
         {
+            _agent.speed = Speed;
             _agent.destination = _room.RandomPosition(marginToMove);
         }
     }

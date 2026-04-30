@@ -8,6 +8,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
     private float _health;
     private EnemyMovement _enemyMovement;
     private EnemySight _enemySight;
+    private EnemyCombat _enemyCombat;
 
     //Propriedades
     public float CurrentHealth => _health;
@@ -31,13 +32,16 @@ public class EnemyStats : MonoBehaviour, IDamageable
         _enemySight = GetComponent<EnemySight>();
         _enemyMovement.SetSpeed(stats.moveSpeed);
         _enemyMovement.SetAngularSpeed(stats.angularSpeed);
+        _enemyCombat = GetComponent<EnemyCombat>();
+        _enemyCombat.SetDamage(stats.attackDamage);
+        _enemyCombat.SetRange(stats.attackRange);
+        _enemyCombat.SetCooldown(stats.attackCooldown);
         _health = stats.maxHealth;
     }
 
     public void TakeDamage(float damage, Combat combat)
     {
         if (combat is EnemyCombat) return;
-        Debug.Log(combat.transform.name);
 
         _health -= damage;
         _enemySight.SetTarget(combat.transform);
@@ -53,7 +57,6 @@ public class EnemyStats : MonoBehaviour, IDamageable
     {
         //Play death animation;
         //for tests purposes
-        Debug.Log("morre logo");
         gameObject.SetActive(false);
     }
 

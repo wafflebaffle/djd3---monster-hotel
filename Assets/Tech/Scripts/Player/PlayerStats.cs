@@ -2,13 +2,12 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerStats : MonoBehaviour, IHealable, IDamageable
+public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable
 {
     [SerializeField] private StatsData stats;
     private float _health;
     private PlayerMovement _playerMovement;
     private PlayerCombat _playerCombat;
-    private bool _canHeal;
 
     //Propriedades
     public float CurrentHealth => _health;
@@ -16,6 +15,11 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable
     public float AttackDamage => stats.attackDamage;
     public float CooldownReduction => stats.cooldownReduction;
     public float Speed => stats.moveSpeed;
+
+    //Instancias Temporárias
+    private bool _isBuff;
+    private float _buffDuration;
+    private float _buffTimer;
     
     //Eventos
     public event Action OnHealthChanged;
@@ -25,8 +29,17 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable
         OnHealthChanged?.Invoke();
     }
 
+    public event Action OnBuff;
+
+    private void StatsChanged()
+    {
+        OnBuff?.Invoke();
+    }
+
     private void Awake()
     {
+        _isBuff = false;
+
         // Fazer um if para checkar se os valores 
         // do player prefs são zero. 
         // Se não, vai buscar os valores lá.
@@ -34,9 +47,27 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable
         //else
         _playerCombat = GetComponent<PlayerCombat>();
         _playerCombat.SetDamage(stats.attackDamage);
+        _playerCombat.SetRange(stats.attackRange);
+        _playerCombat.SetCooldown(stats.attackCooldown);
         _playerMovement = GetComponent<PlayerMovement>();
         _playerMovement.SetSpeed(stats.moveSpeed);
         _health = stats.maxHealth;
+    }
+
+    private void Update()
+    {
+        if (_isBuff)
+        {
+            _buffTimer += Time.deltaTime;
+
+            if (_buffTimer >= _buffDuration)
+            {
+                _playerCombat.SetDamage(stats.attackDamage);
+                _playerCombat.SetCooldown(stats.attackCooldown);
+                _playerMovement.SetSpeed(stats.moveSpeed);
+                _isBuff = false;
+            }
+        }
     }
 
 
@@ -63,15 +94,23 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable
         return _health < stats.maxHealth;
     }
 
+    public void BeingBuff(float duration)
+    {
+        _isBuff = true;
+        _buffTimer = 0;
+        _buffDuration = duration;
+        SaveTempStats();
+    }
+
     public void IncrementHealth(float bonusHealth)
     {
         stats.maxHealth += bonusHealth;
         DispatchHealthChanged();
     }
 
-    public void IncrementDamage(int bonusDamage)
+    public void IncrementDamage(float bonusDamage)
     {
-        stats.attackDamage += bonusDamage;
+        _playerCombat.SetDamage(_playerCombat.AttackDamage+bonusDamage);
     }
 
     public void MultiplyVelocity(float value)
@@ -79,7 +118,12 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable
         _playerMovement.SetSpeed(_playerMovement.Speed*value);
     }
 
-    public void DecrementCooldown(int timeToReduce)
+    public void MultiplyAttackCooldown(float value)
+    {
+        _playerCombat.SetCooldown(_playerCombat.AttackCooldown*value);
+    }
+
+    public void DecrementCooldown(float timeToReduce)
     {
         stats.cooldownReduction += timeToReduce;
     }
@@ -96,6 +140,10 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable
         stats.attackDamage = AttackDamage;
         stats.cooldownReduction = CooldownReduction;
         stats.moveSpeed = _playerMovement.Speed;
+        stats.attackDamage = _playerCombat.AttackDamage;
+        stats.attackCooldown = _playerCombat.AttackCooldown;
+
+        StatsChanged();
     }
 
     public void TakeDamage(float damage, Combat combat)
