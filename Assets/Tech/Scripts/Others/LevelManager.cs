@@ -1,0 +1,41 @@
+using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
+using System;
+using UnityEngine.UI;
+
+public class LevelManager : MonoBehaviour
+{
+    [SerializeField] private EnemyEventChannel enemyEvent;
+    [SerializeField] private Canvas upgradePanel;
+    private int _enemiesAlive;
+    private void EnemyHasSpawn() => _enemiesAlive++;
+    private void EnemyHasDied() => _enemiesAlive--;
+
+    private void OnEnable()
+    {
+        enemyEvent.OnEnemySpawned += EnemyHasSpawn;
+        enemyEvent.OnEnemySpawned += EnemyHasDied;
+    }
+
+    private void OnDisable()
+    {
+        enemyEvent.OnEnemySpawned -= EnemyHasSpawn;
+        enemyEvent.OnEnemySpawned -= EnemyHasDied;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (_enemiesAlive == 0)
+            if(other.TryGetComponent(out PlayerStats _))
+            {
+                ClearLevel();
+            }
+    }
+
+    private void ClearLevel()
+    {
+        upgradePanel.enabled = true;
+        //Make a selector
+    }
+}

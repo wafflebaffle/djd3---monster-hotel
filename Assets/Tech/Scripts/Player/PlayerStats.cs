@@ -23,14 +23,9 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable
     
     //Eventos
     public event Action OnHealthChanged;
-
-    private void DispatchHealthChanged()
-    {
-        OnHealthChanged?.Invoke();
-    }
+    private void DispatchHealthChanged() => OnHealthChanged?.Invoke();
 
     public event Action OnBuff;
-
     private void StatsChanged()
     {
         OnBuff?.Invoke();
