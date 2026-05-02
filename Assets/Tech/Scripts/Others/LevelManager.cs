@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private EnemyEventChannel enemyEvent;
-    [SerializeField] private Canvas upgradePanel;
+    [SerializeField] private RandomUpgradeSelector upgradePanel;
     private int _enemiesAlive;
     private void EnemyHasSpawn() => _enemiesAlive++;
     private void EnemyHasDied() => _enemiesAlive--;
@@ -27,15 +27,10 @@ public class LevelManager : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (_enemiesAlive == 0)
-            if(other.TryGetComponent(out PlayerStats _))
+            if(other.TryGetComponent(out PlayerStats player))
             {
-                ClearLevel();
+                upgradePanel.SetPlayer(player);
+                upgradePanel.gameObject.SetActive(true);
             }
-    }
-
-    private void ClearLevel()
-    {
-        upgradePanel.enabled = true;
-        //Make a selector
     }
 }
