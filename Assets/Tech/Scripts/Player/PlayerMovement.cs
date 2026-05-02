@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         motion = motion.normalized;
         motion *= Speed*Time.fixedDeltaTime;
 
-        _controller.Move(motion);
+        if (Time.timeScale != 0) _controller.Move(motion);
     }
 
     private void HandleGravity()

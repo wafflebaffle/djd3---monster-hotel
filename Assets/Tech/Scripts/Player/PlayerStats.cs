@@ -57,10 +57,7 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable
 
             if (_buffTimer >= _buffDuration)
             {
-                _playerCombat.SetDamage(stats.attackDamage);
-                _playerCombat.SetCooldown(stats.attackCooldown);
-                _playerMovement.SetSpeed(stats.moveSpeed);
-                _isBuff = false;
+                RemoveBuff();
             }
         }
     }
@@ -91,10 +88,18 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable
 
     public void BeingBuff(float duration)
     {
+        SaveTempStats();
         _isBuff = true;
         _buffTimer = 0;
         _buffDuration = duration;
-        SaveTempStats();
+    }
+
+    public void RemoveBuff()
+    {
+        _playerCombat.SetDamage(stats.attackDamage);
+        _playerCombat.SetCooldown(stats.attackCooldown);
+        _playerMovement.SetSpeed(stats.moveSpeed);
+        _isBuff = false;
     }
 
     public void IncrementHealth(float bonusHealth)

@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyStats : MonoBehaviour, IDamageable
 {
     [SerializeField] private StatsData stats;
+    [SerializeField] private EnemyEventChannel events;
     [SerializeField] private string takeDamageAnimName = "TakeDamage";
     [SerializeField] private string deathAnimName = "Death";
     [SerializeField] private float deathAnimTime = 0.5f;
@@ -30,9 +31,10 @@ public class EnemyStats : MonoBehaviour, IDamageable
         OnHealthChanged?.Invoke();
     }
 
-    private void Awake()
+    private void Start()
     {
         _enemyAnim = GetComponent<Animator>();
+        events.RaiseEnemySpawned();
 
         _enemyMovement = GetComponent<EnemyMovement>();
         _enemySight = GetComponent<EnemySight>();
@@ -74,6 +76,7 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
         yield return wfs;
 
+        events.RaiseEnemyDied();
         gameObject.SetActive(false);
     }
 

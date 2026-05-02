@@ -13,12 +13,13 @@ public class RandomUpgradeSelector : MonoBehaviour
 
     private void OnEnable()
     {
+        Time.timeScale = 0;
         _usedUpgrades = new();
 
         foreach (Button button in buttons)
         {
             Upgrade toUse = upgrades[Random.Range(0, upgrades.Count)];
-            button.onClick.AddListener(() => toUse.Effect(_player));
+            button.onClick.AddListener(() => toUse.Effect(_player, gameObject));
             button.GetComponentInChildren<TextMeshProUGUI>().text = toUse.Name;
             _usedUpgrades.Add(toUse);
             upgrades.Remove(toUse);
