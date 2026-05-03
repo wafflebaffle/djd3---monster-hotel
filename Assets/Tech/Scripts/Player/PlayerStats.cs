@@ -8,6 +8,7 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable
     private float _health;
     private PlayerMovement _playerMovement;
     private PlayerCombat _playerCombat;
+    private PlayerParry _parry;
 
     //Propriedades
     public float CurrentHealth => _health;
@@ -47,6 +48,7 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable
         _playerMovement = GetComponent<PlayerMovement>();
         _playerMovement.SetSpeed(stats.moveSpeed);
         _health = stats.maxHealth;
+        _parry = GetComponent<PlayerParry>();
     }
 
     private void Update()
@@ -148,6 +150,12 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable
 
     public void TakeDamage(float damage, Combat combat)
     {
+        if (_parry != null && _parry.IsParrying)
+        {
+            _parry.SucessfulParry(combat);
+            return;
+        }
+
         _health -= damage;
         DispatchHealthChanged();
         if (_health <= 0)
