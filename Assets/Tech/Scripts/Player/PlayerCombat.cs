@@ -7,7 +7,6 @@ public class PlayerCombat : Combat
 {
     private InputAction _attack;
     private IDamageable _stats;
-    private ISound _sound;
 
     public float AttackDamage => attackDamage;
     public float AttackCooldown => attackCooldown;
@@ -16,16 +15,16 @@ public class PlayerCombat : Combat
     [SerializeField] private string attackInput = "Attack";
     [SerializeField] private Animator attackAnim;
     [SerializeField] private string attackAnimName = "Punch";
-    [SerializeField] private SoundType punchSound;
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip attackSound;
+    [SerializeField] private AudioClip hitSound;
+
 
 
     void Start()
     {
         _attack = InputSystem.actions.FindAction(attackInput);
         _stats = GetComponent<PlayerStats>();
-        _sound = GetComponent<PlayerStats>();
-        audioSource = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -43,8 +42,12 @@ public class PlayerCombat : Combat
 
         lastAttackTime = Time.time;
         attackAnim.SetTrigger(attackAnimName);
+        if (audioSource && attackSound)
+        {
+            audioSource.pitch = Random.Range(0.95f, 1.05f);
+            audioSource.PlayOneShot(attackSound);
+        }
         Attack();
-        Sound.PlaySound(_sound.GetSoundData(), punchSound, audioSource);
     }
 
     protected override void Attack()
@@ -85,6 +88,12 @@ public class PlayerCombat : Combat
             if (dot > 0.5f) // (0.5 ≈ 60)
             {
                 closestTarget.TakeDamage(attackDamage, this);
+                if (audioSource && hitSound)
+                {
+                    audioSource.pitch = Random.Range(0.95f, 1.05f);
+                    audioSource.PlayOneShot(hitSound);
+                }
+                    
             }
         }
     }

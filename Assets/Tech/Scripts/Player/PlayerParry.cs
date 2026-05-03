@@ -7,10 +7,10 @@ public class PlayerParry : MonoBehaviour
     [SerializeField] private float parryOp = 2f;
     [SerializeField] private float cooldown = 10f;
     [SerializeField] private string Input = "Parry";
-    [SerializeField] private SoundType PARRY;
-    [SerializeField] private SoundType PARRYSUCCESS;
-    private AudioSource audioSource;
-    private ISound _sound;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip parryStartSound;
+    [SerializeField] private AudioClip parrySuccessSound;
+
 
     private Renderer[] _renderers;
     private Color[] _originalColors;
@@ -25,8 +25,6 @@ public class PlayerParry : MonoBehaviour
 
     void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-        _sound = GetComponent<PlayerStats>();
         _parryAction = InputSystem.actions.FindAction(Input);
         _renderers = GetComponentsInChildren<Renderer>();
         _originalColors = new Color[_renderers.Length];
@@ -81,19 +79,22 @@ public class PlayerParry : MonoBehaviour
 
         SetColor(Color.blue);
         //som do parry
-        Sound.PlaySound(_sound.GetSoundData(), PARRY, audioSource);
+
+        if (audioSource && parryStartSound)
+            audioSource.PlayOneShot(parryStartSound);
 
     }
 
     public void SucessfulParry(Combat enemy)
     {
-        Sound.PlaySound(_sound.GetSoundData(), PARRYSUCCESS, audioSource);
 
         ResetColor();
 
         Debug.Log("PARRY SUCCESS");
         _isParrying = false;
-        
+
+        if (audioSource && parrySuccessSound)
+            audioSource.PlayOneShot(parrySuccessSound);
 
         if (enemy == null) return;
 
