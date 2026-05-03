@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class EnemyStats : MonoBehaviour, IDamageable
+public class EnemyStats : MonoBehaviour, IDamageable, IParryable
 {
     [SerializeField] private StatsData stats;
     [SerializeField] private EnemyEventChannel events;
@@ -87,4 +87,37 @@ public class EnemyStats : MonoBehaviour, IDamageable
 
     public float DistanceToTarget()
     { return _enemyMovement.DistanceToTarget(); }
+
+    public void OnParried(Vector3 direction)
+    {
+        StartCoroutine(ParryEffect(direction));
+    }
+
+    private IEnumerator ParryEffect(Vector3 direction)
+    {
+        float stunTime = 0.5f; //mudar para algo incrementavel e serializavel
+        float knockbackForce = 5f; //mudar para algo incrementavel e serializavel
+
+        EnemyMovement movement = GetComponent<EnemyMovement>();
+        Rigidbody rb = GetComponent<Rigidbody>();
+
+        if (movement != null)
+        {
+            movement.enabled = false;
+        }
+
+
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.AddForce(direction * knockbackForce, ForceMode.Impulse);
+        }
+
+        yield return new WaitForSeconds(stunTime);
+
+        if (movement != null)
+        {
+            movement.enabled = true;
+        }
+    }
 }
