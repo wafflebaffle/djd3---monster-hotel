@@ -7,6 +7,7 @@ public class PlayerCombat : Combat
 {
     private InputAction _attack;
     private IDamageable _stats;
+    private ISound _sound;
 
     public float AttackDamage => attackDamage;
     public float AttackCooldown => attackCooldown;
@@ -15,12 +16,16 @@ public class PlayerCombat : Combat
     [SerializeField] private string attackInput = "Attack";
     [SerializeField] private Animator attackAnim;
     [SerializeField] private string attackAnimName = "Punch";
+    [SerializeField] private SoundType punchSound;
+    private AudioSource audioSource;
 
 
     void Start()
     {
         _attack = InputSystem.actions.FindAction(attackInput);
         _stats = GetComponent<PlayerStats>();
+        _sound = GetComponent<PlayerStats>();
+        audioSource = GetComponent<AudioSource>();
     }
     void Update()
     {
@@ -39,6 +44,7 @@ public class PlayerCombat : Combat
         lastAttackTime = Time.time;
         attackAnim.SetTrigger(attackAnimName);
         Attack();
+        Sound.PlaySound(_sound.GetSoundData(), punchSound, audioSource);
     }
 
     protected override void Attack()

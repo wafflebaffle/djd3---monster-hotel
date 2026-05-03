@@ -3,7 +3,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private float gravity = 9.81f;
     [SerializeField] private string moveInput = "Move";
     public float Speed { get; private set; }
     private Vector2 _direction;
@@ -42,11 +41,6 @@ public class PlayerMovement : MonoBehaviour
         motion *= Speed*Time.fixedDeltaTime;
 
         if (Time.timeScale != 0) _controller.Move(motion);
-    }
-
-    private void HandleGravity()
-    {
-        _controller.Move(Vector3.up*gravity*Time.fixedDeltaTime);
     }
 
     public void SetSpeed(float value)

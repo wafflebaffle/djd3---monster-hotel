@@ -858,7 +858,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -879,7 +879,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombat
   attackPoint: {fileID: 1403800586}
-  attackTreshold: 1
+  attackTreshold: 1.5
 --- !u!136 &409537405
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2632,7 +2632,7 @@ Transform:
   m_GameObject: {fileID: 1403800585}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.71}
+  m_LocalPosition: {x: 0, y: 0, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4061,15 +4061,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6213498041719978099, guid: dfc40db0944845a45a920a26219e50fa, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 14.943167
       objectReference: {fileID: 0}
     - target: {fileID: 6213498041719978099, guid: dfc40db0944845a45a920a26219e50fa, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 6213498041719978099, guid: dfc40db0944845a45a920a26219e50fa, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 30
+      value: 26.38082
       objectReference: {fileID: 0}
     - target: {fileID: 6213498041719978099, guid: dfc40db0944845a45a920a26219e50fa, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4150,6 +4150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   stats: {fileID: 11400000, guid: 5f190b32d6bb6364ba0188950e4314d8, type: 2}
+  sounds: {fileID: 11400000, guid: 2cad945bf952ec547b4eff125542dd15, type: 2}
 --- !u!114 &3793835390491306463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4166,6 +4167,7 @@ MonoBehaviour:
   attackInput: Attack
   attackAnim: {fileID: 2109298682}
   attackAnimName: Punch
+  punchSound: 0
 --- !u!114 &3793835390491306467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4178,9 +4180,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab3040a99dd1cd4896f4c6b19a987f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerParry
-  parryOp: 0.3
+  parryOp: 1
   cooldown: 1
   Input: Parry
+  PARRY: 1
+  PARRYSUCCESS: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
