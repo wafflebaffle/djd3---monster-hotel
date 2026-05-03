@@ -4150,6 +4150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   stats: {fileID: 11400000, guid: 5f190b32d6bb6364ba0188950e4314d8, type: 2}
+  sounds: {fileID: 11400000, guid: 2cad945bf952ec547b4eff125542dd15, type: 2}
 --- !u!114 &3793835390491306463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4166,6 +4167,7 @@ MonoBehaviour:
   attackInput: Attack
   attackAnim: {fileID: 2109298682}
   attackAnimName: Punch
+  punchSound: 0
 --- !u!114 &3793835390491306467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4181,6 +4183,8 @@ MonoBehaviour:
   parryOp: 1
   cooldown: 1
   Input: Parry
+  PARRY: 1
+  PARRYSUCCESS: 2
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

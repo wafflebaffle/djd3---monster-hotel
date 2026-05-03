@@ -1,4 +1,6 @@
 public enum SoundType
 {
-    PUNCH
+    PUNCH,
+    PARRY,
+    PARRYSUCCESS
 }
