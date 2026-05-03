@@ -4178,7 +4178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ab3040a99dd1cd4896f4c6b19a987f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerParry
-  parryOp: 0.3
+  parryOp: 1
   cooldown: 1
   Input: Parry
 --- !u!1660057539 &9223372036854775807

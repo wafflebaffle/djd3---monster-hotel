@@ -3,8 +3,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerParry : MonoBehaviour
 {
-    [SerializeField] private float parryOp = 0.3f;
-    [SerializeField] private float cooldown = 1f;
+    [SerializeField] private float parryOp = 2f;
+    [SerializeField] private float cooldown = 10f;
     [SerializeField] private string Input = "Parry";
 
     private Renderer[] _renderers;
