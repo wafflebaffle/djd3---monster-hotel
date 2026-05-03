@@ -49,23 +49,26 @@ public class PlayerParry : MonoBehaviour
 
         if (Timer >= parryOp)
         {
-            _isParrying = false;
+            EndParry();
         }
     }
 
     private void TryParry()
     {
+        Debug.Log("PARRY INPUT DETECTED");
         if (Time.time < _lastParried + cooldown) return;
 
         _lastParried = Time.time;
         _isParrying = true;
         Timer = 0f;
 
+        //SetColor(parryColor);
         //som do parry
     }
 
     public void SucessfulParry(Combat enemy)
     {
+        Debug.Log("PARRY SUCCESS");
         _isParrying = false;
 
         if (enemy == null) return;
@@ -77,5 +80,20 @@ public class PlayerParry : MonoBehaviour
             parryable.OnParried(direction);
         }
     }
+
+    private void EndParry()
+    {
+        _isParrying = false;
+        //SetColor(_originalColor);
+        
+    }
+
+    /*private void SetColor(Color color)
+    {
+        if (playerRenderer != null)
+        {
+            playerRenderer.material.color = color;
+        }
+    }*/
 
 }

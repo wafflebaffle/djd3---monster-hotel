@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class EnemyStats : MonoBehaviour, IDamageable, IParryable
 {
@@ -9,6 +10,8 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     [SerializeField] private string takeDamageAnimName = "TakeDamage";
     [SerializeField] private string deathAnimName = "Death";
     [SerializeField] private float deathAnimTime = 0.5f;
+
+
     private float _health;
     private EnemyMovement _enemyMovement;
     private EnemySight _enemySight;
@@ -88,6 +91,14 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     public float DistanceToTarget()
     { return _enemyMovement.DistanceToTarget(); }
 
+    /*private void SetColor(Color color)
+    {
+        if(enemyRenderer != null)
+        {
+            enemyRenderer.material.color = color;
+        }
+    }*/
+
     public void OnParried(Vector3 direction)
     {
         StartCoroutine(ParryEffect(direction));
@@ -96,28 +107,35 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     private IEnumerator ParryEffect(Vector3 direction)
     {
         float stunTime = 0.5f; //mudar para algo incrementavel e serializavel
-        float knockbackForce = 5f; //mudar para algo incrementavel e serializavel
+        float knockbackDistance = 5f; //mudar para algo incrementavel e serializavel
 
-        EnemyMovement movement = GetComponent<EnemyMovement>();
-        Rigidbody rb = GetComponent<Rigidbody>();
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
 
-        if (movement != null)
+        //SetColor(stunColor);
+
+        if (agent != null)
         {
-            movement.enabled = false;
+            agent.isStopped = true;
         }
 
 
-        if (rb != null)
+        Vector3 targetPos = transform.position + direction * knockbackDistance;
+
+        float t = 0;
+        while (t < 1f)
         {
-            rb.linearVelocity = Vector3.zero;
-            rb.AddForce(direction * knockbackForce, ForceMode.Impulse);
+            t += Time.deltaTime * 6f;
+            transform.position = Vector3.Lerp(transform.position, targetPos, t);
+            yield return null;
         }
 
         yield return new WaitForSeconds(stunTime);
 
-        if (movement != null)
+        //SetColor(_originalColor);
+
+        if (agent != null)
         {
-            movement.enabled = true;
+            agent.isStopped = false;
         }
     }
 }
