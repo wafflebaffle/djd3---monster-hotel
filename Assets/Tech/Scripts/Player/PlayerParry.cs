@@ -7,6 +7,9 @@ public class PlayerParry : MonoBehaviour
     [SerializeField] private float cooldown = 1f;
     [SerializeField] private string Input = "Parry";
 
+    private Renderer[] _renderers;
+    private Color[] _originalColors;
+
     private InputAction _parryAction;
     private bool _isParrying;
 
@@ -18,6 +21,13 @@ public class PlayerParry : MonoBehaviour
     private void Start()
     {
         _parryAction = InputSystem.actions.FindAction(Input);
+        _renderers = GetComponentsInChildren<Renderer>();
+        _originalColors = new Color[_renderers.Length];
+
+        for (int i = 0; i < _renderers.Length; i++)
+        {
+            _originalColors[i] = _renderers[i].material.color;
+        }
     }
 
     private void Update()
@@ -62,12 +72,14 @@ public class PlayerParry : MonoBehaviour
         _isParrying = true;
         Timer = 0f;
 
-        //SetColor(parryColor);
+        SetColor(Color.blue);
         //som do parry
     }
 
     public void SucessfulParry(Combat enemy)
     {
+        ResetColor();
+
         Debug.Log("PARRY SUCCESS");
         _isParrying = false;
 
@@ -84,16 +96,23 @@ public class PlayerParry : MonoBehaviour
     private void EndParry()
     {
         _isParrying = false;
-        //SetColor(_originalColor);
+        ResetColor();
         
     }
 
-    /*private void SetColor(Color color)
+    private void SetColor(Color color)
     {
-        if (playerRenderer != null)
+        for (int i = 0; i < _renderers.Length; i++)
         {
-            playerRenderer.material.color = color;
+            _renderers[i].material.color = color;
         }
-    }*/
+    }
 
+    private void ResetColor()
+    {
+        for (int i = 0; i < _renderers.Length; i++)
+        {
+            _renderers[i].material.color = _originalColors[i];
+        }
+    }
 }

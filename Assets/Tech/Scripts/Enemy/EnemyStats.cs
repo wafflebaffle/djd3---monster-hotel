@@ -11,6 +11,8 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     [SerializeField] private string deathAnimName = "Death";
     [SerializeField] private float deathAnimTime = 0.5f;
 
+    private Renderer[] _renderers;
+    private Color[] _originalColors;
 
     private float _health;
     private EnemyMovement _enemyMovement;
@@ -48,6 +50,13 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
         _enemyCombat.SetRange(stats.attackRange);
         _enemyCombat.SetCooldown(stats.attackCooldown);
         _health = stats.maxHealth;
+
+        _renderers = GetComponentsInChildren<Renderer>();
+        _originalColors = new Color[_renderers.Length];
+        for (int i = 0; i < _renderers.Length; i++)
+        {
+            _originalColors[i] = _renderers[i].material.color;
+        }
     }
 
     public void TakeDamage(float damage, Combat combat)
@@ -91,13 +100,22 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     public float DistanceToTarget()
     { return _enemyMovement.DistanceToTarget(); }
 
-    /*private void SetColor(Color color)
+    private void SetColor(Color color)
     {
-        if(enemyRenderer != null)
+        for (int i = 0; i < _renderers.Length; i++)
         {
-            enemyRenderer.material.color = color;
+            _renderers[i].material.color = color;
         }
-    }*/
+    }
+
+    private void ResetColor()
+    {
+        for (int i = 0; i < _renderers.Length; i++)
+        {
+            _renderers[i].material.color = _originalColors[i];
+        }
+    }
+
 
     public void OnParried(Vector3 direction)
     {
@@ -111,7 +129,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
 
         NavMeshAgent agent = GetComponent<NavMeshAgent>();
 
-        //SetColor(stunColor);
+        SetColor(Color.blue);
 
         if (agent != null)
         {
@@ -131,7 +149,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
 
         yield return new WaitForSeconds(stunTime);
 
-        //SetColor(_originalColor);
+        ResetColor();
 
         if (agent != null)
         {
