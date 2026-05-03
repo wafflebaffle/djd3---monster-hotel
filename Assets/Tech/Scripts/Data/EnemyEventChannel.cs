@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
 
-// ScriptableObject event channel
 [CreateAssetMenu(fileName = "EnemyEventChannel", menuName = "Events/EnemyEventChannel")]
 public class EnemyEventChannel : ScriptableObject
 {
