@@ -10,6 +10,17 @@ public class Pause_Menu : MonoBehaviour
     private bool _isPaused;
     public bool Paused => _isPaused;
 
+    private void OnEnable()
+    {
+        cancel.Enable();
+    }
+
+    private void OnDisable()
+    {
+        cancel.Disable();
+    }
+
+
     void Update()
     {
         if (cancel.WasPressedThisFrame())
