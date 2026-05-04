@@ -22,6 +22,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     private Animator _enemyAnim;
 
     private bool _isStunned;
+    public bool IsStunned => _isStunned;
 
     //Propriedades
     public float CurrentHealth => _health;
@@ -180,8 +181,6 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
 
         _isStunned = false;
     }
-
-
 
     public void ApplyHitStun(float duration)
     {
