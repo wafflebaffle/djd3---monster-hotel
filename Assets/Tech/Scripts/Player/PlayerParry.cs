@@ -1,3 +1,5 @@
+using System;
+using TreeEditor;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -11,6 +13,10 @@ public class PlayerParry : MonoBehaviour
     [SerializeField] private AudioClip parryStartSound;
     [SerializeField] private AudioClip parrySuccessSound;
 
+    public event Action OnCooldownChanged;
+    private void CoolDownUpdate() => OnCooldownChanged?.Invoke();
+    
+
 
     private Renderer[] _renderers;
     private Color[] _originalColors;
@@ -19,9 +25,11 @@ public class PlayerParry : MonoBehaviour
     private bool _isParrying;
 
     public bool IsParrying => _isParrying;
+    public float Cooldown => cooldown;
 
     private float Timer;
     private float _lastParried;
+    public float LastParried => _lastParried;
 
     void Start()
     {
@@ -82,6 +90,8 @@ public class PlayerParry : MonoBehaviour
 
         if (audioSource && parryStartSound)
             audioSource.PlayOneShot(parryStartSound);
+
+        CoolDownUpdate();
 
     }
 
