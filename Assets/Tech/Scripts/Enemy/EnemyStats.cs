@@ -10,6 +10,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     [SerializeField] private string takeDamageAnimName = "TakeDamage";
     [SerializeField] private string deathAnimName = "Death";
     [SerializeField] private float deathAnimTime = 0.5f;
+    [SerializeField] private float hitStunDuration = 0.15f;
 
     private Renderer[] _renderers;
     private Color[] _originalColors;
@@ -19,6 +20,8 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     private EnemySight _enemySight;
     private EnemyCombat _enemyCombat;
     private Animator _enemyAnim;
+
+    private bool _isStunned;
 
     //Propriedades
     public float CurrentHealth => _health;
@@ -155,5 +158,34 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
         {
             agent.isStopped = false;
         }
+    }
+
+    private IEnumerator StunRoutine(float duration, Color stunColor)
+    {
+
+        _isStunned = true;
+
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        if (agent != null)
+            agent.isStopped = true;
+
+        SetColor(stunColor);
+
+        yield return new WaitForSeconds(duration);
+
+        ResetColor();
+
+        if (agent != null)
+            agent.isStopped = false;
+
+        _isStunned = false;
+    }
+
+
+
+    public void ApplyHitStun(float duration)
+    {
+        if (!gameObject.activeInHierarchy) return;
+        StartCoroutine(StunRoutine(duration, Color.white));
     }
 }

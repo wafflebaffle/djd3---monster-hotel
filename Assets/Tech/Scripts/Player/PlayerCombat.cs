@@ -18,6 +18,7 @@ public class PlayerCombat : Combat
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private AudioClip hitSound;
+    [SerializeField] private float hitStunDuration = 0.15f;
 
 
 
@@ -88,6 +89,13 @@ public class PlayerCombat : Combat
             if (dot > 0.5f) // (0.5 ≈ 60)
             {
                 closestTarget.TakeDamage(attackDamage, this);
+                if (closestTarget is MonoBehaviour mb)
+                {
+                    if (mb.TryGetComponent<EnemyStats>(out var enemy))
+                    {
+                        enemy.ApplyHitStun(hitStunDuration);
+                    }
+                }
                 if (audioSource && hitSound)
                 {
                     audioSource.pitch = Random.Range(0.95f, 1.05f);
