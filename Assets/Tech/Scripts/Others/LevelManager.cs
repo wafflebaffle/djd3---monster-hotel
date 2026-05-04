@@ -4,9 +4,14 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private EnemyEventChannel enemyEvent;
     [SerializeField] private RandomUpgradeSelector upgradePanel;
+    [SerializeField] private MeshRenderer mesh;
     private int _enemiesAlive;
     private void EnemyHasSpawn() => _enemiesAlive++;
-    private void EnemyHasDied() => _enemiesAlive--;
+    private void EnemyHasDied()
+    {
+        _enemiesAlive--;
+        if(_enemiesAlive <= 0) DeactivateSeal();
+    }
 
     private void OnEnable()
     {
@@ -22,7 +27,7 @@ public class LevelManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_enemiesAlive == 0)
+        if (_enemiesAlive <= 0)
             if(other.TryGetComponent(out PlayerStats player))
             {
                 player.RemoveBuff();
@@ -31,8 +36,8 @@ public class LevelManager : MonoBehaviour
             }
     }
 
-    private void Update()
+    private void DeactivateSeal()
     {
-        Debug.Log(_enemiesAlive);
+        mesh.enabled = false;
     }
 }

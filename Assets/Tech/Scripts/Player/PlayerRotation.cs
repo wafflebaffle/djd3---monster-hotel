@@ -3,8 +3,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerRotation : MonoBehaviour
 {
-    [SerializeField] private LayerMask hitLayer;
-    private Vector3 _mousePos;
     private Camera _cam;
     private Mouse _mouse;
     private Vector3 _point;
