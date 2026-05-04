@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class Visualizer : MonoBehaviour
 {
     [SerializeField] private Slider healthSlider;
+    [SerializeField] private Image portrait;
+    [SerializeField] private Sprite healthy, damaged;
     [SerializeField] private Slider cooldownSlider;
     private PlayerStats _playerStats;
     private PlayerParry _playerParry;
@@ -34,6 +36,8 @@ public class Visualizer : MonoBehaviour
     {
         healthSlider.maxValue = _playerStats.MaxHealth;
         healthSlider.value = _playerStats.CurrentHealth;
+        if (_playerStats.CurrentHealth < _playerStats.MaxHealth / 2) portrait.sprite = damaged;
+        else portrait.sprite = healthy;
     }
 
     private void SetCooldownBar()

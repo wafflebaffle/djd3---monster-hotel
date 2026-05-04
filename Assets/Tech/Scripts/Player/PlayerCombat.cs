@@ -20,8 +20,6 @@ public class PlayerCombat : Combat
     [SerializeField] private AudioClip hitSound;
     [SerializeField] private float hitStunDuration = 0.15f;
 
-
-
     void Start()
     {
         _attack = InputSystem.actions.FindAction(attackInput);
@@ -113,5 +111,4 @@ public class PlayerCombat : Combat
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
-    
 }

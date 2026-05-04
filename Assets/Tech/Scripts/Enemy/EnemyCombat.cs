@@ -3,6 +3,8 @@
 public class EnemyCombat : Combat
 {
     [SerializeField] private float attackTreshold = 1;
+    [SerializeField] private Animator attackAnim;
+    [SerializeField] private string attackAnimName = "Punch";
     private EnemyStats _enemy;
 
     private void Start()
@@ -48,6 +50,7 @@ public class EnemyCombat : Combat
             return;
 
         lastAttackTime = Time.time;
+        attackAnim.SetTrigger(attackAnimName);
         Attack();
     }
 

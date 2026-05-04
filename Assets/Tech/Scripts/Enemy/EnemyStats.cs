@@ -7,6 +7,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
 {
     [SerializeField] private StatsData stats;
     [SerializeField] private EnemyEventChannel events;
+    [SerializeField] private Animator enemyAnim;
     [SerializeField] private string takeDamageAnimName = "TakeDamage";
     [SerializeField] private string deathAnimName = "Death";
     [SerializeField] private float deathAnimTime = 0.5f;
