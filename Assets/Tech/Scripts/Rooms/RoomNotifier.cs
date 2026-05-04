@@ -1,11 +1,13 @@
 using System;
-using Unity.VisualScripting;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RoomNotifier : MonoBehaviour
 {
     [SerializeField] private Transform cameraPos;
     [SerializeField] private float cameraReturnBreak = 0.5f;
+    [SerializeField] private GameObject allMeshes;
     public event Action<bool> OnPlayerEnter;
     private CameraBehaviour _cam;
     private Vector3 _cameraDestination;
@@ -20,6 +22,8 @@ public class RoomNotifier : MonoBehaviour
     {
         if(other.TryGetComponent(out PlayerStats player))
         {
+            allMeshes.SetActive(true);
+
             OnPlayerEnter?.Invoke(true);
 
             CancelInvoke(nameof(ReturnToRoamingCamera));
@@ -32,6 +36,8 @@ public class RoomNotifier : MonoBehaviour
     {
         if(other.TryGetComponent(out PlayerStats player))
         {
+            allMeshes.SetActive(false);
+
             OnPlayerEnter?.Invoke(false);
             
             Invoke(nameof(ReturnToRoamingCamera), cameraReturnBreak);

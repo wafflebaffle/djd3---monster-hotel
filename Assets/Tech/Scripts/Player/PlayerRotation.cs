@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerRotation : MonoBehaviour
 {
+    [SerializeField] private LayerMask hitLayer;
     private Vector3 _mousePos;
     private Camera _cam;
     private Mouse _mouse;
@@ -33,7 +34,7 @@ public class PlayerRotation : MonoBehaviour
         RaycastHit hit;
         Ray raycast = _cam.ScreenPointToRay(_mouse.position.ReadValue());
 
-        if (Physics.Raycast(raycast, out hit))
+        if (Physics.Raycast(raycast, out hit, hitLayer))
         {
             _point = hit.point;
         }

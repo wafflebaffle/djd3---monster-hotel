@@ -15,11 +15,12 @@ public class RoomArea : MonoBehaviour
     public float Zmax { get; private set; }
     public float Zmin { get; private set; }
 
+    [SerializeField] private Collider mesh;
     // Configure game area limits object
     private void Awake()
     {
         // Get the sprite renderer and its bounds
-        MeshRenderer mesh = GetComponent<MeshRenderer>();
+        mesh = GetComponent<Collider>();
         Bounds bounds = mesh.bounds;
 
         // Determine and keep game area limits
