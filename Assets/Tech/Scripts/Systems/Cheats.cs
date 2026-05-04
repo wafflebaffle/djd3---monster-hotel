@@ -61,7 +61,7 @@ public class Cheats : MonoBehaviour
 
         foreach (EnemyStats e in enemies)
         {
-            e.TakeDamage(800, _player.GetComponent<Combat>());
+            e.Death();
         }
     }
 

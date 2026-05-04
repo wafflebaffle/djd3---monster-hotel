@@ -79,7 +79,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
             Death();
         }
     }
-    private void Death()
+    public void Death()
     {
         //Play death animation;
         _enemyAnim.SetTrigger(deathAnimName);

@@ -5268,6 +5268,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7176667889198578055, guid: 8039b75adf4ad2e4ea5ead59bad7fd69, type: 3}
+--- !u!23 &140003888 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 1048655328500833578, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
+  m_PrefabInstance: {fileID: 243129838}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &140056991
 GameObject:
   m_ObjectHideFlags: 0
@@ -7934,6 +7939,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: d13620af31c60234f843159b1ba7acb0, type: 2}
+    - target: {fileID: 6778967078249159105, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
+      propertyPath: mesh
+      value: 
+      objectReference: {fileID: 140003888}
     - target: {fileID: 6778967078249159105, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
       propertyPath: upgradePanel
       value: 
@@ -39047,8 +39056,8 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 50cdc58b-550b-42e4-acc7-8799ad151886
-      m_Path: <Keyboard>/numpadPlus
+      m_Id: a5afb658-0eb5-4794-af7b-9fdc31fc37c9
+      m_Path: <Keyboard>/k
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -39064,8 +39073,8 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings:
     - m_Name: 
-      m_Id: 77dc44cd-1180-4655-be40-1c2c1ce1f5f0
-      m_Path: <Keyboard>/numpadMinus
+      m_Id: cac24078-c266-41f6-ae34-cf5026dca452
+      m_Path: <Keyboard>/l
       m_Interactions: 
       m_Processors: 
       m_Groups: 
