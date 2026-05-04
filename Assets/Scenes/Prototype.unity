@@ -38838,6 +38838,118 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bd42823ac85ed8d4aa1206ca18d389ca, type: 3}
   m_PrefabInstance: {fileID: 1351021873}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1353869337
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1353869339}
+  - component: {fileID: 1353869338}
+  m_Layer: 0
+  m_Name: CheatsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1353869338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353869337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 270b811e7a391e446a5326071cb18b96, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Cheats
+  toggleCheats:
+    m_Name: Toggle Cheats
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a4fb4c79-9d5b-4669-8d40-0a7807ebb460
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: ac681d52-ec21-416d-a663-b61d78ee18f6
+      m_Path: <Keyboard>/backslash
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Toggle Cheats
+      m_Flags: 0
+    m_Flags: 0
+  heal:
+    m_Name: Heal
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4b8aaba1-2960-465c-99aa-c6903cadb231
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 50cdc58b-550b-42e4-acc7-8799ad151886
+      m_Path: <Keyboard>/numpadPlus
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Heal
+      m_Flags: 0
+    m_Flags: 0
+  killAll:
+    m_Name: Kill All
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: d1a5c5cf-b1c0-4a4f-8997-853c3bd887db
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 77dc44cd-1180-4655-be40-1c2c1ce1f5f0
+      m_Path: <Keyboard>/numpadMinus
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Kill All
+      m_Flags: 0
+    m_Flags: 0
+  godMode:
+    m_Name: God Mode
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 064b37e2-7d32-4c8f-9ed4-25def235b4f0
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: b2a8c0cd-28ef-47b3-98b3-a1b2c792b863
+      m_Path: <Keyboard>/g
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: God Mode
+      m_Flags: 0
+    m_Flags: 0
+--- !u!4 &1353869339
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353869337}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 994.2324, y: 1033.8816, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1356879940
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -63770,3 +63882,4 @@ SceneRoots:
   - {fileID: 1462720394}
   - {fileID: 243129838}
   - {fileID: 1112622135}
+  - {fileID: 1353869339}
