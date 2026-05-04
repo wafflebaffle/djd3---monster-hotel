@@ -38,7 +38,7 @@ public class Visualizer : MonoBehaviour
 
     private void SetCooldownBar()
     {
-        cooldownSlider.maxValue = _playerParry.Cooldown;
-        cooldownSlider.value = _playerParry.LastParried;
+        cooldownSlider.maxValue = 1f;
+        cooldownSlider.value = _playerParry.CooldownProgress;
     }
 }

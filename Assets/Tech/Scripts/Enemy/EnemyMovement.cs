@@ -25,6 +25,12 @@ public class EnemyMovement : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (_enemy.IsStunned)
+        {
+            _agent.ResetPath();
+            return;
+        }
+
         _timer += Time.deltaTime;
 
         if(_timer >= timerPerDecision)

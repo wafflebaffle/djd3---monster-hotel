@@ -11,6 +11,10 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISo
     private PlayerCombat _playerCombat;
     private PlayerParry _parry;
 
+
+    //CHEATS
+    private bool _godMode;
+
     //Propriedades
     public float CurrentHealth => _health;
     public float MaxHealth => stats.maxHealth;
@@ -151,6 +155,12 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISo
         StatsChanged();
     }
 
+    //CHEATS
+    public void SetGodMode(bool value)
+    {
+        _godMode = value;
+    }
+
     public void TakeDamage(float damage, Combat combat)
     {
         if (_parry != null && _parry.IsParrying)
@@ -158,6 +168,8 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISo
             _parry.SucessfulParry(combat);
             return;
         }
+        //CHEATS
+        if (_godMode) return;
 
         _health -= damage;
         DispatchHealthChanged();

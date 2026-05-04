@@ -11,6 +11,17 @@ public class PlayerParry : MonoBehaviour
     [SerializeField] private AudioClip parryStartSound;
     [SerializeField] private AudioClip parrySuccessSound;
 
+    public float CooldownProgress
+    {
+        get
+        {
+            if (Time.time >= _lastParried + cooldown)
+                return 1f;
+
+            return (Time.time - _lastParried) / cooldown;
+        }
+    }
+
     public event Action OnCooldownChanged;
     private void CoolDownUpdate() => OnCooldownChanged?.Invoke();
     
@@ -45,6 +56,7 @@ public class PlayerParry : MonoBehaviour
     {
         HandleInput();
         HandleParryOpening();
+        CoolDownUpdate();
     }
 
 
@@ -89,17 +101,13 @@ public class PlayerParry : MonoBehaviour
         if (audioSource && parryStartSound)
             audioSource.PlayOneShot(parryStartSound);
 
-        CoolDownUpdate();
-
     }
 
     public void SucessfulParry(Combat enemy)
     {
 
-        ResetColor();
 
         Debug.Log("PARRY SUCCESS");
-        _isParrying = false;
 
         if (audioSource && parrySuccessSound)
             audioSource.PlayOneShot(parrySuccessSound);
