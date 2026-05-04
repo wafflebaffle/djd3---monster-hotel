@@ -228,7 +228,7 @@ CharacterController:
   m_Height: 2
   m_Radius: 0.5000001
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
@@ -244,9 +244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3725eceb3483ea94f993bf378f9a0798, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRotation
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!114 &4216769568168632577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -280,6 +277,7 @@ MonoBehaviour:
   audioSource: {fileID: 6874916950957869879}
   attackSound: {fileID: 8300000, guid: 3a2220fc305712840aec0c716cfcb657, type: 3}
   hitSound: {fileID: 8300000, guid: 9cca2c4f2f4c22d45863db588b2dda16, type: 3}
+  hitStunDuration: 0.15
 --- !u!114 &249241999887188801
 MonoBehaviour:
   m_ObjectHideFlags: 0

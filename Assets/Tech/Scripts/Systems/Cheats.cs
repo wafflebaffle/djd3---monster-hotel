@@ -49,7 +49,7 @@ public class Cheats : MonoBehaviour
 
         if (!_cheatsEnabled) return;
         
-        if (heal.WasPressedThisFrame()) _player.Heal(999);
+        if (heal.WasPressedThisFrame()) _player.Heal(800);
         if (killAll.WasPressedThisFrame()) KillAllEnemies();
         if (godMode.WasPressedThisFrame()) ToggleGodMode();
         if (bigDamage.WasPressedThisFrame()) _player.IncrementDamage(800);
@@ -61,7 +61,7 @@ public class Cheats : MonoBehaviour
 
         foreach (EnemyStats e in enemies)
         {
-            e.TakeDamage(99999, _player.GetComponent<Combat>());
+            e.TakeDamage(800, _player.GetComponent<Combat>());
         }
     }
 

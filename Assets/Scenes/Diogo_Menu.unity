@@ -3538,6 +3538,7 @@ GameObject:
   - component: {fileID: 518480070}
   - component: {fileID: 518480069}
   - component: {fileID: 518480072}
+  - component: {fileID: 518480073}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3663,6 +3664,28 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!95 &518480073
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 518480068}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9c5012455ab05c44eb4dbb11737a35eb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &525053464
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10885,6 +10908,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Main_Menu
   settingsScreen: {fileID: 1738829501}
+  startScreen: {fileID: 802171184}
+  camAnim: {fileID: 518480073}
+  animSettingsName: Settings
+  animStartName: Start
+  annimRestoreSettingsName: Restore
+  animationTime: 1
 --- !u!4 &1772076370 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 10d3fefcc86ce6240b29a707a90505b1, type: 3}
