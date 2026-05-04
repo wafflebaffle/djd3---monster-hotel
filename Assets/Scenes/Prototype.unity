@@ -7968,6 +7968,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 140003888}
     - target: {fileID: 6778967078249159105, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
+      propertyPath: music1
+      value: 
+      objectReference: {fileID: 8300000, guid: 9ebb6c953af1a4a4d8dd7763db6b6b4f, type: 3}
+    - target: {fileID: 6778967078249159105, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 1177890639}
+    - target: {fileID: 6778967078249159105, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
       propertyPath: ambientMusic
       value: 
       objectReference: {fileID: 8300000, guid: 25187cfd49a0d8e4e827fd00e9e5ca8d, type: 3}
@@ -34027,7 +34035,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 1
   Mute: 0
