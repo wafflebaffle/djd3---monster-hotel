@@ -12,7 +12,16 @@ public class Main_Menu : MonoBehaviour
     [SerializeField] private string animStartName = "Start";
     [SerializeField] private string annimRestoreSettingsName = "Restore";
     [SerializeField] private float animationTime = 60.0f;
-    
+    [Header("AmbientMusic")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip music1;
+
+    private void Start()
+    {
+        audioSource.clip = music1;
+        audioSource.Play();
+    }
+
     public void StartGame(int sceneindex)
     {
         camAnim.SetTrigger(animStartName);
