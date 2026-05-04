@@ -33,13 +33,10 @@ public class EnemyCombat : Combat
 
             if (hit.TryGetComponent<IDamageable>(out damageable))
             {
-            Vector3 directionToTarget = (hit.transform.position - transform.position).normalized;
-            float dot = Vector3.Dot(transform.forward, directionToTarget);
+                Vector3 directionToTarget = (hit.transform.position - transform.position).normalized;
 
-            if (dot > 0.5f) // (0.5 ≈ 60)
-            {
                 damageable.TakeDamage(attackDamage, this);
-            }
+            
             }
         }
     }
