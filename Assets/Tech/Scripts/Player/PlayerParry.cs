@@ -106,10 +106,8 @@ public class PlayerParry : MonoBehaviour
     public void SucessfulParry(Combat enemy)
     {
 
-        ResetColor();
 
         Debug.Log("PARRY SUCCESS");
-        _isParrying = false;
 
         if (audioSource && parrySuccessSound)
             audioSource.PlayOneShot(parrySuccessSound);
