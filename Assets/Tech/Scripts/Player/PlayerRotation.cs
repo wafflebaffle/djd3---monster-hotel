@@ -8,37 +8,41 @@ public class PlayerRotation : MonoBehaviour
     private Camera _cam;
     private Mouse _mouse;
     private Vector3 _point;
+    private PlayerStats _stats;
 
     private void Start()
     {
+        _stats = GetComponent<PlayerStats>();
         _cam = Camera.main;
         _mouse = Mouse.current;
     }
 
     private void Update()
-    {
-        _mousePos = ScreenToWorld();
-        
-        Vector3 direction = _mousePos - transform.position;
-        direction.y = 0;
+    {        
+        Vector3 direction = ScreenToWorld();
 
         if(direction != Vector3.zero)
         {
             Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = lookRotation;
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 
+                                                  _stats.AngularSpeed * Time.deltaTime);;
         }
     }
 
     private Vector3 ScreenToWorld()
     {
-        RaycastHit hit;
+        Vector3 aimDirection = Vector3.zero;
+
+        Plane groundPlane = new Plane(Vector3.up, transform.position);
         Ray raycast = _cam.ScreenPointToRay(_mouse.position.ReadValue());
 
-        if (Physics.Raycast(raycast, out hit, hitLayer))
+        if (groundPlane.Raycast(raycast, out float distance))
         {
-            _point = hit.point;
+            Vector3 hitPoint = raycast.GetPoint(distance);
+            aimDirection = (hitPoint - transform.position).normalized;
+            aimDirection.y = 0;
         }
 
-        return _point;
+        return aimDirection;
     }
 }

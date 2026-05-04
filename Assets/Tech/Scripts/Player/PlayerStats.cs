@@ -17,6 +17,7 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISo
     public float AttackDamage => stats.attackDamage;
     public float CooldownReduction => stats.cooldownReduction;
     public float Speed => stats.moveSpeed;
+    public float AngularSpeed => stats.angularSpeed;
     public SoundData GetSoundData() => sounds;
 
     //Instancias Temporárias
