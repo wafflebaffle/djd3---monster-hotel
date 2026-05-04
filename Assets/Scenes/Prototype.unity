@@ -19254,7 +19254,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Pause_Menu
   pauseMenu: {fileID: 1126873520}
   areYouSure: {fileID: 1508068324}
-  playerMovement: {fileID: 2113106714}
+  cancel:
+    m_Name: Cancel
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: a93d982c-c128-4149-aea1-f900db7e9daa
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: bad4f802-6ef9-484f-8970-9407c1b3930c
+      m_Path: <Keyboard>/x
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Cancel
+      m_Flags: 0
+    m_Flags: 0
 --- !u!1001 &661064405
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38883,6 +38899,14 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Toggle Cheats
       m_Flags: 0
+    - m_Name: 
+      m_Id: 6d6d74fa-a912-47a8-a0b8-a3e02130ce83
+      m_Path: <Keyboard>/b
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Toggle Cheats
+      m_Flags: 0
     m_Flags: 0
   heal:
     m_Name: Heal
@@ -38933,6 +38957,23 @@ MonoBehaviour:
       m_Processors: 
       m_Groups: 
       m_Action: God Mode
+      m_Flags: 0
+    m_Flags: 0
+  bigDamage:
+    m_Name: Big Damage
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: b1bd0e18-563d-4f21-bc28-fe6b86c1cfe6
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: f3223e73-8142-433c-b39e-b12f6b9c871a
+      m_Path: <Keyboard>/h
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Big Damage
       m_Flags: 0
     m_Flags: 0
 --- !u!4 &1353869339
@@ -62893,17 +62934,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6213498041719978099, guid: dfc40db0944845a45a920a26219e50fa, type: 3}
   m_PrefabInstance: {fileID: 834702664}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2113106714 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3824921651135013552, guid: dfc40db0944845a45a920a26219e50fa, type: 3}
-  m_PrefabInstance: {fileID: 834702664}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7fc02e64d84d67438b5332b18d16418, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Movement
 --- !u!1001 &2122700608
 PrefabInstance:
   m_ObjectHideFlags: 0

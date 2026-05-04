@@ -1,17 +1,18 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class Pause_Menu : MonoBehaviour
 {
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject areYouSure;
-    [SerializeField] private PlayerMovement playerMovement;
+    [SerializeField] private InputAction cancel;
     private bool _isPaused;
     public bool Paused => _isPaused;
 
     void Update()
     {
-        if (Input.GetButtonDown("Cancel"))
+        if (cancel.WasPressedThisFrame())
         {
             if (_isPaused)
             {
@@ -30,8 +31,6 @@ public class Pause_Menu : MonoBehaviour
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
 
-        playerMovement.enabled = false;
-
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -41,8 +40,6 @@ public class Pause_Menu : MonoBehaviour
         _isPaused = false;
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
-
-        playerMovement.enabled = true;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

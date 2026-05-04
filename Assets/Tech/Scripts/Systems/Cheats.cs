@@ -8,6 +8,7 @@ public class Cheats : MonoBehaviour
     [SerializeField] private InputAction heal;
     [SerializeField] private InputAction killAll;
     [SerializeField] private InputAction godMode;
+    [SerializeField] private InputAction bigDamage;
 
     private bool _godMode;
 
@@ -26,6 +27,7 @@ public class Cheats : MonoBehaviour
         heal.Enable();
         killAll.Enable();
         godMode.Enable();
+        bigDamage.Enable();
     }
 
     void OnDisable()
@@ -34,6 +36,7 @@ public class Cheats : MonoBehaviour
         heal.Disable();
         killAll.Disable();
         godMode.Disable();
+        bigDamage.Disable();
     }
 
     void Update()
@@ -45,21 +48,11 @@ public class Cheats : MonoBehaviour
         }
 
         if (!_cheatsEnabled) return;
-
-        if (heal.WasPressedThisFrame())
-        {
-            _player.Heal(999);
-        }
-
-        if (killAll.WasPressedThisFrame())
-        {
-            KillAllEnemies();
-        }
-
-        if (godMode.WasPressedThisFrame())
-        {
-            ToggleGodMode();
-        }
+        
+        if (heal.WasPressedThisFrame()) _player.Heal(999);
+        if (killAll.WasPressedThisFrame()) KillAllEnemies();
+        if (godMode.WasPressedThisFrame()) ToggleGodMode();
+        if (bigDamage.WasPressedThisFrame()) _player.IncrementDamage(800);
     }
 
     private void KillAllEnemies()
