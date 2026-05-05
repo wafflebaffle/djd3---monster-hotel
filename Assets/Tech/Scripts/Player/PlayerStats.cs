@@ -97,7 +97,6 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISo
 
     public void BeingBuff(float duration)
     {
-        SaveTempStats();
         _isBuff = true;
         _buffTimer = 0;
         _buffDuration = duration;

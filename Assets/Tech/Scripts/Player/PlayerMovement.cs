@@ -38,7 +38,7 @@ public class PlayerMovement : MonoBehaviour
             motion += -Vector3.right;
 
         motion = motion.normalized;
-        motion *= Speed*Time.fixedDeltaTime;
+        motion *= Speed*Time.deltaTime;
 
         if (Time.timeScale != 0) _controller.Move(motion);
     }
