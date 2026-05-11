@@ -3,10 +3,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "UpgradeSpeed", menuName = "Upgrades/UpgradeSpeed")]
 public class UpgradeSpeed : Upgrade
 {
-    [field: SerializeField] public float MultiplyVelocity { get; private set; }
+    [SerializeField] public float multiplyVelocity;
     public override void Effect(PlayerStats player, GameObject panel)
     {
-        player.MultiplyVelocity(MultiplyVelocity);
+        player.MultiplyVelocity(multiplyVelocity);
 
         base.Effect(player, panel);
     }

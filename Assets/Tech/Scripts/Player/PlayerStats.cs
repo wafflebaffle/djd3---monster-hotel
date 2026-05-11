@@ -11,7 +11,6 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISo
     private PlayerCombat _playerCombat;
     private PlayerParry _parry;
 
-
     //CHEATS
     private bool _godMode;
 
@@ -19,7 +18,7 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISo
     public float CurrentHealth => _health;
     public float MaxHealth => stats.maxHealth;
     public float AttackDamage => stats.attackDamage;
-    public float CooldownReduction => stats.cooldownReduction;
+    public float ShieldCooldown => stats.shieldCooldown;
     public float Speed => stats.moveSpeed;
     public float AngularSpeed => stats.angularSpeed;
     public SoundData GetSoundData() => sounds;
@@ -32,12 +31,8 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISo
     //Eventos
     public event Action OnHealthChanged;
     private void DispatchHealthChanged() => OnHealthChanged?.Invoke();
-
     public event Action OnBuff;
-    private void StatsChanged()
-    {
-        OnBuff?.Invoke();
-    }
+    private void StatsChanged() => OnBuff?.Invoke();
 
     private void Awake()
     {
@@ -56,6 +51,7 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISo
         _playerMovement.SetSpeed(stats.moveSpeed);
         _health = stats.maxHealth;
         _parry = GetComponent<PlayerParry>();
+        _parry.SetCooldown(stats.shieldCooldown);
     }
 
     private void Update()
@@ -133,7 +129,7 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISo
 
     public void DecrementCooldown(float timeToReduce)
     {
-        stats.cooldownReduction += timeToReduce;
+        _parry.SetCooldown(_parry.Cooldown - timeToReduce);
     }
 
     public void SaveStats()
@@ -146,7 +142,7 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISo
         stats.maxHealth = MaxHealth;
         stats.currentHealth = CurrentHealth;
         stats.attackDamage = AttackDamage;
-        stats.cooldownReduction = CooldownReduction;
+        stats.shieldCooldown = ShieldCooldown;
         stats.moveSpeed = _playerMovement.Speed;
         stats.attackDamage = _playerCombat.AttackDamage;
         stats.attackCooldown = _playerCombat.AttackCooldown;

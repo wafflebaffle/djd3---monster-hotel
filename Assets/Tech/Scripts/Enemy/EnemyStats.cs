@@ -29,7 +29,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     public float CurrentHealth => _health;
     public float MaxHealth => stats.maxHealth;
     public float AttackDamage => stats.attackDamage;
-    public float CooldownReduction => stats.cooldownReduction;
+    public float ShieldCooldown => stats.shieldCooldown;
     public float Speed => stats.moveSpeed;
     public float AngularSpeed => stats.angularSpeed;
     

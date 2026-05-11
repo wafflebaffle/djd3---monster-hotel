@@ -15,7 +15,7 @@ MonoBehaviour:
   maxHealth: 15
   currentHealth: 0
   moveSpeed: 2
-  angularSpeed: 360
+  angularSpeed: 120
   attackDamage: 10
   attackRange: 1
   attackCooldown: 0.5
