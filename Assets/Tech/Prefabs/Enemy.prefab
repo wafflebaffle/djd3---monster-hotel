@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 7235022014729098277}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.13}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -206,9 +206,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6956f1bed4742b945be9cc88d985a39b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  timerPerDecision: 1
+  timerPerDecision: 0.5
   marginToMove: 0.9
-  pursuitVelocityMultiplier: 2
+  pursuitVelocityMultiplier: 1.5
 --- !u!114 &4474728040946503078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,12 +221,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7411bd3d1c9daa48997b0e026888940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySight
-  sightRange: {x: 1.5, y: 1, z: 3.5}
+  sightRange: 8
   sightTrans: {fileID: 1510001453199842960}
+  viewAngle: 90
   playerMask:
     serializedVersion: 2
     m_Bits: 128
-  timeUntilLoseTarget: 3
+  timeUntilLoseTarget: 5
 --- !u!114 &4281369382471946517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,9 +258,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 30
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 360
   m_StoppingDistance: 1.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -315,7 +316,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8068299934542467148}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 767ba1791d5878f44b382689b46ad18b, type: 2}
   m_CullingMode: 0

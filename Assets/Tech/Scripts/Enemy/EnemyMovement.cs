@@ -22,8 +22,9 @@ public class EnemyMovement : MonoBehaviour
 
         _agent.speed = Speed;
         _agent.angularSpeed = AngularSpeed;
+        _agent.updateRotation = true;
     }
-    private void FixedUpdate()
+    private void Update()
     {
         if (_enemy.IsStunned)
         {
