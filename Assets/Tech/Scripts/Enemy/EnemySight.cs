@@ -36,7 +36,6 @@ public class EnemySight : MonoBehaviour
 
     private Transform SeekTarget()
     {
-        // Step 1: Get all potential targets within view radius (Sphere check - quick filter)
         Collider[] potentialTargets = Physics.OverlapSphere(sightTrans.position, sightRange, playerMask);
         
         Transform closestTarget = null;
@@ -48,12 +47,10 @@ public class EnemySight : MonoBehaviour
             Vector3 directionToTarget = (targetTransform.position - sightTrans.position).normalized;
             float distanceToTarget = Vector3.Distance(sightTrans.position, targetTransform.position);
             
-            // Step 2: Check if target is within field of view cone (direction test)
             float angleToTarget = Vector3.Angle(sightTrans.forward, directionToTarget);
             
             if (angleToTarget < viewAngle / 2)
             {
-                // Target is visible and within FOV!
                 if (distanceToTarget < closestDistance)
                 {
                     closestDistance = distanceToTarget;
@@ -63,7 +60,6 @@ public class EnemySight : MonoBehaviour
             }
         }
 
-        if(closestTarget == null) Debug.Log("Mata-te");
         return closestTarget;
     }
 
