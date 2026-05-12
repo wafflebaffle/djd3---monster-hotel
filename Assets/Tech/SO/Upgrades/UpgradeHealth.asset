@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba9000cd20e2734aa3780b1e144cede, type: 3}
   m_Name: UpgradeHealth
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeHealth
-  <Name>k__BackingField: 
-  addMaxHealth: 0
+  <Name>k__BackingField: "AmorVital\xEDcio"
+  addMaxHealth: 50

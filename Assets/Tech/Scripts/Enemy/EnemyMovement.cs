@@ -3,16 +3,17 @@ using UnityEngine.AI;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private float timerPerDecision = 1.0f;
     [SerializeField] private float marginToMove = 0.9f;
     [SerializeField] private float pursuitVelocityMultiplier = 1.5f;
-    private float _timer;
     private RoomArea _room;
     public float Speed { get; private set; }
     public float AngularSpeed { get; private set; }
     private EnemyStats _enemy;
     private NavMeshAgent _agent;
     private Transform _currentTarget;
+    private bool _hasArrive => Vector3.Distance(transform.position, _agent.destination) <= _agent.stoppingDistance;
+    private Vector3? _lastTarget;
+    private Vector3 _lastPos;
 
     private void Start()
     {
@@ -22,7 +23,8 @@ public class EnemyMovement : MonoBehaviour
 
         _agent.speed = Speed;
         _agent.angularSpeed = AngularSpeed;
-        _agent.updateRotation = true;
+
+        _lastTarget = null;
     }
     private void Update()
     {
@@ -32,13 +34,7 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
-        _timer += Time.deltaTime;
-
-        if(_timer >= timerPerDecision)
-        {
-            Move();
-            _timer = 0;
-        }  
+        Move();  
     }
 
     public void SetSpeed(float value)
@@ -54,17 +50,23 @@ public class EnemyMovement : MonoBehaviour
     private void Move()
     {
         _currentTarget = _enemy.GetTarget();
+        Vector3 target;
 
         if (_currentTarget)
         {
             _agent.speed = Speed*pursuitVelocityMultiplier;
-            _agent.destination = _currentTarget.position;
-        }
-        else
+            target = _currentTarget.position;
+        } 
+        else if(_lastTarget == null || _hasArrive || _lastPos == transform.position)
         {
             _agent.speed = Speed;
-            _agent.destination = _room.RandomPosition(marginToMove);
+            target = _room.RandomPosition(marginToMove);
+            _lastTarget = target;
         }
+        else target = _lastTarget.Value;
+
+        _lastPos = transform.position;
+        _agent.destination = target;
     }
 
     public float DistanceToTarget()

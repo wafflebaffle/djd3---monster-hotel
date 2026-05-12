@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cadeba0b52217d14fbb503a7aac25240, type: 3}
   m_Name: UpgradeAbility
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeAbility
-  <Name>k__BackingField: 
-  decreaseAbilityCooldown: 0
+  <Name>k__BackingField: QuickVogue
+  decreaseAbilityCooldown: 0.3
