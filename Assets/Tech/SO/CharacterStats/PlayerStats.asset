@@ -16,7 +16,7 @@ MonoBehaviour:
   currentHealth: 50
   moveSpeed: 5
   angularSpeed: 90
-  attackDamage: 25
-  attackRange: 1
+  attackDamage: 10
+  attackRange: 1.5
   attackCooldown: 0.5
   shieldCooldown: 0
