@@ -19,7 +19,7 @@ public class EnemySight : MonoBehaviour
         _respectiveRoom.OnPlayerEnter += canFollow => _canFollowPlayer = canFollow;
     }
 
-    private void Update()
+    public void GetTarget()
     {   
         if(_canFollowPlayer)
         {

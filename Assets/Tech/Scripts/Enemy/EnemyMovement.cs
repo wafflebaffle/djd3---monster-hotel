@@ -26,6 +26,8 @@ public class EnemyMovement : MonoBehaviour
 
         _lastTarget = null;
     }
+
+    // TO REMOVE
     private void Update()
     {
         if (_enemy.IsStunned)
@@ -47,17 +49,28 @@ public class EnemyMovement : MonoBehaviour
         AngularSpeed = value;
     }
 
-    private void Move()
+    public void Stun()
+    {
+        
+    }
+
+    public void Move()
     {
         _currentTarget = _enemy.GetTarget();
         Vector3 target;
 
-        if (_currentTarget)
-        {
-            _agent.speed = Speed*pursuitVelocityMultiplier;
-            target = _currentTarget.position;
-        } 
-        else if(_lastTarget == null || _hasArrive || _lastPos == transform.position)
+        _agent.speed = Speed*pursuitVelocityMultiplier;
+        target = _currentTarget.position;
+
+        _lastPos = transform.position;
+        _agent.destination = target;
+    }
+
+    public void MoveRandom()
+    {
+        Vector3 target;
+
+        if(_lastTarget == null || _hasArrive || _lastPos == transform.position)
         {
             _agent.speed = Speed;
             target = _room.RandomPosition(marginToMove);

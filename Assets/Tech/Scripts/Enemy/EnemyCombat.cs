@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using NUnit.Framework;
+using UnityEngine;
 
 public class EnemyCombat : Combat
 {
@@ -6,18 +7,17 @@ public class EnemyCombat : Combat
     [SerializeField] private Animator attackAnim;
     [SerializeField] private string attackAnimName = "Punch";
     private EnemyStats _enemy;
+    public bool HasAttack { get; private set; }
 
     private void Start()
     {
         _enemy = GetComponent<EnemyStats>();
+        HasAttack = false;
     }
 
-    private void Update()
+    public void DoAttack()
     {
-        if (_enemy.GetTarget() && _enemy.DistanceToTarget() <= attackTreshold)
-        {
-            TryAttack();
-        }
+        TryAttack();
     }
 
     protected override void Attack()
@@ -33,12 +33,13 @@ public class EnemyCombat : Combat
 
             if (hit.TryGetComponent<IDamageable>(out damageable))
             {
-                Vector3 directionToTarget = (hit.transform.position - transform.position).normalized;
+                //Vector3 directionToTarget = (hit.transform.position - transform.position).normalized;
 
                 damageable.TakeDamage(attackDamage, this);
-            
             }
         }
+
+        HasAttack = true;
     }
 
     protected override void TryAttack()
@@ -49,6 +50,16 @@ public class EnemyCombat : Combat
         lastAttackTime = Time.time;
         attackAnim.SetTrigger(attackAnimName);
         Attack();
+    }
+
+    public bool CanAttack()
+    {
+        return _enemy.GetTarget() && _enemy.DistanceToTarget() <= attackTreshold;
+    }
+
+    public void IdkIJustWantToTurnThisOff()
+    {
+        HasAttack = false;
     }
 
     private void OnDrawGizmosSelected()
