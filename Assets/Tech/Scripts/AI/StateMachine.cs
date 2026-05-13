@@ -1,5 +1,6 @@
 using System;
 using LibGameAI.FSMs;
+using UnityEngine;
 
 namespace LibGameAI.FSMs
 {
@@ -60,6 +61,7 @@ namespace LibGameAI.FSMs
 
             // If no transition was triggered, return the actions for the
             // current state
+            Debug.Log(currentState.Name);
             return currentState.StateActions;
         }
     }

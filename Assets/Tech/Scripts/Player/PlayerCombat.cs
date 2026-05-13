@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Unity.VisualScripting;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -15,6 +14,7 @@ public class PlayerCombat : Combat
     [SerializeField] private string attackInput = "Attack";
     [SerializeField] private Animator attackAnim;
     [SerializeField] private string attackAnimName = "Punch";
+    [SerializeField] private float attackAnimDuration = 1.0f;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private AudioClip hitSound;
@@ -46,11 +46,15 @@ public class PlayerCombat : Combat
             audioSource.pitch = Random.Range(0.95f, 1.05f);
             audioSource.PlayOneShot(attackSound);
         }
-        Attack();
+        StartCoroutine(Attack());
     }
 
-    protected override void Attack()
+    protected override IEnumerator Attack()
     {
+        YieldInstruction wfs = new WaitForSeconds(attackAnimDuration);
+
+        yield return wfs;
+
         Vector3 directionToTarget;
         Vector3 closestTargetPosition = Vector3.zero;
         IDamageable closestTarget = null;

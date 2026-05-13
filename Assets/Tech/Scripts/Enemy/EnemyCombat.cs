@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+﻿using System.Collections;
 using UnityEngine;
 
 public class EnemyCombat : Combat
@@ -6,13 +6,13 @@ public class EnemyCombat : Combat
     [SerializeField] private float attackTreshold = 1;
     [SerializeField] private Animator attackAnim;
     [SerializeField] private string attackAnimName = "Punch";
+    [SerializeField] private float attackAnimDuration = 1.0f;
     private EnemyStats _enemy;
-    public bool HasAttack { get; private set; }
+    public bool HadAttack { get; private set; }
 
     private void Start()
     {
         _enemy = GetComponent<EnemyStats>();
-        HasAttack = false;
     }
 
     public void DoAttack()
@@ -20,8 +20,14 @@ public class EnemyCombat : Combat
         TryAttack();
     }
 
-    protected override void Attack()
+    protected override IEnumerator Attack()
     {
+        YieldInstruction wfs = new WaitForSeconds(attackAnimDuration);
+
+        yield return wfs;
+        
+        HadAttack = false;
+
         Collider[] hits = Physics.OverlapSphere(
             attackPoint.position,
             attackRange
@@ -39,7 +45,7 @@ public class EnemyCombat : Combat
             }
         }
 
-        HasAttack = true;
+        HadAttack = true;
     }
 
     protected override void TryAttack()
@@ -49,17 +55,12 @@ public class EnemyCombat : Combat
 
         lastAttackTime = Time.time;
         attackAnim.SetTrigger(attackAnimName);
-        Attack();
+        StartCoroutine(Attack());
     }
 
     public bool CanAttack()
     {
         return _enemy.GetTarget() && _enemy.DistanceToTarget() <= attackTreshold;
-    }
-
-    public void IdkIJustWantToTurnThisOff()
-    {
-        HasAttack = false;
     }
 
     private void OnDrawGizmosSelected()

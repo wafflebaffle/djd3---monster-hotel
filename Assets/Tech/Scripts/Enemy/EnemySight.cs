@@ -11,7 +11,7 @@ public class EnemySight : MonoBehaviour
     private RoomNotifier _respectiveRoom;
     private bool _canFollowPlayer;
     private Transform _saveTarget;
-    public Transform Target { get; private set; }
+    public Transform Target => _saveTarget;
 
     private void Start()
     {
@@ -19,19 +19,28 @@ public class EnemySight : MonoBehaviour
         _respectiveRoom.OnPlayerEnter += canFollow => _canFollowPlayer = canFollow;
     }
 
-    public void GetTarget()
+    public bool GetTarget()
     {   
+        Transform target;
+
         if(_canFollowPlayer)
         {
             _timer += Time.deltaTime;
-            Target = SeekTarget();
+            target = SeekTarget();
 
-            if (!Target && timeUntilLoseTarget > _timer)
+            if (!target && timeUntilLoseTarget > _timer)
             {
-                Target = _saveTarget;
+                target = _saveTarget;
             }
         }
-        else Target = null;
+        else target = null;
+
+        return target;
+    }
+
+    public void SetTarget(Transform target)
+    {
+        _saveTarget = target;
     }
 
     private Transform SeekTarget()
@@ -79,10 +88,5 @@ public class EnemySight : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawRay(sightTrans.position, leftBoundary * sightRange);
         Gizmos.DrawRay(sightTrans.position, rightBoundary * sightRange);
-    }
-
-    public void SetTarget(Transform target)
-    {
-        Target = target;
     }
 }

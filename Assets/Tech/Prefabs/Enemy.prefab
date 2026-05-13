@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 2335371125738568523}
   - component: {fileID: 7606720754029555809}
   - component: {fileID: 2753698611032960610}
+  - component: {fileID: -2288762740815319940}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -206,7 +207,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6956f1bed4742b945be9cc88d985a39b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  timerPerDecision: 0
   marginToMove: 0.9
   pursuitVelocityMultiplier: 1.5
 --- !u!114 &4474728040946503078
@@ -330,6 +330,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-2288762740815319940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8068299934542467148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edeb30df4431ef3498a9c0ad90a672f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CleanerBehaviour
 --- !u!1 &8137778520726814843
 GameObject:
   m_ObjectHideFlags: 0

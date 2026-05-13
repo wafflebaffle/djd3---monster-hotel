@@ -27,18 +27,6 @@ public class EnemyMovement : MonoBehaviour
         _lastTarget = null;
     }
 
-    // TO REMOVE
-    private void Update()
-    {
-        if (_enemy.IsStunned)
-        {
-            _agent.ResetPath();
-            return;
-        }
-
-        Move();  
-    }
-
     public void SetSpeed(float value)
     {
         Speed = value;

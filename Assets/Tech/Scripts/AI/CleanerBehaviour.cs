@@ -1,30 +1,39 @@
+using System;
 using LibGameAI.FSMs;
+using UnityEngine;
 
 public class CleanerBehaviour : AIBehaviour
 {
     private EnemyMovement _movement;
     private EnemyCombat _combat;
     private EnemySight _sight;
+    private StateMachine _fsm;
+    private State _idle;
+    private State _chase;
+    private State _attack;
 
     protected override void Start()
     {
-        _movement.GetComponent<EnemyMovement>();
-        _combat.GetComponent<EnemyCombat>();
-        _sight.GetComponent<EnemySight>();
+        _movement = GetComponent<EnemyMovement>();
+        _combat = GetComponent<EnemyCombat>();
+        _sight = GetComponent<EnemySight>();
 
-        State idle = new State("Idle", null , _movement.MoveRandom, null);
-        State chase = new State("Chase", null, _movement.Move, null);
-        State attack = new State("Attack", _combat.DoAttack, null, null);
+        _idle = new State("Idle", null, _movement.MoveRandom, null);
+        _chase = new State("Chase", null, _movement.Move, null);
+        _attack = new State("Attack", _combat.DoAttack, null, null);
 
-        Transition idleToChase = new Transition(() => _sight.Target, null, chase);
-        Transition chaseToAttack = new Transition(_combat.CanAttack, null, attack);
-        Transition attackToIdle = new Transition(() => _combat.HasAttack, _combat.IdkIJustWantToTurnThisOff, idle);
+        Transition idleToChase = new Transition(_sight.GetTarget, null, _chase);
+        _idle.AddTransition(idleToChase);
+        Transition chaseToAttack = new Transition(_combat.CanAttack, null, _attack);
+        _chase.AddTransition(chaseToAttack);
+        Transition attackToIdle = new Transition(() => {Debug.Log($"HadAttack value: {_combat.HadAttack}"); return _combat.HadAttack; }, null, _idle);
+        _attack.AddTransition(attackToIdle);
 
-        StateMachine fsm = new StateMachine(idle);
+        _fsm = new StateMachine(_idle);
     }
 
     protected override void Update()
     {
-        
+        _fsm.Update()?.Invoke();
     }
 }
