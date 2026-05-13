@@ -38865,6 +38865,7 @@ MonoBehaviour:
   cameraPos: {fileID: 150787331}
   cameraReturnBreak: 0
   allMeshes: {fileID: 711149375}
+  allEnemies: {fileID: 0}
 --- !u!65 &1327921932
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -40667,6 +40668,7 @@ MonoBehaviour:
   cameraPos: {fileID: 1958041752}
   cameraReturnBreak: 0
   allMeshes: {fileID: 150915614}
+  allEnemies: {fileID: 0}
 --- !u!65 &1385895920
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -53159,6 +53161,7 @@ MonoBehaviour:
   cameraPos: {fileID: 1592628209}
   cameraReturnBreak: 0
   allMeshes: {fileID: 1098266633}
+  allEnemies: {fileID: 343785742}
 --- !u!65 &1788398595
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -63931,6 +63934,7 @@ MonoBehaviour:
   cameraPos: {fileID: 429843928}
   cameraReturnBreak: 0
   allMeshes: {fileID: 1982619619}
+  allEnemies: {fileID: 0}
 --- !u!65 &2137831048
 BoxCollider:
   m_ObjectHideFlags: 0
