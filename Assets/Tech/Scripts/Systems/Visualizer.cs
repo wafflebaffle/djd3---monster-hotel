@@ -20,6 +20,12 @@ public class Visualizer : MonoBehaviour
         SetCooldownBar();
     }
 
+    private void OnDestroy()
+    {
+            _playerStats.OnHealthChanged -= SetHealthBar;
+            _playerParry.OnCooldownChanged -= SetCooldownBar;
+    }
+
     private void FindObjects()
     {
         _playerStats = FindAnyObjectByType<PlayerStats>();

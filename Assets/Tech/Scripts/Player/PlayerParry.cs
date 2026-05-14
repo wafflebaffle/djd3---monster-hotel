@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -41,6 +43,8 @@ public class PlayerParry : MonoBehaviour
     private PlayerStats _stats;
     private float _cooldown;
 
+    private Coroutine _cooldownRoutine;
+
     void Start()
     {
         _parryAction = InputSystem.actions.FindAction(Input);
@@ -59,7 +63,6 @@ public class PlayerParry : MonoBehaviour
     {
         HandleInput();
         HandleParryOpening();
-        //CoolDownUpdate();
     }
 
 
@@ -103,6 +106,13 @@ public class PlayerParry : MonoBehaviour
 
         if (audioSource && parryStartSound)
             audioSource.PlayOneShot(parryStartSound);
+
+        if (_cooldownRoutine != null)
+        {
+            StopCoroutine(_cooldownRoutine);
+        }
+
+        _cooldownRoutine = StartCoroutine(UpdateCooldownUI());
 
     }
 
@@ -151,6 +161,16 @@ public class PlayerParry : MonoBehaviour
         {
             _renderers[i].material.color = _originalColors[i];
         }
+    }
+
+    private IEnumerator UpdateCooldownUI()
+    {
+        while (Time.time < _lastParried + _cooldown)
+        {
+            OnCooldownChanged?.Invoke();
+            yield return null;
+        }
+        OnCooldownChanged?.Invoke();
     }
 
 }
