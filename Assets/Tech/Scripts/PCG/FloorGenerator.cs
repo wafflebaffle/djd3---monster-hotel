@@ -4,9 +4,12 @@ public class FloorGenerator : MonoBehaviour
 {
     [SerializeField] private Room[] roomprefab;
     [SerializeField] private Transform[] corridorConection;
+    [SerializeField] private int seed;
 
     private void Start()
     {
+        Random.InitState(seed);
+
         foreach (Transform conection in corridorConection)
         {
             SpawnRoom(conection);
