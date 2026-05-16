@@ -1,9 +1,10 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FloorGenerator : MonoBehaviour
 {
-    [SerializeField] private Room[] roomprefab;
+    [SerializeField] private Room[] rooms;
     [SerializeField] private Transform[] corridorConection;
 
     [SerializeField] private bool randomSeed = true;
@@ -21,35 +22,66 @@ public class FloorGenerator : MonoBehaviour
 
         random = new System.Random(seed);
 
-        foreach (Transform conection in corridorConection)
+        GenerateRoom();
+    }
+
+    private void GenerateRoom()
+    {
+        for (int i = 0; i < corridorConection.Length; i++) 
         {
-            SpawnRoom(conection);
+            Transform connection = corridorConection[i];
+            SpawnRoom(connection, i);
         }
     }
+
 
     private void AttachRoom(Room room, Transform conection)
     {
         Transform entrance = room.Entrance;
 
         //matem quem inventou quaternions, 2 horas nesta brincadeira
-        Quaternion rotation = 
-            Quaternion.FromToRotation(entrance.forward, -conection.forward);
+        Quaternion rotation = Quaternion.FromToRotation(entrance.forward, -conection.forward);
 
         room.transform.rotation = rotation * room.transform.rotation;
 
-        Vector3 offset = conection.position - entrance.position;
-
-        room.transform.position += offset;
+        room.transform.position += conection.position - entrance.position;
 
     }
 
-    private void SpawnRoom(Transform conection)
+    private void SpawnRoom(Transform conection, int roomIndex)
     {
-        int randomIndex = random.Next(0, roomprefab.Length);
+        Room roomPrefab = GetRandomRoom(roomIndex);
 
-        Room room = Instantiate(roomprefab[randomIndex]);
+        Room room = Instantiate(roomPrefab);
 
         AttachRoom(room, conection);
+    }
+
+    private Room GetRandomRoom(int index)
+    {
+        Room.RoomType wantedType;
+
+        if (index < 2)
+        {
+            wantedType = Room.RoomType.Small;
+        }
+        else
+        {
+            wantedType = Room.RoomType.Big;
+        }
+
+        List<Room> validRooms = new List<Room>();
+
+        foreach (Room room in rooms)
+        {
+            if(room.Type == wantedType)
+            {
+                validRooms.Add(room);
+            }
+        }
+
+        return validRooms[random.Next(validRooms.Count)];
+
     }
 
 }

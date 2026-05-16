@@ -390,6 +390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Room
   entrance: {fileID: 941368045820434355}
+  type: 1
 --- !u!1 &7951336819871690151
 GameObject:
   m_ObjectHideFlags: 0
