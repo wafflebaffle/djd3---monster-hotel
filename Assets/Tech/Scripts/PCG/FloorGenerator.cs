@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class FloorGenerator : MonoBehaviour
 {
-    [SerializeField] private Room roomprefab;
-    [SerializeField] private Transform corridorConection;
+    [SerializeField] private Room[] roomprefab;
+    [SerializeField] private Transform[] corridorConection;
 
     private void Start()
     {
-        SpawnRoom();
+        foreach (Transform conection in corridorConection)
+        {
+            SpawnRoom(conection);
+        }
     }
 
     private void AttachRoom(Room room, Transform conection)
@@ -26,11 +29,13 @@ public class FloorGenerator : MonoBehaviour
 
     }
 
-    private void SpawnRoom()
+    private void SpawnRoom(Transform conection)
     {
-        Room room = Instantiate(roomprefab);
+        int randomIndex = Random.Range(0, roomprefab.Length);
 
-        AttachRoom(room, corridorConection);
+        Room room = Instantiate(roomprefab[randomIndex]);
+
+        AttachRoom(room, conection);
     }
 
 }

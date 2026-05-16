@@ -4756,8 +4756,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99dba89631b3cff41a0d0e3fff4a7492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorGenerator
-  roomprefab: {fileID: 4248954968703428970, guid: b6cadcc6a7d2eaf4eaafe9c4ffb26766, type: 3}
-  corridorConection: {fileID: 467078960}
+  roomprefab:
+  - {fileID: 4248954968703428970, guid: b6cadcc6a7d2eaf4eaafe9c4ffb26766, type: 3}
+  - {fileID: 380948214948031639, guid: 6c3dc8e0fef173543bd985f3dedb5899, type: 3}
+  corridorConection:
+  - {fileID: 467078960}
+  - {fileID: 1457100187}
+  - {fileID: 1995119895}
+  - {fileID: 1943871425}
 --- !u!1001 &748667522
 PrefabInstance:
   m_ObjectHideFlags: 0
