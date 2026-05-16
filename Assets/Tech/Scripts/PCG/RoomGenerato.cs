@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomGenerato : MonoBehaviour
+public class RoomGenerato 
 {
     private System.Random random;
 

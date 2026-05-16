@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class FloorGenerator : MonoBehaviour
 {
     [SerializeField] private Room[] rooms;
     [SerializeField] private Transform[] corridorConection;
+    private System.Random random;
 
     private RoomGenerato roomGenerator;
 
@@ -13,15 +16,21 @@ public class FloorGenerator : MonoBehaviour
     {
         int seed = RunManager.Seed;
 
+        random = new System.Random(seed);
+
         roomGenerator = new RoomGenerato(seed);
 
         GenerateRoom();
     }
-
+    
     private void GenerateRoom()
     {
-        for (int i = 0; i < corridorConection.Length; i++) 
+        List<Transform> shuffledConnections = ShuffleConnections();
+
+        for (int i = 0; i < shuffledConnections.Count; i++) 
         {
+            Transform connection = shuffledConnections[i];
+
             Room roomPrefab = roomGenerator.PickRoom(rooms);
 
             if (roomPrefab == null)
@@ -32,7 +41,7 @@ public class FloorGenerator : MonoBehaviour
 
             Room room = Instantiate(roomPrefab);
 
-            AttachRoom(room, corridorConection[i]);
+            AttachRoom(room, connection);
         }
     }
 
@@ -49,4 +58,19 @@ public class FloorGenerator : MonoBehaviour
         room.transform.position += conection.position - entrance.position;
 
     }
+
+    private List<Transform> ShuffleConnections()
+    {
+        List<Transform> list = new List<Transform>(corridorConection);
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            int randIndex = random.Next(i, list.Count);
+
+            (list[i], list[randIndex]) = (list[randIndex], list[i]);
+        }
+
+        return list;
+    }
+
 }
