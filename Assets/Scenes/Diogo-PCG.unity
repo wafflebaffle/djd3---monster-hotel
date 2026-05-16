@@ -4764,7 +4764,8 @@ MonoBehaviour:
   - {fileID: 1457100187}
   - {fileID: 1995119895}
   - {fileID: 1943871425}
-  seed: 1738
+  randomSeed: 1
+  seed: 0
 --- !u!1001 &748667522
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,14 +1,25 @@
+using System;
 using UnityEngine;
 
 public class FloorGenerator : MonoBehaviour
 {
     [SerializeField] private Room[] roomprefab;
     [SerializeField] private Transform[] corridorConection;
+
+    [SerializeField] private bool randomSeed = true;
     [SerializeField] private int seed;
+    private System.Random random;
 
     private void Start()
     {
-        Random.InitState(seed);
+        if (randomSeed)
+        {
+            seed = DateTime.Now.GetHashCode();
+        }
+
+        Debug.Log("Seed: " + seed);
+
+        random = new System.Random(seed);
 
         foreach (Transform conection in corridorConection)
         {
@@ -34,7 +45,7 @@ public class FloorGenerator : MonoBehaviour
 
     private void SpawnRoom(Transform conection)
     {
-        int randomIndex = Random.Range(0, roomprefab.Length);
+        int randomIndex = random.Next(0, roomprefab.Length);
 
         Room room = Instantiate(roomprefab[randomIndex]);
 
