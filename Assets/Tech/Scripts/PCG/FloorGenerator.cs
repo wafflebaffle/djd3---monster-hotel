@@ -29,8 +29,7 @@ public class FloorGenerator : MonoBehaviour
     {
         for (int i = 0; i < corridorConection.Length; i++) 
         {
-            Transform connection = corridorConection[i];
-            SpawnRoom(connection, i);
+            SpawnRoom(corridorConection[i]);
         }
     }
 
@@ -48,40 +47,20 @@ public class FloorGenerator : MonoBehaviour
 
     }
 
-    private void SpawnRoom(Transform conection, int roomIndex)
+    private void SpawnRoom(Transform conection)
     {
-        Room roomPrefab = GetRandomRoom(roomIndex);
+        Room roomPrefab = GetRandomRoom();
 
         Room room = Instantiate(roomPrefab);
 
         AttachRoom(room, conection);
     }
 
-    private Room GetRandomRoom(int index)
+    private Room GetRandomRoom()
     {
-        Room.RoomType wantedType;
-
-        if (index < 2)
-        {
-            wantedType = Room.RoomType.Small;
-        }
-        else
-        {
-            wantedType = Room.RoomType.Big;
-        }
-
-        List<Room> validRooms = new List<Room>();
-
-        foreach (Room room in rooms)
-        {
-            if(room.Type == wantedType)
-            {
-                validRooms.Add(room);
-            }
-        }
+        List<Room> validRooms = new List<Room>(rooms);
 
         return validRooms[random.Next(validRooms.Count)];
-
     }
 
 }
