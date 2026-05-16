@@ -7,20 +7,13 @@ public class FloorGenerator : MonoBehaviour
     [SerializeField] private Room[] rooms;
     [SerializeField] private Transform[] corridorConection;
 
-    [SerializeField] private bool randomSeed = true;
-    [SerializeField] private int seed;
-    private System.Random random;
+    private RoomGenerato roomGenerator;
 
     private void Start()
     {
-        if (randomSeed)
-        {
-            seed = DateTime.Now.GetHashCode();
-        }
+        int seed = RunManager.Seed;
 
-        Debug.Log("Seed: " + seed);
-
-        random = new System.Random(seed);
+        roomGenerator = new RoomGenerato(seed);
 
         GenerateRoom();
     }
@@ -29,7 +22,17 @@ public class FloorGenerator : MonoBehaviour
     {
         for (int i = 0; i < corridorConection.Length; i++) 
         {
-            SpawnRoom(corridorConection[i]);
+            Room roomPrefab = roomGenerator.PickRoom(rooms);
+
+            if (roomPrefab == null)
+            {
+                Debug.Log("No more rooms avaliable");
+                break;
+            }
+
+            Room room = Instantiate(roomPrefab);
+
+            AttachRoom(room, corridorConection[i]);
         }
     }
 
@@ -46,21 +49,4 @@ public class FloorGenerator : MonoBehaviour
         room.transform.position += conection.position - entrance.position;
 
     }
-
-    private void SpawnRoom(Transform conection)
-    {
-        Room roomPrefab = GetRandomRoom();
-
-        Room room = Instantiate(roomPrefab);
-
-        AttachRoom(room, conection);
-    }
-
-    private Room GetRandomRoom()
-    {
-        List<Room> validRooms = new List<Room>(rooms);
-
-        return validRooms[random.Next(validRooms.Count)];
-    }
-
 }

@@ -6,23 +6,38 @@ public class RoomGenerato : MonoBehaviour
 {
     private System.Random random;
 
+    private HashSet<Room> usedRooms = new HashSet<Room>();
+
+
     public RoomGenerato(int seed)
     {
         random = new System.Random(seed);
     }
 
-    public Room PickRoom(Room[] rooms, int index, int total)
+    public Room PickRoom(Room[] rooms)
     {
-        float progress = index / (float)total;
-
-        List<Room> candidates = new List<Room>();
+        List<Room> validRooms = new List<Room>();
 
         foreach (Room room in rooms)
         {
-            //regra + add
+            //regra de salas não se podem repetir
+           if(!usedRooms.Contains(room))
+           {
+                validRooms.Add(room);
+           }
         }
 
-        return candidates[random.Next(candidates.Count)];
+        //fallback
+        if (validRooms.Count == 0)
+        {
+            return null;
+        }
+
+        Room chosen = validRooms[random.Next(validRooms.Count)];
+
+        usedRooms.Add(chosen);
+
+        return chosen;
     }
 
 }
