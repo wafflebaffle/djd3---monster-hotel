@@ -41,7 +41,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
         OnHealthChanged?.Invoke();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         _enemyAnim = GetComponent<Animator>();
         events.RaiseEnemySpawned();

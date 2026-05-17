@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.Mathematics;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class FloorGenerator : MonoBehaviour
@@ -9,6 +7,7 @@ public class FloorGenerator : MonoBehaviour
     [SerializeField] private Room[] rooms;
     [SerializeField] private Transform[] corridorConection;
     private System.Random random;
+    private NavMeshSurface _surfaceAI;
 
     private RoomGenerato roomGenerator;
 
@@ -19,6 +18,8 @@ public class FloorGenerator : MonoBehaviour
         random = new System.Random(seed);
 
         roomGenerator = new RoomGenerato(seed);
+
+        _surfaceAI = GetComponent<NavMeshSurface>();
 
         GenerateRoom();
     }

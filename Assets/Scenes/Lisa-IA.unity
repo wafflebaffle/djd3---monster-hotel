@@ -53059,6 +53059,7 @@ GameObject:
   - component: {fileID: 1788398595}
   - component: {fileID: 1788398594}
   - component: {fileID: 1788398593}
+  - component: {fileID: 1788398596}
   m_Layer: 0
   m_Name: RoomOne
   m_TagString: Untagged
@@ -53134,6 +53135,63 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 5.802936, y: 2.5, z: 9.716901}
   m_Center: {x: -1.3945959, y: 0.75, z: 3.1173198}
+--- !u!114 &1788398596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1788398591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b84d648579908044f85d1e78e9a98591, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AssetsGenerator
+  stepSize: 2
+  minObjectDistance: 1
+  minEdgeDistance: 1
+  floorLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  unwalkableMask:
+    serializedVersion: 2
+    m_Bits: 64
+  spawnRules:
+  - Category: 0
+    Prefab: {fileID: 919132149155446097, guid: 8667c7401d99743408b2697700525f3d, type: 3}
+    MaxCount: 3
+    MinDistanceFromOthers: 2
+    MinDistanceFromGapEdge: 2
+    PlacementStrategy: 0
+    RotateToFaceWall: 0
+  - Category: 1
+    Prefab: {fileID: 8068299934542467148, guid: b1b08baf384627348b8821ebfee87d80, type: 3}
+    MaxCount: 5
+    MinDistanceFromOthers: 3
+    MinDistanceFromGapEdge: 3
+    PlacementStrategy: 0
+    RotateToFaceWall: 0
+  - Category: 2
+    Prefab: {fileID: 7944465180534532267, guid: eed2d009f85d46e47b67bdd682ccd4d9, type: 3}
+    MaxCount: 1
+    MinDistanceFromOthers: 3
+    MinDistanceFromGapEdge: 3
+    PlacementStrategy: 0
+    RotateToFaceWall: 0
+  - Category: 0
+    Prefab: {fileID: 919132149155446097, guid: 59582d46a379a4e4cae8bf8e797a54ed, type: 3}
+    MaxCount: 2
+    MinDistanceFromOthers: 3
+    MinDistanceFromGapEdge: 3
+    PlacementStrategy: 2
+    RotateToFaceWall: 0
+  - Category: 0
+    Prefab: {fileID: 919132149155446097, guid: 991acedfd220779479acf1385ff6279d, type: 3}
+    MaxCount: 2
+    MinDistanceFromOthers: 3
+    MinDistanceFromGapEdge: 3
+    PlacementStrategy: 1
+    RotateToFaceWall: 1
 --- !u!1001 &1795138273
 PrefabInstance:
   m_ObjectHideFlags: 0
