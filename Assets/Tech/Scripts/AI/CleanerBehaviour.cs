@@ -26,6 +26,8 @@ public class CleanerBehaviour : AIBehaviour
         _idle.AddTransition(idleToChase);
         Transition chaseToAttack = new Transition(_combat.CanAttack, null, _attack);
         _chase.AddTransition(chaseToAttack);
+        Transition chaseToIdle = new Transition(() => _sight.GetTarget() == false, null, _idle);
+        _chase.AddTransition(chaseToIdle);
         Transition attackToIdle = new Transition(() => {Debug.Log($"HadAttack value: {_combat.HadAttack}"); return _combat.HadAttack; }, null, _idle);
         _attack.AddTransition(attackToIdle);
 

@@ -44,6 +44,8 @@ public class FloorGenerator : MonoBehaviour
 
             AttachRoom(room, connection);
         }
+
+        _surfaceAI.BuildNavMesh();
     }
 
 
@@ -58,6 +60,7 @@ public class FloorGenerator : MonoBehaviour
 
         room.transform.position += conection.position - entrance.position;
 
+        room.transform.SetParent(conection);
     }
 
     private List<Transform> ShuffleConnections()
