@@ -1453,7 +1453,7 @@ MonoBehaviour:
   m_text: Settings
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
-  m_sharedMaterial: {fileID: -4031500483400292265, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
+  m_sharedMaterial: {fileID: 660716431856187360, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2181,7 +2181,7 @@ MonoBehaviour:
   m_text: "Mi Coraz\xF3n Bravo"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
-  m_sharedMaterial: {fileID: -4031500483400292265, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
+  m_sharedMaterial: {fileID: 660716431856187360, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2534,7 +2534,7 @@ MonoBehaviour:
   m_text: Start
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
-  m_sharedMaterial: {fileID: -4031500483400292265, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
+  m_sharedMaterial: {fileID: 660716431856187360, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5299,7 +5299,7 @@ MonoBehaviour:
   m_text: Exit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
-  m_sharedMaterial: {fileID: -4031500483400292265, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
+  m_sharedMaterial: {fileID: 660716431856187360, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5497,7 +5497,7 @@ MonoBehaviour:
   m_text: Exit
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
-  m_sharedMaterial: {fileID: -4031500483400292265, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
+  m_sharedMaterial: {fileID: 660716431856187360, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9398,7 +9398,7 @@ MonoBehaviour:
   m_text: "Mi Coraz\xF3n Bravo"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
-  m_sharedMaterial: {fileID: -4031500483400292265, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
+  m_sharedMaterial: {fileID: 660716431856187360, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10622,7 +10622,7 @@ MonoBehaviour:
   m_text: Start
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
-  m_sharedMaterial: {fileID: -4031500483400292265, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
+  m_sharedMaterial: {fileID: 660716431856187360, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12210,7 +12210,7 @@ MonoBehaviour:
   m_text: Settings
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
-  m_sharedMaterial: {fileID: -4031500483400292265, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
+  m_sharedMaterial: {fileID: 660716431856187360, guid: faef8eca67f27a34eb6e88ce8b9a1e2a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
