@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public abstract class Combat : MonoBehaviour
 {
@@ -10,7 +11,7 @@ public abstract class Combat : MonoBehaviour
     protected float lastAttackTime;
 
     protected abstract void TryAttack();
-    protected abstract void Attack();
+    protected abstract IEnumerator Attack();
 
     public void SetDamage(float damage)
     {

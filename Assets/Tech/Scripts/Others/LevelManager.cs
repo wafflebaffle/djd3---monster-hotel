@@ -5,6 +5,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private EnemyEventChannel enemyEvent;
     [SerializeField] private RandomUpgradeSelector upgradePanel;
     [SerializeField] private MeshRenderer mesh;
+    [ Header("Ambient Sound")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip music1;
+
     private int _enemiesAlive;
     private void EnemyHasSpawn() => _enemiesAlive++;
     private void EnemyHasDied()
@@ -23,6 +27,12 @@ public class LevelManager : MonoBehaviour
     {
         enemyEvent.OnEnemySpawned -= EnemyHasSpawn;
         enemyEvent.OnEnemyDied -= EnemyHasDied;
+    }
+
+    private void Start()
+    {
+        audioSource.clip = music1;
+        audioSource.Play();
     }
 
     private void OnTriggerEnter(Collider other)

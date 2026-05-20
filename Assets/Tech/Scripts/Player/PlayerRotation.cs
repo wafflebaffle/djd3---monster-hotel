@@ -23,7 +23,7 @@ public class PlayerRotation : MonoBehaviour
         {
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, 
-                                                  _stats.AngularSpeed * Time.deltaTime);;
+                                                  _stats.AngularSpeed * Time.deltaTime);
         }
     }
 

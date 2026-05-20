@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SpicyData
   m_EditorClassIdentifier: Assembly-CSharp::BuffsData
   damageBuffAmount: 50
-  velocityBuff: 1.5
+  velocityBuff: 1.2
   attackCooldownBuff: 0.25
   duration: 5
   destroyTimer: 1

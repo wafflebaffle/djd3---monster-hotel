@@ -1,25 +1,33 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EnemyCombat : Combat
 {
     [SerializeField] private float attackTreshold = 1;
+    [SerializeField] private Animator attackAnim;
+    [SerializeField] private string attackAnimName = "Punch";
+    [SerializeField] private float attackAnimDuration = 1.0f;
     private EnemyStats _enemy;
+    public bool HadAttack { get; private set; }
 
     private void Start()
     {
         _enemy = GetComponent<EnemyStats>();
     }
 
-    private void Update()
+    public void DoAttack()
     {
-        if (_enemy.GetTarget() && _enemy.DistanceToTarget() <= attackTreshold)
-        {
-            TryAttack();
-        }
+        TryAttack();
     }
 
-    protected override void Attack()
+    protected override IEnumerator Attack()
     {
+        YieldInstruction wfs = new WaitForSeconds(attackAnimDuration);
+
+        yield return wfs;
+        
+        HadAttack = false;
+
         Collider[] hits = Physics.OverlapSphere(
             attackPoint.position,
             attackRange
@@ -31,15 +39,13 @@ public class EnemyCombat : Combat
 
             if (hit.TryGetComponent<IDamageable>(out damageable))
             {
-            Vector3 directionToTarget = (hit.transform.position - transform.position).normalized;
-            float dot = Vector3.Dot(transform.forward, directionToTarget);
+                //Vector3 directionToTarget = (hit.transform.position - transform.position).normalized;
 
-            if (dot > 0.5f) // (0.5 ≈ 60)
-            {
                 damageable.TakeDamage(attackDamage, this);
             }
-            }
         }
+
+        HadAttack = true;
     }
 
     protected override void TryAttack()
@@ -48,7 +54,13 @@ public class EnemyCombat : Combat
             return;
 
         lastAttackTime = Time.time;
-        Attack();
+        attackAnim.SetTrigger(attackAnimName);
+        StartCoroutine(Attack());
+    }
+
+    public bool CanAttack()
+    {
+        return _enemy.GetTarget() && _enemy.DistanceToTarget() <= attackTreshold;
     }
 
     private void OnDrawGizmosSelected()

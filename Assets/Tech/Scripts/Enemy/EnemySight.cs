@@ -1,57 +1,92 @@
-using System.Linq;
-using System.Collections.Generic;
 using UnityEngine;
-using NUnit.Framework;
-using System.Threading;
-using Unity.VisualScripting;
 
 public class EnemySight : MonoBehaviour
 {
-    [SerializeField] private Vector3 sightRange;
+    [SerializeField] private float sightRange;
     [SerializeField] private Transform sightTrans;
+    [SerializeField] private float viewAngle = 120;
     [SerializeField] private LayerMask playerMask;
     [SerializeField] private float timeUntilLoseTarget;
     private float _timer;
     private RoomNotifier _respectiveRoom;
     private bool _canFollowPlayer;
-    public Transform Target { get; private set; }
+    private Transform _saveTarget;
+    public Transform Target => _saveTarget;
 
     private void Start()
     {
-        _respectiveRoom = GetComponentInParent<RoomNotifier>();
+        if (!_respectiveRoom) _respectiveRoom = GetComponentInParent<RoomNotifier>();
         _respectiveRoom.OnPlayerEnter += canFollow => _canFollowPlayer = canFollow;
     }
 
-    private void Update()
-    {
-        Collider[] colliders = new Collider[1];
+    public bool GetTarget()
+    {   
+        Transform target;
 
         if(_canFollowPlayer)
         {
-            if (Physics.OverlapBoxNonAlloc(sightTrans.position, sightRange, colliders, Quaternion.identity,playerMask) > 0)
-            {
-                Target = colliders[0].transform;
-                _timer = 0;
-            }
-            else
-            {
-                _timer += Time.deltaTime;
+            _timer += Time.deltaTime;
+            target = SeekTarget();
 
-                if(_timer >= timeUntilLoseTarget)
-                    Target = null;
+            if (!target && timeUntilLoseTarget > _timer)
+            {
+                target = _saveTarget;
             }
         }
-        else Target = null;
-    }
+        else target = null;
 
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawCube(sightTrans.position, sightRange);
+        return target;
     }
 
     public void SetTarget(Transform target)
     {
-        Target = target;
+        _saveTarget = target;
+    }
+
+    private Transform SeekTarget()
+    {
+        Collider[] potentialTargets = Physics.OverlapSphere(sightTrans.position, sightRange, playerMask);
+        
+        Transform closestTarget = null;
+        float closestDistance = sightRange;
+        
+        foreach (Collider targetCollider in potentialTargets)
+        {
+            Transform targetTransform = targetCollider.transform;
+            Vector3 directionToTarget = (targetTransform.position - sightTrans.position).normalized;
+            float distanceToTarget = Vector3.Distance(sightTrans.position, targetTransform.position);
+            
+            float angleToTarget = Vector3.Angle(sightTrans.forward, directionToTarget);
+            
+            if (angleToTarget < viewAngle / 2)
+            {
+                if (distanceToTarget < closestDistance)
+                {
+                    closestDistance = distanceToTarget;
+                    closestTarget = targetTransform;
+                    if (!_saveTarget) _saveTarget = closestTarget;
+                }
+            }
+        }
+
+        return closestTarget;
+    }
+
+    void OnDrawGizmos()
+    {
+        if (sightTrans == null) return;
+        
+        // Draw view radius
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(sightTrans.position, sightRange);
+        
+        // Draw FOV cone
+        Vector3 forward = transform.forward;
+        Vector3 leftBoundary = Quaternion.Euler(0, -viewAngle / 2, 0) * forward;
+        Vector3 rightBoundary = Quaternion.Euler(0, viewAngle / 2, 0) * forward;
+        
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(sightTrans.position, leftBoundary * sightRange);
+        Gizmos.DrawRay(sightTrans.position, rightBoundary * sightRange);
     }
 }

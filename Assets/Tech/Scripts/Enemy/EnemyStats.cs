@@ -7,6 +7,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
 {
     [SerializeField] private StatsData stats;
     [SerializeField] private EnemyEventChannel events;
+    [SerializeField] private Animator enemyAnim;
     [SerializeField] private string takeDamageAnimName = "TakeDamage";
     [SerializeField] private string deathAnimName = "Death";
     [SerializeField] private float deathAnimTime = 0.5f;
@@ -28,7 +29,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     public float CurrentHealth => _health;
     public float MaxHealth => stats.maxHealth;
     public float AttackDamage => stats.attackDamage;
-    public float CooldownReduction => stats.cooldownReduction;
+    public float ShieldCooldown => stats.shieldCooldown;
     public float Speed => stats.moveSpeed;
     public float AngularSpeed => stats.angularSpeed;
     
@@ -40,7 +41,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
         OnHealthChanged?.Invoke();
     }
 
-    private void Start()
+    private void Awake()
     {
         _enemyAnim = GetComponent<Animator>();
         events.RaiseEnemySpawned();
@@ -78,7 +79,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
             Death();
         }
     }
-    private void Death()
+    public void Death()
     {
         //Play death animation;
         _enemyAnim.SetTrigger(deathAnimName);

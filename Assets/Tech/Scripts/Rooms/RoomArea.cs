@@ -17,7 +17,7 @@ public class RoomArea : MonoBehaviour
 
     [SerializeField] private Collider mesh;
     // Configure game area limits object
-    private void Awake()
+    private void Start()
     {
         // Get the sprite renderer and its bounds
         mesh = GetComponent<Collider>();

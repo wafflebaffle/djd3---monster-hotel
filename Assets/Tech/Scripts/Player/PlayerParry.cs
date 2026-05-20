@@ -1,11 +1,12 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerParry : MonoBehaviour
 {
     [SerializeField] private float parryOp = 2f;
-    [SerializeField] private float cooldown = 10f;
     [SerializeField] private string Input = "Parry";
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip parryStartSound;
@@ -15,10 +16,10 @@ public class PlayerParry : MonoBehaviour
     {
         get
         {
-            if (Time.time >= _lastParried + cooldown)
+            if (Time.time >= _lastParried + _cooldown)
                 return 1f;
 
-            return (Time.time - _lastParried) / cooldown;
+            return (Time.time - _lastParried) / _cooldown;
         }
     }
 
@@ -34,15 +35,21 @@ public class PlayerParry : MonoBehaviour
     private bool _isParrying;
 
     public bool IsParrying => _isParrying;
-    public float Cooldown => cooldown;
+    public float Cooldown => _cooldown;
 
     private float Timer;
     private float _lastParried;
     public float LastParried => _lastParried;
+    private PlayerStats _stats;
+    private float _cooldown;
+
+    private Coroutine _cooldownRoutine;
 
     void Start()
     {
         _parryAction = InputSystem.actions.FindAction(Input);
+        _stats = GetComponent<PlayerStats>();
+        
         _renderers = GetComponentsInChildren<Renderer>();
         _originalColors = new Color[_renderers.Length];
 
@@ -56,7 +63,6 @@ public class PlayerParry : MonoBehaviour
     {
         HandleInput();
         HandleParryOpening();
-        CoolDownUpdate();
     }
 
 
@@ -89,7 +95,7 @@ public class PlayerParry : MonoBehaviour
     private void TryParry()
     {
         Debug.Log("PARRY INPUT DETECTED");
-        if (Time.time < _lastParried + cooldown) return;
+        if (Time.time < _lastParried + _cooldown) return;
 
         _lastParried = Time.time;
         _isParrying = true;
@@ -100,6 +106,13 @@ public class PlayerParry : MonoBehaviour
 
         if (audioSource && parryStartSound)
             audioSource.PlayOneShot(parryStartSound);
+
+        if (_cooldownRoutine != null)
+        {
+            StopCoroutine(_cooldownRoutine);
+        }
+
+        _cooldownRoutine = StartCoroutine(UpdateCooldownUI());
 
     }
 
@@ -129,6 +142,11 @@ public class PlayerParry : MonoBehaviour
         
     }
 
+    public void SetCooldown(float value)
+    {
+        _cooldown = value;
+    }
+
     private void SetColor(Color color)
     {
         for (int i = 0; i < _renderers.Length; i++)
@@ -143,6 +161,16 @@ public class PlayerParry : MonoBehaviour
         {
             _renderers[i].material.color = _originalColors[i];
         }
+    }
+
+    private IEnumerator UpdateCooldownUI()
+    {
+        while (Time.time < _lastParried + _cooldown)
+        {
+            OnCooldownChanged?.Invoke();
+            yield return null;
+        }
+        OnCooldownChanged?.Invoke();
     }
 
 }

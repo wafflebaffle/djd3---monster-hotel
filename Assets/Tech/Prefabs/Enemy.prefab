@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2252211440886609838}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1.5}
+  m_LocalPosition: {x: 0, y: 0, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 7235022014729098277}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.13}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 2335371125738568523}
   - component: {fileID: 7606720754029555809}
   - component: {fileID: 2753698611032960610}
+  - component: {fileID: -2288762740815319940}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -184,9 +185,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8068299934542467148}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 12.190533, y: 3.5903, z: 27.302269}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1510001453199842960}
@@ -206,9 +207,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6956f1bed4742b945be9cc88d985a39b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  timerPerDecision: 1
   marginToMove: 0.9
-  pursuitVelocityMultiplier: 2
+  pursuitVelocityMultiplier: 1.5
 --- !u!114 &4474728040946503078
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,12 +221,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7411bd3d1c9daa48997b0e026888940, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemySight
-  sightRange: {x: 1.5, y: 1, z: 3.5}
+  sightRange: 8
   sightTrans: {fileID: 1510001453199842960}
+  viewAngle: 90
   playerMask:
     serializedVersion: 2
     m_Bits: 128
-  timeUntilLoseTarget: 3
+  timeUntilLoseTarget: 5
 --- !u!114 &4281369382471946517
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -241,6 +242,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   stats: {fileID: 11400000, guid: edffd5c99814ec14e9d64ae55a1d93c7, type: 2}
   events: {fileID: 11400000, guid: b004ae1660958df46b2675ccda2c6f74, type: 2}
+  enemyAnim: {fileID: 2753698611032960610}
   takeDamageAnimName: TakeDamage
   deathAnimName: Death
   deathAnimTime: 0.5
@@ -256,10 +258,10 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 30
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 2
+  m_AngularSpeed: 360
+  m_StoppingDistance: 1.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -281,6 +283,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombat
   attackPoint: {fileID: 6704688132971903802}
   attackTreshold: 1.5
+  attackAnim: {fileID: 2753698611032960610}
+  attackAnimName: Punch
+  attackAnimDuration: 0
 --- !u!136 &7606720754029555809
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -312,11 +317,11 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8068299934542467148}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 767ba1791d5878f44b382689b46ad18b, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 1
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
@@ -326,6 +331,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &-2288762740815319940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8068299934542467148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edeb30df4431ef3498a9c0ad90a672f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CleanerBehaviour
 --- !u!1 &8137778520726814843
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,8 +370,8 @@ Transform:
   m_GameObject: {fileID: 8137778520726814843}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.001, y: 1.001, z: 1.001}
+  m_LocalPosition: {x: 0, y: -0.04050541, z: 0}
+  m_LocalScale: {x: 1.02, y: 1.02, z: 1.02}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7669271035762448323}
@@ -366,7 +383,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8137778520726814843}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -6482832092703441867, guid: 0aa00947b0bf8d241b302f98ce1e8175, type: 3}
 --- !u!23 &6980886988763981271
 MeshRenderer:
   m_ObjectHideFlags: 0

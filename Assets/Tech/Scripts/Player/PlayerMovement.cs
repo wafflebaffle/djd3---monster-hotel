@@ -18,11 +18,13 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        HandleMovement();
-        //HandleGravity();
+        Vector3 motion = HandleMovement();
+        motion += HandleGravity();
+
+        _controller.Move(motion);
     }
 
-    private void HandleMovement()
+    private Vector3 HandleMovement()
     {
         _direction = _move.ReadValue<Vector2>();
         Vector3 motion = Vector3.zero;
@@ -38,9 +40,15 @@ public class PlayerMovement : MonoBehaviour
             motion += -Vector3.right;
 
         motion = motion.normalized;
-        motion *= Speed*Time.fixedDeltaTime;
+        motion *= Speed*Time.deltaTime;
 
-        if (Time.timeScale != 0) _controller.Move(motion);
+        if (Time.timeScale != 0) return motion;
+        else return Vector3.zero;
+    }
+
+    private Vector3 HandleGravity()
+    {
+        return Vector3.down * 9.81f * Time.deltaTime;
     }
 
     public void SetSpeed(float value)
