@@ -3,8 +3,8 @@ using UnityEngine.EventSystems;
 
 public class ButtonAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private string triggerEnterName = "Expand";
-    [SerializeField] private string triggerExitName = "Shrink";
+    [SerializeField] private string animationEnterName = "Expand";
+    [SerializeField] private string animationExitName = "Shrink";
     private Animator _anim;
 
     private void Awake()
@@ -14,11 +14,11 @@ public class ButtonAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerEnter(PointerEventData a)
     {
-        _anim.SetTrigger(triggerEnterName);
+        _anim.Play(animationEnterName);
     }
 
     public void OnPointerExit(PointerEventData a)
     {
-        _anim.SetTrigger(triggerExitName);
+        _anim.Play(animationExitName);
     }
 }
