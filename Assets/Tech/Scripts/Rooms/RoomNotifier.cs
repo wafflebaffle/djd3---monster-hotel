@@ -15,7 +15,6 @@ public class RoomNotifier : MonoBehaviour
     private void Start()
     {
         _cam = Camera.main.GetComponent<CameraBehaviour>();
-        _cameraDestination = cameraPos.position;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -28,7 +27,7 @@ public class RoomNotifier : MonoBehaviour
 
             CancelInvoke(nameof(ReturnToRoamingCamera));
 
-            _cam.ActivateBattleCamera(_cameraDestination);
+            _cam.ActivateBattleCamera(cameraPos);
         }
     }
 

@@ -40,12 +40,12 @@ public class CameraBehaviour : MonoBehaviour
         }
     }
 
-    public void ActivateBattleCamera(Vector3 destination)
+    public void ActivateBattleCamera(Transform camPos)
     {
         _roaming = false;
 
-        transform.position = destination;
-        transform.rotation = Quaternion.Euler(battleAngle,_originalRot.y,_originalRot.z);
+        transform.position = camPos.position;
+        transform.rotation = camPos.rotation;
     }
 
     public void ActivateRoamingCamera()
