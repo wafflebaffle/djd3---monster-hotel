@@ -7,18 +7,22 @@ public class AssetsGenerator : MonoBehaviour
     [SerializeField] private Collider roomArea;
     [SerializeField] private float stepSize;
     [SerializeField] private LayerMask floorLayer;
+    [SerializeField] private float chanceToSpawnAsset;
+    [SerializeField] private int maxIterations;
     private System.Random rnd;
     private Bounds _roomsBounds;
     private List<Vector3> _points = new();
     private Dictionary<Vector3, Vector3> _corners = new (), _walls = new (), _center = new ();
     private Dictionary<Vector3, bool> _positions = new();
-    private int _actualAssetCount;
-    private Assets _lastAsset;
+    private int _remainingAssets;
 
     private void Start()
     {
         rnd = new System.Random(RunManager.Seed);
         _roomsBounds = roomArea.bounds;
+
+        foreach(Assets asset in assets)
+            asset.RemainingCount = asset.MaxCount;
 
         _points = GetPositions();
 
@@ -29,6 +33,9 @@ public class AssetsGenerator : MonoBehaviour
 
         OrganizePositions();
         DisposeAssets();
+        Debug.Log($"Center positions found: {_center.Count}");
+        Debug.Log($"Wall positions found: {_walls.Count}");
+        Debug.Log($"Corner positions found: {_corners.Count}");
     }
 
     // Lista de Assets disponíveis, separados por tamanho e função, provavelmente uma classe
@@ -46,7 +53,10 @@ public class AssetsGenerator : MonoBehaviour
                 Vector3 origin = new Vector3(x, _roomsBounds.max.y + 1f, z);
                 if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, Mathf.Infinity, floorLayer))
                 {
-                    positions.Add(hit.point);
+                    float roundedX = Mathf.Round(hit.point.x / stepSize) * stepSize;
+                    float roundedZ = Mathf.Round(hit.point.z / stepSize) * stepSize;
+                    Vector3 roundedPoint = new Vector3(roundedX, hit.point.y, roundedZ);
+                    positions.Add(roundedPoint);
                 }
             }
         }
@@ -75,18 +85,34 @@ public class AssetsGenerator : MonoBehaviour
             }
             else if (neighborCount == 2)
             {
-                if (hasXPlus && hasZPlus) _corners.Add(point, new Vector3(1,0,1));
-                else if (hasXPlus && hasZMinus) _corners.Add(point, new Vector3(1,0,-1));
-                else if (hasXMinus && hasZPlus) _corners.Add(point, new Vector3(-1,0,1));
-                else if (hasXMinus && hasZMinus) _corners.Add(point, new Vector3(-1,0,-1));
+                if ((hasXPlus || hasXMinus) && (hasZPlus || hasZMinus))
+                {
+                    if (hasXPlus && hasZPlus) _corners.Add(point, new Vector3(1, 0, 1));
+                    else if (hasXPlus && hasZMinus) _corners.Add(point, new Vector3(1, 0, -1));
+                    else if (hasXMinus && hasZPlus) _corners.Add(point, new Vector3(-1, 0, 1));
+                    else if (hasXMinus && hasZMinus) _corners.Add(point, new Vector3(-1, 0, -1));
+                }
+                else
+                {
+                    if (hasXPlus && hasXMinus) _walls.Add(point, Vector3.zero);
+                    else if (hasZPlus && hasZMinus) _walls.Add(point, Vector3.zero);
+                    else if (hasXPlus) _walls.Add(point, Vector3.right);
+                    else if (hasXMinus) _walls.Add(point, Vector3.left);
+                    else if (hasZPlus) _walls.Add(point, Vector3.forward);
+                    else if (hasZMinus) _walls.Add(point, Vector3.back);
+                }
             }
             else if (neighborCount == 3)
-                if (hasXPlus && hasXMinus && hasZPlus) _walls.Add(point, Vector3.forward);
-                else if (hasXPlus && hasXMinus && hasZMinus) _walls.Add(point, Vector3.back);
-                else if (hasZPlus && hasZMinus && hasXPlus) _walls.Add(point, Vector3.right);
-                else if (hasZPlus && hasZMinus && hasXMinus) _walls.Add(point, Vector3.left);
-            else
+            {
+                if (!hasXPlus && hasXMinus && hasZPlus && hasZMinus) _walls.Add(point, Vector3.right);
+                else if (!hasXMinus && hasXPlus && hasZPlus && hasZMinus) _walls.Add(point, Vector3.left);
+                else if (!hasZPlus && hasXPlus && hasXMinus && hasZMinus) _walls.Add(point, Vector3.forward);
+                else if (!hasZMinus && hasXPlus && hasXMinus && hasZPlus) _walls.Add(point, Vector3.back);
+            }
+            else if (neighborCount == 4)
+            {
                 _center.Add(point, Vector3.zero);
+            }
         }
     }
     // Metodo para fazer raycast ao chão
@@ -104,59 +130,72 @@ public class AssetsGenerator : MonoBehaviour
             {
                 case AssetsPreference.Corner:
                     cornerAssets.Add(asset);
+                    _remainingAssets += asset.MaxCount;
                     break;
                 case AssetsPreference.Wall:
                     wallAssets.Add(asset);
+                    _remainingAssets += asset.MaxCount;
                     break;
                 case AssetsPreference.Center:
                     centerAssets.Add(asset);
+                    _remainingAssets += asset.MaxCount;
                     break;
             }
         }
 
-        if (cornerAssets.Count > 0)
+        int iterations = 0;
+    
+        while(_remainingAssets > 0 && iterations < maxIterations)
         {
-            foreach (KeyValuePair<Vector3,Vector3> position in _corners)
+            DisposePerPoint(cornerAssets, wallAssets, centerAssets);
+            iterations++;
+        }
+    }
+
+    private void DisposePerPoint(List<Assets> cornerAssets, List<Assets> wallAssets, List<Assets> centerAssets)
+    {
+        List<Vector3> positionsList = new (_positions.Keys);
+        //if (rnd.NextDouble() > chanceToSpawnAsset) return;
+
+        foreach (Vector3 position in positionsList)
+        {
+            if (_positions[position]) continue;
+
+            if(_corners.ContainsKey(position))
             {
                 Assets toDispose = DisposeAsset(cornerAssets);
-                Vector3 destination = position.Key + new Vector3(toDispose.SizePerStep.x * position.Value.x, toDispose.SizePerStep.y, toDispose.SizePerStep.z * position.Value.z);
-
+                if (toDispose == null) continue;
+                Vector3 destination = position + new Vector3(toDispose.SizePerStep.x * _corners[position].x, toDispose.SizePerStep.y, toDispose.SizePerStep.z * _corners[position].z);
+                if (_positions.ContainsKey(destination) == false) continue;
                 if (_positions[destination] == false)
                 {
-                    Instantiate(toDispose.Prefab, position.Key, Quaternion.identity);
-                    _positions[position.Key] = true;
+                    Instantiate(toDispose.Prefab, position, Quaternion.identity);
+                    _positions[position] = true;
                     _positions[destination] = true;
                 }
             }
-        }
-
-        if (wallAssets.Count > 0)
-        {
-            foreach (KeyValuePair<Vector3,Vector3> position in _walls)
+            else if(_walls.ContainsKey(position))
             {
                 Assets toDispose = DisposeAsset(wallAssets);
-                Vector3 destination = position.Key + new Vector3(toDispose.SizePerStep.x * position.Value.x, toDispose.SizePerStep.y, toDispose.SizePerStep.z * position.Value.z);
-
+                if (toDispose == null) continue;
+                Vector3 destination = position + new Vector3(toDispose.SizePerStep.x * _walls[position].x, toDispose.SizePerStep.y, toDispose.SizePerStep.z * _walls[position].z);
+                if (_positions.ContainsKey(destination) == false) continue;
                 if (_positions[destination] == false)
                 {
-                    Instantiate(toDispose.Prefab, position.Key, Quaternion.identity);
-                    _positions[position.Key] = true;
+                    Instantiate(toDispose.Prefab, position, Quaternion.identity);
+                    _positions[position] = true;
                     _positions[destination] = true;
                 }
             }
-        }
-
-        if (centerAssets.Count > 0)
-        {
-            foreach (KeyValuePair<Vector3,Vector3> position in _center)
+            else if(_center.ContainsKey(position))
             {
                 Assets toDispose = DisposeAsset(centerAssets);
-                Vector3 destination = position.Key + new Vector3(toDispose.SizePerStep.x * position.Value.x, toDispose.SizePerStep.y, toDispose.SizePerStep.z * position.Value.z);
+                if (toDispose == null) continue;
 
-                if (_positions[destination] == false)
+                if (_positions[position] == false)
                 {
-                    Instantiate(toDispose.Prefab, position.Key, Quaternion.identity);
-                    _positions[destination] = true;
+                    Instantiate(toDispose.Prefab, position, Quaternion.identity);
+                    _positions[position] = true;
                 }
             }
         }
@@ -164,16 +203,30 @@ public class AssetsGenerator : MonoBehaviour
 
     private Assets DisposeAsset(List<Assets> thoseAssets)
     {
+        if (thoseAssets == null || thoseAssets.Count == 0)
+            return null;
+
         Assets result;
 
         result = thoseAssets[rnd.Next(0,thoseAssets.Count)];
-        if (result != _lastAsset) _actualAssetCount = result.MaxCount;
-        _actualAssetCount--;
+        result.RemainingCount--;
+        _remainingAssets--;
 
-        if(_actualAssetCount < 1)
+        if(result.RemainingCount < 1)
             thoseAssets.Remove(result);
 
-        _lastAsset = result;
         return result;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        if (_points != null)
+        {
+            Gizmos.color = Color.green;
+            foreach (var pos in _points)
+            {
+                Gizmos.DrawWireSphere(pos, 0.2f);
+            }
+        }
     }
 }
