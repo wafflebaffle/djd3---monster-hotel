@@ -6,6 +6,7 @@ public class RunManager : MonoBehaviour
     public static int Seed {  get; private set; }
 
     [SerializeField] private bool randomSeed = true;
+    [SerializeField] private int seed;
 
     private void Awake()
     {
@@ -13,6 +14,7 @@ public class RunManager : MonoBehaviour
         {
             Seed = DateTime.Now.GetHashCode();
         }
+        else Seed = seed;
 
         Debug.Log("RUN SEED: " +  Seed);
     }

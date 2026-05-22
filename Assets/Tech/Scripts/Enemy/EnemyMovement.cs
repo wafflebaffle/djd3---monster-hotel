@@ -23,6 +23,7 @@ public class EnemyMovement : MonoBehaviour
 
         _agent.speed = Speed;
         _agent.angularSpeed = AngularSpeed;
+        _agent.stoppingDistance = _enemy.AttackRange;
 
         _lastTarget = null;
     }
@@ -44,6 +45,8 @@ public class EnemyMovement : MonoBehaviour
 
     public void Move()
     {
+        _agent.speed = Speed;
+
         _currentTarget = _enemy.GetTarget();
         Vector3 target;
 
@@ -56,6 +59,8 @@ public class EnemyMovement : MonoBehaviour
 
     public void MoveRandom()
     {
+        _agent.speed = Speed;
+
         Vector3 target;
 
         if(_lastTarget == null || _hasArrive || _lastPos == transform.position)
@@ -74,5 +79,19 @@ public class EnemyMovement : MonoBehaviour
     {
         if(_currentTarget) return Vector3.Distance(transform.position, _currentTarget.position);
         return float.NaN;
+    }
+
+    public void Flee()
+    {
+        _agent.speed = Speed * 1.5f;
+        _agent.destination = (_lastTarget.Value - transform.position) * _enemy.AttackRange;
+    }
+
+    public void FocusTarget()
+    {
+        Vector3 target = _enemy.GetTarget() ? _enemy.GetTarget().position : _lastTarget.Value;
+
+        _agent.destination = transform.position;
+        transform.LookAt(target);
     }
 }

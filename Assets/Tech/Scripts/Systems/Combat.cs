@@ -13,6 +13,8 @@ public abstract class Combat : MonoBehaviour
     protected abstract void TryAttack();
     protected abstract IEnumerator Attack();
 
+    public float AttackDamage => attackDamage;
+
     public void SetDamage(float damage)
     {
         attackDamage = damage;
