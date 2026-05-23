@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
 
 public class AssetsGenerator : MonoBehaviour 
@@ -120,9 +121,9 @@ public class AssetsGenerator : MonoBehaviour
     // Metodo para selecionar o objeto ideal
     private void DisposeAssets()
     {
-        List<Assets> cornerAssets = new ();
-        List<Assets> wallAssets = new ();
-        List<Assets> centerAssets = new ();
+        List<Assets> cornerAssets = new();
+        List<Assets> wallAssets = new();
+        List<Assets> centerAssets = new();
         
         foreach (Assets asset in assets)
         {
@@ -144,55 +145,72 @@ public class AssetsGenerator : MonoBehaviour
         }
 
         int iterations = 0;
-    
+        
+        
         while(_remainingAssets > 0 && iterations < maxIterations)
         {
-            DisposePerPoint(cornerAssets, wallAssets, centerAssets);
+            
+            if (cornerAssets.Count > 0)
+                DisposePerPoint(cornerAssets, _corners, true);
+            
+            if (wallAssets.Count > 0)
+                DisposePerPoint(wallAssets, _walls, true);
+            
+            if (centerAssets.Count > 0)
+                DisposePerPoint(centerAssets, _center, false);
+            
             iterations++;
         }
     }
 
-    private void DisposePerPoint(List<Assets> cornerAssets, List<Assets> wallAssets, List<Assets> centerAssets)
+    private void DisposePerPoint(List<Assets> assetList, Dictionary<Vector3, Vector3> positionDict, bool hasDirection)
     {
-        List<Vector3> positionsList = new (_positions.Keys);
-        //if (rnd.NextDouble() > chanceToSpawnAsset) return;
-
+        if (assetList == null || assetList.Count == 0) return;
+        
+        List<Vector3> positionsList = new List<Vector3>(positionDict.Keys);
+        
+        for (int i = 0; i < positionsList.Count; i++)
+        {
+            int randomIndex = rnd.Next(i, positionsList.Count);
+            Vector3 temp = positionsList[i];
+            positionsList[i] = positionsList[randomIndex];
+            positionsList[randomIndex] = temp;
+        }
+        
         foreach (Vector3 position in positionsList)
         {
+            if (assetList.Count == 0) break;
+            
             if (_positions[position]) continue;
-
-            if(_corners.ContainsKey(position))
+            
+            if (rnd.NextDouble() > chanceToSpawnAsset) continue;
+            
+            Assets toDispose = DisposeAsset(assetList);
+            if (toDispose == null) continue;
+            
+            if (hasDirection)
             {
-                Assets toDispose = DisposeAsset(cornerAssets);
-                if (toDispose == null) continue;
-                Vector3 destination = position + new Vector3(toDispose.SizePerStep.x * _corners[position].x, toDispose.SizePerStep.y, toDispose.SizePerStep.z * _corners[position].z);
-                if (_positions.ContainsKey(destination) == false) continue;
-                if (_positions[destination] == false)
+                Vector3 destination = position + new Vector3(
+                    toDispose.SizePerStep.x * positionDict[position].z, 
+                    toDispose.SizePerStep.y, 
+                    toDispose.SizePerStep.z * positionDict[position].x);
+                    
+                if (_positions.ContainsKey(destination) && !_positions[destination])
                 {
-                    Instantiate(toDispose.Prefab, position, Quaternion.identity);
+                    Instantiate(toDispose.Prefab, destination, Quaternion.LookRotation(positionDict[position]));
                     _positions[position] = true;
                     _positions[destination] = true;
                 }
-            }
-            else if(_walls.ContainsKey(position))
-            {
-                Assets toDispose = DisposeAsset(wallAssets);
-                if (toDispose == null) continue;
-                Vector3 destination = position + new Vector3(toDispose.SizePerStep.x * _walls[position].x, toDispose.SizePerStep.y, toDispose.SizePerStep.z * _walls[position].z);
-                if (_positions.ContainsKey(destination) == false) continue;
-                if (_positions[destination] == false)
+                else
                 {
-                    Instantiate(toDispose.Prefab, position, Quaternion.identity);
-                    _positions[position] = true;
-                    _positions[destination] = true;
+                    toDispose.RemainingCount++;
+                    _remainingAssets++;
+                    assetList.Add(toDispose);
                 }
             }
-            else if(_center.ContainsKey(position))
+            else
             {
-                Assets toDispose = DisposeAsset(centerAssets);
-                if (toDispose == null) continue;
-
-                if (_positions[position] == false)
+                if (!_positions[position])
                 {
                     Instantiate(toDispose.Prefab, position, Quaternion.identity);
                     _positions[position] = true;
@@ -206,14 +224,12 @@ public class AssetsGenerator : MonoBehaviour
         if (thoseAssets == null || thoseAssets.Count == 0)
             return null;
 
-        Assets result;
+        List<Assets> availableAssets = thoseAssets.FindAll(a => a.RemainingCount > 0);
+        if (availableAssets.Count == 0) return null;
 
-        result = thoseAssets[rnd.Next(0,thoseAssets.Count)];
+        Assets result = availableAssets[rnd.Next(0, availableAssets.Count)];
         result.RemainingCount--;
         _remainingAssets--;
-
-        if(result.RemainingCount < 1)
-            thoseAssets.Remove(result);
 
         return result;
     }
@@ -223,7 +239,7 @@ public class AssetsGenerator : MonoBehaviour
         if (_points != null)
         {
             Gizmos.color = Color.green;
-            foreach (var pos in _points)
+            foreach (Vector3 pos in _points)
             {
                 Gizmos.DrawWireSphere(pos, 0.2f);
             }
