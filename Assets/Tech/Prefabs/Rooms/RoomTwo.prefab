@@ -208,6 +208,37 @@ Transform:
   - {fileID: 4360505805317439398}
   m_Father: {fileID: 1763897007733378700}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6573431786742427707
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7840689735887067825}
+  m_Layer: 0
+  m_Name: InvertedCamPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7840689735887067825
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6573431786742427707}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.27059755, y: 0.6532821, z: -0.27059793, w: -0.65328115}
+  m_LocalPosition: {x: -1.28, y: 6.29, z: -4.35}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2052187956913952327}
+  m_LocalEulerAnglesHint: {x: 45, y: 270, z: 0}
 --- !u!1 &6660252861272867007
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,6 +356,7 @@ Transform:
   m_Children:
   - {fileID: 1763897007733378700}
   - {fileID: 4409635600194548722}
+  - {fileID: 7840689735887067825}
   - {fileID: 941368045820434355}
   - {fileID: 4225420809307380161}
   - {fileID: 363859399228535178}
@@ -366,6 +398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomNotifier
   cameraPos: {fileID: 4409635600194548722}
+  invertedCamPos: {fileID: 7840689735887067825}
   cameraReturnBreak: 0
   allMeshes: {fileID: 5453373493038622639}
 --- !u!114 &372855261225381373
