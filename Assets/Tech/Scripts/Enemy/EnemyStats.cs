@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyStats : MonoBehaviour, IDamageable, IParryable
+public class EnemyStats : MonoBehaviour, IDamageable
 {
     [SerializeField] private StatsData stats;
     [SerializeField] private EnemyEventChannel events;

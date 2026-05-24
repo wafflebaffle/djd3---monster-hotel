@@ -15,6 +15,8 @@ public class EnemyMovement : MonoBehaviour
     private Vector3? _lastTarget;
     private Vector3 _lastPos;
 
+    private bool _isStunned;
+
     private void Start()
     {
         _enemy = GetComponent<EnemyStats>();
@@ -40,11 +42,20 @@ public class EnemyMovement : MonoBehaviour
 
     public void Stun()
     {
-        
+      _isStunned = true;
+      _agent.isStopped = true;
+    }
+
+    public void Unstun()
+    {
+        _isStunned = false;
+        _agent.isStopped = false;
     }
 
     public void Move()
     {
+        if (_isStunned) return;
+
         _agent.speed = Speed;
 
         _currentTarget = _enemy.GetTarget();
@@ -59,6 +70,8 @@ public class EnemyMovement : MonoBehaviour
 
     public void MoveRandom()
     {
+        if (_isStunned) return;
+
         _agent.speed = Speed;
 
         Vector3 target;

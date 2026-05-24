@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerParry : MonoBehaviour
 {
-    [SerializeField] private float parryOp = 2f;
+    [SerializeField] private float parryOp = 0.2f;
     [SerializeField] private string Input = "Parry";
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip parryStartSound;
@@ -61,6 +62,11 @@ public class PlayerParry : MonoBehaviour
 
     void Update()
     {
+        if (_parryAction != null && _parryAction.WasPressedThisFrame())
+        {
+            TryParry(); 
+        }
+
         HandleInput();
         HandleParryOpening();
     }
@@ -115,26 +121,6 @@ public class PlayerParry : MonoBehaviour
         _cooldownRoutine = StartCoroutine(UpdateCooldownUI());
 
     }
-
-    public void SucessfulParry(Combat enemy)
-    {
-
-
-        Debug.Log("PARRY SUCCESS");
-
-        if (audioSource && parrySuccessSound)
-            audioSource.PlayOneShot(parrySuccessSound);
-
-        if (enemy == null) return;
-
-        Vector3 direction = (enemy.transform.position - transform.position).normalized;
-
-        if (enemy.TryGetComponent<IParryable>(out IParryable parryable))
-        {
-            parryable.OnParried(direction);
-        }
-    }
-
     private void EndParry()
     {
         _isParrying = false;
@@ -173,4 +159,30 @@ public class PlayerParry : MonoBehaviour
         OnCooldownChanged?.Invoke();
     }
 
+    public bool TryParry(Combat attacker)
+    {
+        if (!_isParrying)
+            return false;
+
+        SucessfulParry(attacker);
+        return true;
+    }
+
+
+    public void SucessfulParry(Combat enemy)
+    {
+        Debug.Log("PARRY SUCCESS");
+
+        if (audioSource && parrySuccessSound)
+            audioSource.PlayOneShot(parrySuccessSound);
+
+        if (enemy == null) return;
+
+        Vector3 direction = (enemy.transform.position - transform.position).normalized;
+
+        if (enemy.TryGetComponent<EnemyCombat>(out EnemyCombat enemyCombat))
+        {
+            enemyCombat.RequestStun();
+        }
+    }
 }

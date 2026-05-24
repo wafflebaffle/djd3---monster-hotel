@@ -17,6 +17,13 @@ namespace LibGameAI.FSMs
         public StateMachine(State initialState)
         {
             currentState = initialState;
+            currentState.EntryActions?.Invoke();
+        }
+
+        public void ForceState(State newState)
+        {
+            currentState = newState;
+            currentState.EntryActions?.Invoke();
         }
 
         /// <summary>

@@ -11,6 +11,7 @@ public class CleanerBehaviour : AIBehaviour
     private State _idle;
     private State _chase;
     private State _attack;
+    private State _stun;
 
     protected override void Start()
     {
@@ -21,6 +22,7 @@ public class CleanerBehaviour : AIBehaviour
         _idle = new State("Idle", null, _movement.MoveRandom, null);
         _chase = new State("Chase", null, _movement.Move, null);
         _attack = new State("Attack", _combat.DoAttack, null, null);
+        _stun = new State("Stun", null, null, null);
 
         Transition idleToChase = new Transition(_sight.GetTarget, null, _chase);
         _idle.AddTransition(idleToChase);
@@ -30,6 +32,9 @@ public class CleanerBehaviour : AIBehaviour
         _chase.AddTransition(chaseToIdle);
         Transition attackToIdle = new Transition(() => {Debug.Log($"HadAttack value: {_combat.HadAttack}"); return _combat.HadAttack; }, null, _idle);
         _attack.AddTransition(attackToIdle);
+        Transition anyToStun = new Transition(() => _combat.IsStunned, null, _stun);
+        Transition stunToIdle = new Transition(() => _combat.IsStunned == false, null, _idle);
+        _stun.AddTransition(stunToIdle);
 
         _fsm = new StateMachine(_idle);
     }
