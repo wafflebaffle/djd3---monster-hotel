@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyStats : MonoBehaviour, IDamageable, IParryable
+public class EnemyStats : MonoBehaviour, IDamageable
 {
     [SerializeField] private StatsData stats;
     [SerializeField] private EnemyEventChannel events;
@@ -19,7 +19,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     private float _health;
     private EnemyMovement _enemyMovement;
     private EnemySight _enemySight;
-    private EnemyCombat _enemyCombat;
+    private Combat _enemyCombat;
     private Animator _enemyAnim;
 
     private bool _isStunned;
@@ -29,6 +29,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     public float CurrentHealth => _health;
     public float MaxHealth => stats.maxHealth;
     public float AttackDamage => stats.attackDamage;
+    public float AttackRange => stats.attackRange;
     public float ShieldCooldown => stats.shieldCooldown;
     public float Speed => stats.moveSpeed;
     public float AngularSpeed => stats.angularSpeed;
@@ -50,7 +51,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
         _enemySight = GetComponent<EnemySight>();
         _enemyMovement.SetSpeed(stats.moveSpeed);
         _enemyMovement.SetAngularSpeed(stats.angularSpeed);
-        _enemyCombat = GetComponent<EnemyCombat>();
+        _enemyCombat = GetComponent<Combat>();
         _enemyCombat.SetDamage(stats.attackDamage);
         _enemyCombat.SetRange(stats.attackRange);
         _enemyCombat.SetCooldown(stats.attackCooldown);
@@ -66,7 +67,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
 
     public void TakeDamage(float damage, Combat combat)
     {
-        if (combat is EnemyCombat) return;
+        if (combat is EnemyCombat or RangedEnemyCombat) return;
 
         _health -= damage;
         _enemyAnim.SetTrigger(takeDamageAnimName);

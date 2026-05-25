@@ -8,11 +8,12 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _direction;
     private CharacterController _controller;
     private InputAction _move;
+    private Camera _cam;
 
     private void Start()
     {
         _controller = GetComponent<CharacterController>();
-
+        _cam = Camera.main;
         _move = InputSystem.actions.FindAction(moveInput);
     }
 
