@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using NUnit.Framework;
+using Unity.AI.Navigation;
 using UnityEngine;
 
 public class AssetsGenerator : MonoBehaviour 
@@ -34,9 +35,6 @@ public class AssetsGenerator : MonoBehaviour
 
         OrganizePositions();
         DisposeAssets();
-        Debug.Log($"Center positions found: {_center.Count}");
-        Debug.Log($"Wall positions found: {_walls.Count}");
-        Debug.Log($"Corner positions found: {_corners.Count}");
     }
 
     // Lista de Assets disponíveis, separados por tamanho e função, provavelmente uma classe
@@ -97,18 +95,18 @@ public class AssetsGenerator : MonoBehaviour
                 {
                     if (hasXPlus && hasXMinus) _walls.Add(point, Vector3.zero);
                     else if (hasZPlus && hasZMinus) _walls.Add(point, Vector3.zero);
-                    else if (hasXPlus) _walls.Add(point, Vector3.right);
-                    else if (hasXMinus) _walls.Add(point, Vector3.left);
-                    else if (hasZPlus) _walls.Add(point, Vector3.forward);
-                    else if (hasZMinus) _walls.Add(point, Vector3.back);
+                    else if (hasXPlus) _walls.Add(point, Vector3.forward);
+                    else if (hasXMinus) _walls.Add(point, Vector3.back);
+                    else if (hasZPlus) _walls.Add(point, Vector3.right);
+                    else if (hasZMinus) _walls.Add(point, Vector3.left);
                 }
             }
             else if (neighborCount == 3)
             {
-                if (!hasXPlus && hasXMinus && hasZPlus && hasZMinus) _walls.Add(point, Vector3.right);
-                else if (!hasXMinus && hasXPlus && hasZPlus && hasZMinus) _walls.Add(point, Vector3.left);
-                else if (!hasZPlus && hasXPlus && hasXMinus && hasZMinus) _walls.Add(point, Vector3.forward);
-                else if (!hasZMinus && hasXPlus && hasXMinus && hasZPlus) _walls.Add(point, Vector3.back);
+                if (!hasXPlus && hasXMinus && hasZPlus && hasZMinus) _walls.Add(point, Vector3.forward);
+                else if (!hasXMinus && hasXPlus && hasZPlus && hasZMinus) _walls.Add(point, Vector3.back);
+                else if (!hasZPlus && hasXPlus && hasXMinus && hasZMinus) _walls.Add(point, Vector3.right);
+                else if (!hasZMinus && hasXPlus && hasXMinus && hasZPlus) _walls.Add(point, Vector3.left);
             }
             else if (neighborCount == 4)
             {
@@ -197,9 +195,17 @@ public class AssetsGenerator : MonoBehaviour
                     
                 if (_positions.ContainsKey(destination) && !_positions[destination])
                 {
-                    Instantiate(toDispose.Prefab, destination, Quaternion.LookRotation(positionDict[position]));
-                    _positions[position] = true;
-                    _positions[destination] = true;
+                    Instantiate(toDispose.Prefab, (position + destination) / 2f, Quaternion.LookRotation(positionDict[position]));
+                    Debug.Log($"Disposing a directional asset: {toDispose.Prefab.name} from {position} to {destination}");
+                    for (int x = 0; x < toDispose.SizePerStep.x; x++)
+                    {
+                        for (int z = 0; z < toDispose.SizePerStep.z; z++)
+                        {
+                            Vector3 blockPos = position + new Vector3(x * stepSize, 0, z * stepSize);
+                            if (_positions.ContainsKey(blockPos))
+                                _positions[blockPos] = true;
+                        }
+                    }
                 }
                 else
                 {
@@ -224,8 +230,10 @@ public class AssetsGenerator : MonoBehaviour
         if (thoseAssets == null || thoseAssets.Count == 0)
             return null;
 
-        List<Assets> availableAssets = thoseAssets.FindAll(a => a.RemainingCount > 0);
-        if (availableAssets.Count == 0) return null;
+        List<Assets> availableAssets = thoseAssets
+                                        .FindAll(a => a.RemainingCount > 0);
+        if (availableAssets.Count == 0) 
+            return null;
 
         Assets result = availableAssets[rnd.Next(0, availableAssets.Count)];
         result.RemainingCount--;

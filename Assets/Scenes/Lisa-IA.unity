@@ -11738,7 +11738,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2048522149}
@@ -20853,7 +20853,6 @@ GameObject:
   - component: {fileID: 763110763}
   - component: {fileID: 763110762}
   - component: {fileID: 763110761}
-  - component: {fileID: 763110766}
   m_Layer: 0
   m_Name: RoomTwo (1)
   m_TagString: Untagged
@@ -20898,32 +20897,32 @@ MonoBehaviour:
     Prefab: {fileID: 1600754737}
     MaxCount: 3
     RemainingCount: 1
-    SizePerStep: {x: 1, y: 0, z: 1}
+    SizePerStep: {x: 0, y: 0, z: 0}
     PreferencePlacement: 2
   - Category: 0
     Prefab: {fileID: 398606640}
     MaxCount: 2
     RemainingCount: 1
-    SizePerStep: {x: 1, y: 0, z: 2}
+    SizePerStep: {x: 2, y: 0, z: 0}
     PreferencePlacement: 1
   - Category: 0
     Prefab: {fileID: 1554198440}
     MaxCount: 4
     RemainingCount: 1
-    SizePerStep: {x: 1, y: 0, z: 1}
+    SizePerStep: {x: 0, y: 0, z: 0}
     PreferencePlacement: 2
   - Category: 0
     Prefab: {fileID: 7412673259067321843, guid: f0ee49d0f6744754393af7a34fbbb5d3, type: 3}
     MaxCount: 1
     RemainingCount: 1
-    SizePerStep: {x: 1, y: 0, z: 1}
+    SizePerStep: {x: 1, y: 0, z: 2}
     PreferencePlacement: 0
-  roomArea: {fileID: 763110766}
+  roomArea: {fileID: 763110765}
   stepSize: 1
   floorLayer:
     serializedVersion: 2
     m_Bits: 256
-  chanceToSpawnAsset: 1
+  chanceToSpawnAsset: 0.74
   maxIterations: 644
 --- !u!114 &763110762
 MonoBehaviour:
@@ -20989,27 +20988,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.401062, y: 2.5, z: 11.720503}
   m_Center: {x: 2.9194689, y: 0.75, z: -4.118936}
---- !u!65 &763110766
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 763110759}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 128
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 127
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 8.401062, y: 2.5, z: 9.935983}
-  m_Center: {x: 2.9194689, y: 0.75, z: -5.0111966}
 --- !u!1001 &764071637
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27167,15 +27145,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 8039b75adf4ad2e4ea5ead59bad7fd69, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.47
+      value: -7.46677
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8039b75adf4ad2e4ea5ead59bad7fd69, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.03
+      value: -0.000000027939677
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8039b75adf4ad2e4ea5ead59bad7fd69, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.34
+      value: -0.37274155
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8039b75adf4ad2e4ea5ead59bad7fd69, type: 3}
       propertyPath: m_LocalRotation.w
