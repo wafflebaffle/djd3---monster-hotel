@@ -36,7 +36,6 @@ public class FloorGenerator : MonoBehaviour
 
             if (roomPrefab == null)
             {
-                Debug.Log("No more rooms avaliable");
                 break;
             }
 

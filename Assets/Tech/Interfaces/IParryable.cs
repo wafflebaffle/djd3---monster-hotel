@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface IParryable 
 {
-    bool TryParry(Combat attacker);
+    void ParryEffect(Vector3 direction, float stunTime, float knockbackDistance);
 }

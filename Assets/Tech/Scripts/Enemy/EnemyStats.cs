@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyStats : MonoBehaviour, IDamageable
+public class EnemyStats : MonoBehaviour, IDamageable, IParryable
 {
     [SerializeField] private StatsData stats;
     [SerializeField] private EnemyEventChannel events;
@@ -11,7 +11,6 @@ public class EnemyStats : MonoBehaviour, IDamageable
     [SerializeField] private string takeDamageAnimName = "TakeDamage";
     [SerializeField] private string deathAnimName = "Death";
     [SerializeField] private float deathAnimTime = 0.5f;
-    [SerializeField] private float hitStunDuration = 0.15f;
 
     private Renderer[] _renderers;
     private Color[] _originalColors;
@@ -121,27 +120,11 @@ public class EnemyStats : MonoBehaviour, IDamageable
             _renderers[i].material.color = _originalColors[i];
         }
     }
-
-
-    public void OnParried(Vector3 direction)
+    
+    public void ParryEffect(Vector3 direction, float stunTime, float knockbackDistance)
     {
-        StartCoroutine(ParryEffect(direction));
-    }
-
-    private IEnumerator ParryEffect(Vector3 direction)
-    {
-        float stunTime = 0.5f; //mudar para algo incrementavel e serializavel
-        float knockbackDistance = 5f; //mudar para algo incrementavel e serializavel
-
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
-
+        ApplyStun();
         SetColor(Color.blue);
-
-        if (agent != null)
-        {
-            agent.isStopped = true;
-        }
-
 
         Vector3 targetPos = transform.position + direction * knockbackDistance;
 
@@ -150,43 +133,19 @@ public class EnemyStats : MonoBehaviour, IDamageable
         {
             t += Time.deltaTime * 6f;
             transform.position = Vector3.Lerp(transform.position, targetPos, t);
-            yield return null;
         }
 
-        yield return new WaitForSeconds(stunTime);
-
-        ResetColor();
-
-        if (agent != null)
-        {
-            agent.isStopped = false;
-        }
+        Invoke("RemoveStun", stunTime);
     }
 
-    private IEnumerator StunRoutine(float duration, Color stunColor)
+    public void ApplyStun()
     {
-
         _isStunned = true;
-
-        NavMeshAgent agent = GetComponent<NavMeshAgent>();
-        if (agent != null)
-            agent.isStopped = true;
-
-        SetColor(stunColor);
-
-        yield return new WaitForSeconds(duration);
-
-        ResetColor();
-
-        if (agent != null)
-            agent.isStopped = false;
-
-        _isStunned = false;
     }
 
-    public void ApplyHitStun(float duration)
+    public void RemoveStun()
     {
-        if (!gameObject.activeInHierarchy) return;
-        StartCoroutine(StunRoutine(duration, Color.white));
+        _isStunned = false;
+        ResetColor();
     }
 }

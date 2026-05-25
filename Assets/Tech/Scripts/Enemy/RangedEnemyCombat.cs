@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class RangedEnemyCombat : Combat
 {
-    [SerializeField] private float attackTreshold = 1;
+    //[SerializeField] private float attackTreshold = 1;
     [SerializeField] private Animator attackAnim;
     [SerializeField] private string attackAnimName = "Shot";
     [SerializeField] private float attackAnimDuration = 1.0f;

@@ -40,22 +40,18 @@ public class EnemyMovement : MonoBehaviour
         AngularSpeed = value;
     }
 
-    public void Stun()
+    public void StopMove()
     {
-      _isStunned = true;
-      _agent.isStopped = true;
+        _agent.isStopped = true;
     }
 
-    public void Unstun()
+    public void ReableMove()
     {
-        _isStunned = false;
         _agent.isStopped = false;
     }
 
     public void Move()
     {
-        if (_isStunned) return;
-
         _agent.speed = Speed;
 
         _currentTarget = _enemy.GetTarget();
@@ -70,8 +66,6 @@ public class EnemyMovement : MonoBehaviour
 
     public void MoveRandom()
     {
-        if (_isStunned) return;
-
         _agent.speed = Speed;
 
         Vector3 target;

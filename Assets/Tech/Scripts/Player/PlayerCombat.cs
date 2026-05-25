@@ -7,7 +7,6 @@ public class PlayerCombat : Combat
     private InputAction _attack;
     private IDamageable _stats;
 
-    public float AttackDamage => attackDamage;
     public float AttackCooldown => attackCooldown;
 
     [Header("References")]
@@ -18,7 +17,6 @@ public class PlayerCombat : Combat
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private AudioClip hitSound;
-    [SerializeField] private float hitStunDuration = 0.15f;
 
     void Start()
     {
@@ -95,7 +93,7 @@ public class PlayerCombat : Combat
                 {
                     if (mb.TryGetComponent<EnemyStats>(out var enemy))
                     {
-                        enemy.ApplyHitStun(hitStunDuration);
+                        enemy.ApplyStun();
                     }
                 }
                 if (audioSource && hitSound)

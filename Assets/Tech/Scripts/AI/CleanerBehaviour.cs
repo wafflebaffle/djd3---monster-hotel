@@ -7,6 +7,7 @@ public class CleanerBehaviour : AIBehaviour
     private EnemyMovement _movement;
     private EnemyCombat _combat;
     private EnemySight _sight;
+    private EnemyStats _stats;
     private StateMachine _fsm;
     private State _idle;
     private State _chase;
@@ -18,6 +19,7 @@ public class CleanerBehaviour : AIBehaviour
         _movement = GetComponent<EnemyMovement>();
         _combat = GetComponent<EnemyCombat>();
         _sight = GetComponent<EnemySight>();
+        _stats = GetComponent<EnemyStats>();
 
         _idle = new State("Idle", null, _movement.MoveRandom, null);
         _chase = new State("Chase", null, _movement.Move, null);
@@ -30,10 +32,13 @@ public class CleanerBehaviour : AIBehaviour
         _chase.AddTransition(chaseToAttack);
         Transition chaseToIdle = new Transition(() => _sight.GetTarget() == false, null, _idle);
         _chase.AddTransition(chaseToIdle);
-        Transition attackToIdle = new Transition(() => {Debug.Log($"HadAttack value: {_combat.HadAttack}"); return _combat.HadAttack; }, null, _idle);
+        Transition attackToIdle = new Transition(() => _combat.HadAttack, null, _idle);
         _attack.AddTransition(attackToIdle);
-        Transition anyToStun = new Transition(() => _combat.IsStunned, null, _stun);
-        Transition stunToIdle = new Transition(() => _combat.IsStunned == false, null, _idle);
+        Transition anyToStun = new Transition(() => _stats.IsStunned, _movement.StopMove, _stun);
+        _idle.AddTransition(anyToStun);
+        _chase.AddTransition(anyToStun);
+        _attack.AddTransition(anyToStun);
+        Transition stunToIdle = new Transition(() => _stats.IsStunned == false, _movement.ReableMove, _idle);
         _stun.AddTransition(stunToIdle);
 
         _fsm = new StateMachine(_idle);

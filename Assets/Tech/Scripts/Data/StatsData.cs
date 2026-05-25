@@ -11,4 +11,6 @@ public class StatsData : ScriptableObject
     public float attackRange;
     public float attackCooldown;
     public float shieldCooldown;
+    public float stunDuration;
+    public float knockbackDistance;
 }

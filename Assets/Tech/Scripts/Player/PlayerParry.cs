@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,12 +18,7 @@ public class PlayerParry : MonoBehaviour
 
             return (Time.time - _lastParried) / _cooldown;
         }
-    }
-
-    public event Action OnCooldownChanged;
-    private void CoolDownUpdate() => OnCooldownChanged?.Invoke();
-    
-
+    }    
 
     private Renderer[] _renderers;
     private Color[] _originalColors;
@@ -43,8 +34,6 @@ public class PlayerParry : MonoBehaviour
     public float LastParried => _lastParried;
     private PlayerStats _stats;
     private float _cooldown;
-
-    private Coroutine _cooldownRoutine;
 
     void Start()
     {
@@ -67,19 +56,7 @@ public class PlayerParry : MonoBehaviour
             TryParry(); 
         }
 
-        HandleInput();
         HandleParryOpening();
-    }
-
-
-    private void HandleInput()
-    {
-        if (_parryAction == null) return;
-
-        if (_parryAction.WasPressedThisFrame())
-        {
-            TryParry();
-        }
     }
 
 
@@ -100,7 +77,6 @@ public class PlayerParry : MonoBehaviour
 
     private void TryParry()
     {
-        Debug.Log("PARRY INPUT DETECTED");
         if (Time.time < _lastParried + _cooldown) return;
 
         _lastParried = Time.time;
@@ -112,20 +88,11 @@ public class PlayerParry : MonoBehaviour
 
         if (audioSource && parryStartSound)
             audioSource.PlayOneShot(parryStartSound);
-
-        if (_cooldownRoutine != null)
-        {
-            StopCoroutine(_cooldownRoutine);
-        }
-
-        _cooldownRoutine = StartCoroutine(UpdateCooldownUI());
-
     }
     private void EndParry()
     {
         _isParrying = false;
-        ResetColor();
-        
+        ResetColor();   
     }
 
     public void SetCooldown(float value)
@@ -149,30 +116,8 @@ public class PlayerParry : MonoBehaviour
         }
     }
 
-    private IEnumerator UpdateCooldownUI()
-    {
-        while (Time.time < _lastParried + _cooldown)
-        {
-            OnCooldownChanged?.Invoke();
-            yield return null;
-        }
-        OnCooldownChanged?.Invoke();
-    }
-
-    public bool TryParry(Combat attacker)
-    {
-        if (!_isParrying)
-            return false;
-
-        SucessfulParry(attacker);
-        return true;
-    }
-
-
     public void SucessfulParry(Combat enemy)
     {
-        Debug.Log("PARRY SUCCESS");
-
         if (audioSource && parrySuccessSound)
             audioSource.PlayOneShot(parrySuccessSound);
 
@@ -180,9 +125,9 @@ public class PlayerParry : MonoBehaviour
 
         Vector3 direction = (enemy.transform.position - transform.position).normalized;
 
-        if (enemy.TryGetComponent<EnemyCombat>(out EnemyCombat enemyCombat))
+        if (enemy.TryGetComponent(out IParryable enemyStats))
         {
-            enemyCombat.RequestStun();
+            enemyStats.ParryEffect(direction, _stats.StunDuration, _stats.KnockbackDistance);
         }
     }
 }

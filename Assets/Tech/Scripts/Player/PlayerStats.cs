@@ -21,6 +21,8 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISo
     public float ShieldCooldown => stats.shieldCooldown;
     public float Speed => stats.moveSpeed;
     public float AngularSpeed => stats.angularSpeed;
+    public float StunDuration => stats.stunDuration;
+    public float KnockbackDistance => stats.knockbackDistance;
     public SoundData GetSoundData() => sounds;
 
     //Instancias Temporárias
@@ -163,6 +165,7 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISo
             _parry.SucessfulParry(combat);
             return;
         }
+        
         //CHEATS
         if (_godMode) return;
 
