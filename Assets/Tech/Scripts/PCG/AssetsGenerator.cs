@@ -52,6 +52,7 @@ public class AssetsGenerator : MonoBehaviour
                 Vector3 origin = new Vector3(x, _roomsBounds.max.y + 1f, z);
                 if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, Mathf.Infinity, floorLayer))
                 {
+                    if(hit.transform.TryGetComponent(out Temp _)) continue;
                     float roundedX = Mathf.Round(hit.point.x / stepSize) * stepSize;
                     float roundedZ = Mathf.Round(hit.point.z / stepSize) * stepSize;
                     Vector3 roundedPoint = new Vector3(roundedX, hit.point.y, roundedZ);
@@ -195,7 +196,7 @@ public class AssetsGenerator : MonoBehaviour
                     
                 if (_positions.ContainsKey(destination) && !_positions[destination])
                 {
-                    Instantiate(toDispose.Prefab, (position + destination) / 2f, Quaternion.LookRotation(positionDict[position]));
+                    Instantiate(toDispose.Prefab, (position + destination) / 2f, Quaternion.LookRotation(positionDict[position]), transform);
                     Debug.Log($"Disposing a directional asset: {toDispose.Prefab.name} from {position} to {destination}");
                     for (int x = 0; x < toDispose.SizePerStep.x; x++)
                     {
@@ -206,6 +207,7 @@ public class AssetsGenerator : MonoBehaviour
                                 _positions[blockPos] = true;
                         }
                     }
+                    _positions[destination] = true;
                 }
                 else
                 {
@@ -218,7 +220,7 @@ public class AssetsGenerator : MonoBehaviour
             {
                 if (!_positions[position])
                 {
-                    Instantiate(toDispose.Prefab, position, Quaternion.identity);
+                    Instantiate(toDispose.Prefab, position, Quaternion.identity, transform);
                     _positions[position] = true;
                 }
             }

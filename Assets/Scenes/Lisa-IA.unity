@@ -3832,7 +3832,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RunManager
   randomSeed: 0
-  seed: 25637
+  seed: 577827
 --- !u!1001 &140792884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6419,6 +6419,72 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -7176667889198578055, guid: 8039b75adf4ad2e4ea5ead59bad7fd69, type: 3}
+--- !u!1 &246452184
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 246452185}
+  - component: {fileID: 246452187}
+  - component: {fileID: 246452186}
+  m_Layer: 9
+  m_Name: DoNotReceiveAssets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &246452185
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246452184}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 763110760}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &246452186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246452184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 237d3a47b8b6c0141806e1a7a5ff4acf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+--- !u!65 &246452187
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 246452184}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.518823, y: 1.1466109, z: 4.6689615}
+  m_Center: {x: 1.6259117, y: 0.07330549, z: -0.4671988}
 --- !u!1001 &247846030
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20877,7 +20943,7 @@ Transform:
   - {fileID: 181672570}
   - {fileID: 1336207345}
   - {fileID: 291856287}
-  - {fileID: 2004215330}
+  - {fileID: 246452185}
   m_Father: {fileID: 422430024}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &763110761
@@ -20895,7 +20961,7 @@ MonoBehaviour:
   assets:
   - Category: 0
     Prefab: {fileID: 1600754737}
-    MaxCount: 3
+    MaxCount: 2
     RemainingCount: 1
     SizePerStep: {x: 0, y: 0, z: 0}
     PreferencePlacement: 2
@@ -20903,11 +20969,11 @@ MonoBehaviour:
     Prefab: {fileID: 398606640}
     MaxCount: 2
     RemainingCount: 1
-    SizePerStep: {x: 2, y: 0, z: 0}
+    SizePerStep: {x: 2, y: 0, z: 1}
     PreferencePlacement: 1
   - Category: 0
     Prefab: {fileID: 1554198440}
-    MaxCount: 4
+    MaxCount: 1
     RemainingCount: 1
     SizePerStep: {x: 0, y: 0, z: 0}
     PreferencePlacement: 2
@@ -20915,13 +20981,13 @@ MonoBehaviour:
     Prefab: {fileID: 7412673259067321843, guid: f0ee49d0f6744754393af7a34fbbb5d3, type: 3}
     MaxCount: 1
     RemainingCount: 1
-    SizePerStep: {x: 1, y: 0, z: 2}
+    SizePerStep: {x: 1, y: 0, z: 1}
     PreferencePlacement: 0
   roomArea: {fileID: 763110765}
   stepSize: 1
   floorLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 768
   chanceToSpawnAsset: 0.74
   maxIterations: 644
 --- !u!114 &763110762
@@ -20936,7 +21002,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 660db9c995ea7ed49b324b05fa42dc26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Room
-  entrance: {fileID: 2004215330}
+  entrance: {fileID: 0}
   type: 0
 --- !u!114 &763110763
 MonoBehaviour:
@@ -60718,37 +60784,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 3a8466bce23cd4b4886f5324cf0a8d1b, type: 3}
   m_PrefabInstance: {fileID: 2004147422}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2004215329
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2004215330}
-  m_Layer: 0
-  m_Name: GameObject
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2004215330
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2004215329}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.6165245, y: 0, z: 1.9158175}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 763110760}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2008060102
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -62041,51 +62076,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b84d648579908044f85d1e78e9a98591, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AssetsGenerator
-  stepSize: 2
-  minObjectDistance: 1
-  minEdgeDistance: 1
+  assets: []
+  roomArea: {fileID: 0}
+  stepSize: 0
   floorLayer:
     serializedVersion: 2
-    m_Bits: 256
-  unwalkableMask:
-    serializedVersion: 2
-    m_Bits: 64
-  spawnRules:
-  - Category: 0
-    Prefab: {fileID: 919132149155446097, guid: 8667c7401d99743408b2697700525f3d, type: 3}
-    MaxCount: 3
-    MinDistanceFromOthers: 2
-    MinDistanceFromGapEdge: 2
-    PlacementStrategy: 0
-    RotateToFaceWall: 0
-  - Category: 1
-    Prefab: {fileID: 8068299934542467148, guid: b1b08baf384627348b8821ebfee87d80, type: 3}
-    MaxCount: 5
-    MinDistanceFromOthers: 3
-    MinDistanceFromGapEdge: 3
-    PlacementStrategy: 0
-    RotateToFaceWall: 0
-  - Category: 2
-    Prefab: {fileID: 7944465180534532267, guid: eed2d009f85d46e47b67bdd682ccd4d9, type: 3}
-    MaxCount: 1
-    MinDistanceFromOthers: 3
-    MinDistanceFromGapEdge: 3
-    PlacementStrategy: 0
-    RotateToFaceWall: 0
-  - Category: 0
-    Prefab: {fileID: 919132149155446097, guid: 59582d46a379a4e4cae8bf8e797a54ed, type: 3}
-    MaxCount: 2
-    MinDistanceFromOthers: 3
-    MinDistanceFromGapEdge: 3
-    PlacementStrategy: 2
-    RotateToFaceWall: 0
-  - Category: 0
-    Prefab: {fileID: 919132149155446097, guid: 991acedfd220779479acf1385ff6279d, type: 3}
-    MaxCount: 2
-    MinDistanceFromOthers: 3
-    MinDistanceFromGapEdge: 3
-    PlacementStrategy: 1
-    RotateToFaceWall: 1
+    m_Bits: 0
+  chanceToSpawnAsset: 0
+  maxIterations: 0
 --- !u!114 &2048522151
 MonoBehaviour:
   m_ObjectHideFlags: 0
