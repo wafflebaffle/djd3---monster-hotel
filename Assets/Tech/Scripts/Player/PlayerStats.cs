@@ -2,10 +2,10 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISound
+public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable
 {
     [SerializeField] private StatsData stats;
-    [SerializeField] private SoundData sounds;
+
     private float _health;
     private PlayerMovement _playerMovement;
     private PlayerCombat _playerCombat;
@@ -23,7 +23,6 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISo
     public float AngularSpeed => stats.angularSpeed;
     public float StunDuration => stats.stunDuration;
     public float KnockbackDistance => stats.knockbackDistance;
-    public SoundData GetSoundData() => sounds;
 
     //Instancias Temporárias
     private bool _isBuff;

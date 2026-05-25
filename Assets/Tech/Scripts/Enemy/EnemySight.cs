@@ -33,7 +33,11 @@ public class EnemySight : MonoBehaviour
                 target = _saveTarget;
             }
         }
-        else target = null;
+        else 
+        {
+            target = null;
+            _timer = 0;
+        }
 
         return target;
     }

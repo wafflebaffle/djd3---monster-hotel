@@ -93,7 +93,7 @@ public class PlayerCombat : Combat
                 {
                     if (mb.TryGetComponent<EnemyStats>(out var enemy))
                     {
-                        enemy.ApplyStun();
+                        enemy.ParryEffect(directionToTarget);
                     }
                 }
                 if (audioSource && hitSound)

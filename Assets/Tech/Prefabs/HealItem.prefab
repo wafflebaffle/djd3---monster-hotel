@@ -126,4 +126,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Taco
   healAmount: 5
-  destroyTimer: 0.5
+  destroyTimer: 0

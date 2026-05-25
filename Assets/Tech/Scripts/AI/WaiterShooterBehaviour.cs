@@ -25,7 +25,7 @@ public class WaiterShooterBehaviour : AIBehaviour
         _attack = new State("Attack", _combat.DoAttack, null, null);
         _flee = new State("Flee", null, _movement.Flee, null);
 
-        Transition idleToChase = new Transition(_sight.GetTarget, null, _chase);
+        Transition idleToChase = new Transition(() => _sight.GetTarget(), null, _chase);
         _idle.AddTransition(idleToChase);
         Transition chaseToAttack = new Transition(_combat.CanAttack, null, _attack);
         _chase.AddTransition(chaseToAttack);

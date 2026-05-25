@@ -26,12 +26,16 @@ public class CleanerBehaviour : AIBehaviour
         _attack = new State("Attack", _combat.DoAttack, null, null);
         _stun = new State("Stun", null, null, null);
 
-        Transition idleToChase = new Transition(_sight.GetTarget, null, _chase);
-        _idle.AddTransition(idleToChase);
+        Transition idleToChaseByAttack = new Transition(() => _sight.Target != null, null, _chase);
+        Transition idleToChaseBySight = new Transition(_sight.GetTarget, null, _chase);
+        _idle.AddTransition(idleToChaseByAttack);
+        _idle.AddTransition(idleToChaseBySight);
         Transition chaseToAttack = new Transition(_combat.CanAttack, null, _attack);
         _chase.AddTransition(chaseToAttack);
         Transition chaseToIdle = new Transition(() => _sight.GetTarget() == false, null, _idle);
+        Transition chaseToIdle2 = new Transition(() => _sight.Target == null, null, _idle);
         _chase.AddTransition(chaseToIdle);
+        _chase.AddTransition(chaseToIdle2);
         Transition attackToIdle = new Transition(() => _combat.HadAttack, null, _idle);
         _attack.AddTransition(attackToIdle);
         Transition anyToStun = new Transition(() => _stats.IsStunned, _movement.StopMove, _stun);

@@ -121,7 +121,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
         }
     }
     
-    public void ParryEffect(Vector3 direction, float stunTime, float knockbackDistance)
+    public void ParryEffect(Vector3 direction, float stunTime = 0.5f, float knockbackDistance = 0.0f)
     {
         ApplyStun();
         SetColor(Color.blue);
