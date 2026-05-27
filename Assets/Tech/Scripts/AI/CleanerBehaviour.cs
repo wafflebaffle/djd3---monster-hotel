@@ -24,26 +24,22 @@ public class CleanerBehaviour : AIBehaviour
         _idle = new State("Idle", null, _movement.MoveRandom, null);
         _chase = new State("Chase", null, _movement.Move, null);
         _attack = new State("Attack", _combat.DoAttack, null, null);
-        _stun = new State("Stun", null, null, null);
+        _stun = new State("Stun", null, null, () => _sight.GetTarget(_sight.Target));
 
-        Transition idleToChaseByAttack = new Transition(() => _sight.Target != null, null, _chase);
-        Transition idleToChaseBySight = new Transition(_sight.GetTarget, null, _chase);
-        _idle.AddTransition(idleToChaseByAttack);
+        Transition idleToChaseBySight = new Transition(() => _sight.GetTarget(), null, _chase);
         _idle.AddTransition(idleToChaseBySight);
         Transition chaseToAttack = new Transition(_combat.CanAttack, null, _attack);
         _chase.AddTransition(chaseToAttack);
         Transition chaseToIdle = new Transition(() => _sight.GetTarget() == false, null, _idle);
-        Transition chaseToIdle2 = new Transition(() => _sight.Target == null, null, _idle);
         _chase.AddTransition(chaseToIdle);
-        _chase.AddTransition(chaseToIdle2);
         Transition attackToIdle = new Transition(() => _combat.HadAttack, null, _idle);
         _attack.AddTransition(attackToIdle);
         Transition anyToStun = new Transition(() => _stats.IsStunned, _movement.StopMove, _stun);
         _idle.AddTransition(anyToStun);
         _chase.AddTransition(anyToStun);
         _attack.AddTransition(anyToStun);
-        Transition stunToIdle = new Transition(() => _stats.IsStunned == false, _movement.ReableMove, _idle);
-        _stun.AddTransition(stunToIdle);
+        Transition stunToChase = new Transition(() => _stats.IsStunned == false, _movement.ReableMove, _chase);
+        _stun.AddTransition(stunToChase);
 
         _fsm = new StateMachine(_idle);
     }

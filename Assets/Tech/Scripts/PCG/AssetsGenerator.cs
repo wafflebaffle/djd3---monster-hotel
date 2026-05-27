@@ -7,6 +7,7 @@ public class AssetsGenerator : MonoBehaviour
 {
     [SerializeField] private List<Assets> assets;
     [SerializeField] private Collider roomArea;
+    [SerializeField] private GameObject allMeshes;
     [SerializeField] private float stepSize;
     [SerializeField] private LayerMask floorLayer;
     [SerializeField] private float chanceToSpawnAsset;
@@ -35,6 +36,8 @@ public class AssetsGenerator : MonoBehaviour
 
         OrganizePositions();
         DisposeAssets();
+
+        allMeshes.SetActive(false);
     }
 
     // Lista de Assets disponíveis, separados por tamanho e função, provavelmente uma classe
@@ -196,8 +199,7 @@ public class AssetsGenerator : MonoBehaviour
                     
                 if (_positions.ContainsKey(destination) && !_positions[destination])
                 {
-                    Instantiate(toDispose.Prefab, (position + destination) / 2f, Quaternion.LookRotation(positionDict[position]), transform);
-                    Debug.Log($"Disposing a directional asset: {toDispose.Prefab.name} from {position} to {destination}");
+                    Instantiate(toDispose.Prefab, (position + destination) / 2f, Quaternion.LookRotation(positionDict[position]), allMeshes.transform);
                     for (int x = 0; x < toDispose.SizePerStep.x; x++)
                     {
                         for (int z = 0; z < toDispose.SizePerStep.z; z++)
@@ -220,7 +222,7 @@ public class AssetsGenerator : MonoBehaviour
             {
                 if (!_positions[position])
                 {
-                    Instantiate(toDispose.Prefab, position, Quaternion.identity, transform);
+                    Instantiate(toDispose.Prefab, position, Quaternion.identity, allMeshes.transform);
                     _positions[position] = true;
                 }
             }
