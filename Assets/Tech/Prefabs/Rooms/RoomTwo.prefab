@@ -401,7 +401,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoomNotifier
   cameraPos: {fileID: 4409635600194548722}
-  invertedCamPos: {fileID: 4409635600194548722}
+  invertedCamPos: {fileID: 7840689735887067825}
   cameraReturnBreak: 0
   allMeshes: {fileID: 5453373493038622639}
 --- !u!114 &372855261225381373
@@ -468,6 +468,12 @@ MonoBehaviour:
     RemainingCount: 1
     SizePerStep: {x: 1, y: 0, z: 1}
     PreferencePlacement: 0
+  - Category: 2
+    Prefab: {fileID: 5125655322329505420, guid: f884365454dc21a4b91c73d492d99030, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    SizePerStep: {x: 0, y: 0, z: 0}
+    PreferencePlacement: 2
   roomArea: {fileID: 3144809998757647831}
   allMeshes: {fileID: 5453373493038622639}
   stepSize: 1

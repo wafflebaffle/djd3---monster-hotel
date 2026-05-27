@@ -267,7 +267,7 @@ MonoBehaviour:
   enemyAnim: {fileID: 2178970576814990034}
   takeDamageAnimName: TakeDamage
   deathAnimName: Death
-  deathAnimTime: 0.5
+  deathAnimTime: 0.15
 --- !u!195 &9223028777846313002
 NavMeshAgent:
   m_ObjectHideFlags: 0

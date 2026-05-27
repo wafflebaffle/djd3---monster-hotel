@@ -277,6 +277,12 @@ MonoBehaviour:
     RemainingCount: 1
     SizePerStep: {x: 1, y: 0, z: 1}
     PreferencePlacement: 0
+  - Category: 2
+    Prefab: {fileID: 7944465180534532267, guid: eed2d009f85d46e47b67bdd682ccd4d9, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    SizePerStep: {x: 0, y: 0, z: 0}
+    PreferencePlacement: 2
   roomArea: {fileID: 810369351508494740}
   allMeshes: {fileID: 4285131283261656641}
   stepSize: 1

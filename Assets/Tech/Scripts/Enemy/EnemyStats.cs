@@ -19,7 +19,6 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     private EnemyMovement _enemyMovement;
     private EnemySight _enemySight;
     private Combat _enemyCombat;
-    private Animator _enemyAnim;
 
     private bool _isStunned;
     public bool IsStunned => _isStunned;
@@ -43,7 +42,6 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
 
     private void Awake()
     {
-        _enemyAnim = GetComponent<Animator>();
         events.RaiseEnemySpawned();
 
         _enemyMovement = GetComponent<EnemyMovement>();
@@ -69,7 +67,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
         if (combat is EnemyCombat or RangedEnemyCombat) return;
 
         _health -= damage;
-        _enemyAnim.SetTrigger(takeDamageAnimName);
+        enemyAnim.SetTrigger(takeDamageAnimName);
         _enemySight.SetTarget(combat.transform);
         
         DispatchHealthChanged();
@@ -82,7 +80,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     public void Death()
     {
         //Play death animation;
-        _enemyAnim.SetTrigger(deathAnimName);
+        enemyAnim.SetTrigger(deathAnimName);
 
         StartCoroutine(Died());
     }

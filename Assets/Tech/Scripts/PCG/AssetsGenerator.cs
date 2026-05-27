@@ -37,7 +37,7 @@ public class AssetsGenerator : MonoBehaviour
         OrganizePositions();
         DisposeAssets();
 
-        allMeshes.SetActive(false);
+        //allMeshes.SetActive(false);
     }
 
     // Lista de Assets disponíveis, separados por tamanho e função, provavelmente uma classe
