@@ -1,10 +1,14 @@
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 public class PlayerParry : MonoBehaviour
 {
     [SerializeField] private float parryOp = 0.2f;
     [SerializeField] private string Input = "Parry";
+
+    [Header("Audio")]
+    [SerializeField] private AudioMixerGroup sfxGroup;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip parryStartSound;
     [SerializeField] private AudioClip parrySuccessSound;
@@ -46,6 +50,11 @@ public class PlayerParry : MonoBehaviour
         for (int i = 0; i < _renderers.Length; i++)
         {
             _originalColors[i] = _renderers[i].material.color;
+        }
+
+        if (audioSource && sfxGroup)
+        {
+            audioSource.outputAudioMixerGroup = sfxGroup;
         }
     }
 

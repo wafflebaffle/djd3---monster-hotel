@@ -3,8 +3,7 @@ using UnityEngine.UI;
 
 public class AudioSettings : MonoBehaviour
 {
-    [SerializeField] private AudioManager audioManager;
-    [SerializeField] private Slider MasterSlider;
+    [SerializeField] private Slider masterSlider;
 
     private void Start()
     {
@@ -14,12 +13,14 @@ public class AudioSettings : MonoBehaviour
 
     private void InitializeSliders()
     {
-        MasterSlider.value = audioManager.GetMasterVolume();
+        masterSlider.value = AudioManager.Instance.GetMasterVolume();
     }
 
     private void RegisterListeneres()
     {
-        MasterSlider.onValueChanged.AddListener(audioManager.SetMasterVolume);
+        masterSlider.onValueChanged.RemoveAllListeners();
+
+        masterSlider.onValueChanged.AddListener(v => { AudioManager.Instance.SetMasterVolume(v); });
     }
 
 

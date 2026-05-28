@@ -6609,6 +6609,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 249241999887188801, guid: dfc40db0944845a45a920a26219e50fa, type: 3}
+      propertyPath: sfxGroup
+      value: 
+      objectReference: {fileID: -5889397635432707386, guid: 94981ed0c93219142afc040d9064a919, type: 2}
+    - target: {fileID: 1608199338547244622, guid: dfc40db0944845a45a920a26219e50fa, type: 3}
+      propertyPath: sfxGroup
+      value: 
+      objectReference: {fileID: -5889397635432707386, guid: 94981ed0c93219142afc040d9064a919, type: 2}
     - target: {fileID: 1608199338547244622, guid: dfc40db0944845a45a920a26219e50fa, type: 3}
       propertyPath: attackAnimDuration
       value: 0
