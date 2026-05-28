@@ -9,7 +9,7 @@ public class AudioManager : MonoBehaviour
 
     private void Awake()
     {
-        
+        LoadSettings();
     }
 
     public void SetMasterVolume(float volume)
@@ -27,6 +27,11 @@ public class AudioManager : MonoBehaviour
     private void Save(string parameter, float volume)
     {
         PlayerPrefs.SetFloat(parameter, volume);
+    }
+
+    public float GetMasterVolume()
+    {
+        return PlayerPrefs.GetFloat(MasterVolumeParam, 1f);
     }
 
     private void LoadSettings()
