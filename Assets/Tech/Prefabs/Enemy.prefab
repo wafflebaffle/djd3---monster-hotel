@@ -190,7 +190,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombat
   attackPoint: {fileID: 6704688132971903802}
   attackAnimName: Punch
-  attackAnimDuration: 0.5
+  attackAnimDuration: 0.25
 --- !u!136 &7606720754029555809
 CapsuleCollider:
   m_ObjectHideFlags: 0
