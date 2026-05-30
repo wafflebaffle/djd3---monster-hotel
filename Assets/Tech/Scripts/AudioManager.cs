@@ -9,6 +9,10 @@ public class AudioManager : MonoBehaviour
 
     private const string MASTER_PARAM = "MasterVolume";
     private const string MASTER_KEY = "MASTER_VOLUME";
+    private const string MUSIC_PARAM = "MusicVolume";
+    private const string MUSIC_KEY = "MUSIC_VOLUME";
+    private const string SFX_PARAM = "SFXVolume";
+    private const string SFX_KEY = "SFX_VOLUME";
 
     private void Awake()
     {
@@ -26,7 +30,19 @@ public class AudioManager : MonoBehaviour
     public void SetMasterVolume(float volume)
     {
         ApplyVolume(MASTER_PARAM, volume);
-        Save(volume);
+        Save(MASTER_KEY, volume);
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        ApplyVolume(MUSIC_PARAM, volume);
+        Save(MUSIC_KEY, volume);
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        ApplyVolume(SFX_PARAM, volume);
+        Save(SFX_KEY ,volume);
     }
 
     private void ApplyVolume(string parameter, float volume)
@@ -36,18 +52,32 @@ public class AudioManager : MonoBehaviour
         mixer.SetFloat(parameter, db);
     }
 
-    private void Save(float volume)
+    private void Save(string key, float volume)
     {
-        PlayerPrefs.SetFloat(MASTER_KEY, volume);
+        PlayerPrefs.SetFloat(key, volume);
     }
 
     public float GetMasterVolume()
     {
         return PlayerPrefs.GetFloat(MASTER_KEY, 1f);
     }
+
+    public float GetMusicVolume()
+    {
+        return PlayerPrefs.GetFloat(MUSIC_KEY, 1f);
+    }
+
+    public float GetSFXVolume()
+    {
+        return PlayerPrefs.GetFloat(SFX_KEY, 1f);
+    }
+
+
     private void LoadSettings()
     {
         float volume = GetMasterVolume();
         ApplyVolume(MASTER_PARAM, volume);
+        ApplyVolume(MUSIC_PARAM, volume);
+        ApplyVolume(SFX_PARAM, volume);
     }
 }
