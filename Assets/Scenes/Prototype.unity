@@ -1238,11 +1238,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4604787795199396990, guid: 912253fd2bafe394c8291f1760d043ec, type: 3}
---- !u!23 &140003888 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 1048655328500833578, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
-  m_PrefabInstance: {fileID: 243129838}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &166239633
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2228,50 +2223,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1943465278}
     m_Modifications:
-    - target: {fileID: 1048655328500833578, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1048655328500833578, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: d13620af31c60234f843159b1ba7acb0, type: 2}
-    - target: {fileID: 6778967078249159105, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
-      propertyPath: mesh
-      value: 
-      objectReference: {fileID: 140003888}
-    - target: {fileID: 6778967078249159105, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
-      propertyPath: music1
-      value: 
-      objectReference: {fileID: 8300000, guid: 9ebb6c953af1a4a4d8dd7763db6b6b4f, type: 3}
     - target: {fileID: 6778967078249159105, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1177890639}
     - target: {fileID: 6778967078249159105, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
-      propertyPath: ambientMusic
-      value: 
-      objectReference: {fileID: 8300000, guid: 25187cfd49a0d8e4e827fd00e9e5ca8d, type: 3}
-    - target: {fileID: 6778967078249159105, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
       propertyPath: upgradePanel
       value: 
       objectReference: {fileID: 1462720395}
-    - target: {fileID: 6778967078249159105, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
-      propertyPath: universalAudioSource
-      value: 
-      objectReference: {fileID: 1177890639}
-    - target: {fileID: 7597702831865788998, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7597702831865788998, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7597702831865788998, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.16205
-      objectReference: {fileID: 0}
     - target: {fileID: 7597702831865788998, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -3.95925
@@ -2319,10 +2278,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8387081828370872776, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1555913480}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
 --- !u!1001 &249877203
 PrefabInstance:
@@ -12179,25 +12135,6 @@ Transform:
   - {fileID: 371329}
   m_Father: {fileID: 1421529636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1555913476 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8387081828370872776, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
-  m_PrefabInstance: {fileID: 243129838}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1555913480
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1555913476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfc456768f28a224e8a5b3bc9bbe3ea3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RunManager
-  randomSeed: 1
-  seed: 0
 --- !u!4 &1562200563 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bc1580b1a66bedc4890c1a93b9919c08, type: 3}

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1048655328500833578}
   - component: {fileID: 9210274863664568692}
   - component: {fileID: 6778967078249159105}
+  - component: {fileID: 8433751974723561452}
   m_Layer: 0
   m_Name: Elevator
   m_TagString: Untagged
@@ -28,9 +29,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8387081828370872776}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 2, z: 35}
-  m_LocalScale: {x: 3, y: 4, z: 1}
+  m_LocalScale: {x: 1.5, y: 2, z: 0.16205}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -68,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: d13620af31c60234f843159b1ba7acb0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,3 +128,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::LevelManager
   enemyEvent: {fileID: 11400000, guid: b004ae1660958df46b2675ccda2c6f74, type: 2}
   upgradePanel: {fileID: 0}
+  mesh: {fileID: 1048655328500833578}
+  MusicGroup: {fileID: -3530354023931853852, guid: 94981ed0c93219142afc040d9064a919, type: 2}
+  audioSource: {fileID: 0}
+  music1: {fileID: 8300000, guid: 9ebb6c953af1a4a4d8dd7763db6b6b4f, type: 3}
+--- !u!114 &8433751974723561452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8387081828370872776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfc456768f28a224e8a5b3bc9bbe3ea3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RunManager
+  randomSeed: 1
+  seed: 0

@@ -11026,6 +11026,7 @@ MonoBehaviour:
   animStartName: Start
   annimRestoreSettingsName: Restore
   animationTime: 1
+  MusicGroup: {fileID: -3530354023931853852, guid: 94981ed0c93219142afc040d9064a919, type: 2}
   audioSource: {fileID: 518480074}
   music1: {fileID: 8300000, guid: e32d92316f07ad740999eb5d998cdac5, type: 3}
 --- !u!4 &1772076370 stripped
