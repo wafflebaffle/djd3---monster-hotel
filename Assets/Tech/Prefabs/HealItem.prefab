@@ -9708,7 +9708,7 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
---- !u!1 &7944465180534532267
+--- !u!1 &6485694085572418902
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9716,50 +9716,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1497851565696195351}
-  - component: {fileID: 5656266150333992012}
-  - component: {fileID: 3039924367517384810}
-  - component: {fileID: 1397491475201136155}
-  - component: {fileID: 8728776123691165245}
-  - component: {fileID: 1266985448098630598}
+  - component: {fileID: 6145673855789775581}
+  - component: {fileID: 8038175771363880981}
+  - component: {fileID: 5487925354472506669}
   m_Layer: 0
-  m_Name: HealItem
+  m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1497851565696195351
+--- !u!4 &6145673855789775581
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7944465180534532267}
+  m_GameObject: {fileID: 6485694085572418902}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5102732514380575496}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 1497851565696195351}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &5656266150333992012
+--- !u!33 &8038175771363880981
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7944465180534532267}
+  m_GameObject: {fileID: 6485694085572418902}
   m_Mesh: {fileID: -8870946231481924797, guid: 323f4224fb75c4641a176aa49224e360, type: 3}
---- !u!23 &3039924367517384810
+--- !u!23 &5487925354472506669
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7944465180534532267}
+  m_GameObject: {fileID: 6485694085572418902}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -9802,6 +9798,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7944465180534532267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1497851565696195351}
+  - component: {fileID: 1397491475201136155}
+  - component: {fileID: 8728776123691165245}
+  - component: {fileID: 1266985448098630598}
+  m_Layer: 0
+  m_Name: HealItem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1497851565696195351
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7944465180534532267}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5102732514380575496}
+  - {fileID: 6145673855789775581}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1397491475201136155
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9835,7 +9867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73b4e80c7817f7946b518df69461eab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Taco
-  healAmount: 5
+  healAmount: 20
   destroyTimer: 0
 --- !u!114 &1266985448098630598
 MonoBehaviour:
@@ -9879,7 +9911,7 @@ Transform:
   m_GameObject: {fileID: 9098398113539405349}
   serializedVersion: 2
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children:

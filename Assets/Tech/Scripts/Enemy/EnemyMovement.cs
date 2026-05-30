@@ -30,6 +30,11 @@ public class EnemyMovement : MonoBehaviour
         _lastTarget = null;
     }
 
+    private void Update()
+    {
+        _enemy.Animator.SetFloat("Velocity", _agent.velocity.magnitude);
+    }
+
     public void SetSpeed(float value)
     {
         Speed = value;

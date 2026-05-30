@@ -20984,6 +20984,7 @@ MonoBehaviour:
     SizePerStep: {x: 1, y: 0, z: 1}
     PreferencePlacement: 0
   roomArea: {fileID: 763110765}
+  allMeshes: {fileID: 0}
   stepSize: 1
   floorLayer:
     serializedVersion: 2
@@ -64765,6 +64766,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0ee49d0f6744754393af7a34fbbb5d3, type: 3}
+--- !u!1001 &9187712679013432203
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 678091401070697676, guid: 488c007cfb6c9f047b2bc054c3580948, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 678091401070697676, guid: 488c007cfb6c9f047b2bc054c3580948, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 678091401070697676, guid: 488c007cfb6c9f047b2bc054c3580948, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 678091401070697676, guid: 488c007cfb6c9f047b2bc054c3580948, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 678091401070697676, guid: 488c007cfb6c9f047b2bc054c3580948, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 678091401070697676, guid: 488c007cfb6c9f047b2bc054c3580948, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 678091401070697676, guid: 488c007cfb6c9f047b2bc054c3580948, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 678091401070697676, guid: 488c007cfb6c9f047b2bc054c3580948, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 678091401070697676, guid: 488c007cfb6c9f047b2bc054c3580948, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 678091401070697676, guid: 488c007cfb6c9f047b2bc054c3580948, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2724122495360523850, guid: 488c007cfb6c9f047b2bc054c3580948, type: 3}
+      propertyPath: m_Name
+      value: SmallBed
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 488c007cfb6c9f047b2bc054c3580948, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -64781,3 +64839,4 @@ SceneRoots:
   - {fileID: 1529152520}
   - {fileID: 562479584}
   - {fileID: 4837047488062576370}
+  - {fileID: 9187712679013432203}

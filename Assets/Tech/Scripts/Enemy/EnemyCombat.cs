@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class EnemyCombat : Combat
 {
-    [SerializeField] private Animator attackAnim;
     [SerializeField] private string attackAnimName = "Punch";
     [SerializeField] private float attackAnimDuration = 1.0f;
     private EnemyStats _enemy;
@@ -55,7 +54,7 @@ public class EnemyCombat : Combat
 
         lastAttackTime = Time.time;
 
-        attackAnim.SetTrigger(attackAnimName);
+        _enemy.Animator.SetTrigger(attackAnimName);
         StartCoroutine(Attack());
     }
 

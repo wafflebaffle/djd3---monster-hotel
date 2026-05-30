@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5125655322329505420
+--- !u!1 &1774662904050782870
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,50 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3609208712405427085}
-  - component: {fileID: 6854573293229579585}
-  - component: {fileID: 6062430228123218670}
-  - component: {fileID: 4833083457369910522}
-  - component: {fileID: 8223112675508848966}
-  - component: {fileID: 1305384217211860062}
+  - component: {fileID: 7269632122507141243}
+  - component: {fileID: 3588934835209548374}
+  - component: {fileID: 4735565024667305204}
   m_Layer: 0
-  m_Name: SpicyItem
+  m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3609208712405427085
+--- !u!4 &7269632122507141243
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5125655322329505420}
+  m_GameObject: {fileID: 1774662904050782870}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 6701871242264965027}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 3609208712405427085}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &6854573293229579585
+--- !u!33 &3588934835209548374
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5125655322329505420}
+  m_GameObject: {fileID: 1774662904050782870}
   m_Mesh: {fileID: -5702533645516264591, guid: adf07fd1ccadb49cf98e21f89d4b318b, type: 3}
---- !u!23 &6062430228123218670
+--- !u!23 &4735565024667305204
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5125655322329505420}
+  m_GameObject: {fileID: 1774662904050782870}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -94,6 +90,42 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &5125655322329505420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3609208712405427085}
+  - component: {fileID: 4833083457369910522}
+  - component: {fileID: 8223112675508848966}
+  - component: {fileID: 1305384217211860062}
+  m_Layer: 0
+  m_Name: SpicyItem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3609208712405427085
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5125655322329505420}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6701871242264965027}
+  - {fileID: 7269632122507141243}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &4833083457369910522
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -181,7 +213,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 366398508269011731, guid: 5334360cd0cfad84bbf6855beaf10de4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.4
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 366398508269011731, guid: 5334360cd0cfad84bbf6855beaf10de4, type: 3}
       propertyPath: m_LocalPosition.z

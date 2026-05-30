@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-using NUnit.Framework;
-using Unity.AI.Navigation;
+ using System.Collections.Generic;
 using UnityEngine;
 
 public class AssetsGenerator : MonoBehaviour 
@@ -15,6 +13,7 @@ public class AssetsGenerator : MonoBehaviour
     private System.Random rnd;
     private Bounds _roomsBounds;
     private List<Vector3> _points = new();
+    private List<Vector3> _unavaiablePoints = new();
     private Dictionary<Vector3, Vector3> _corners = new (), _walls = new (), _center = new ();
     private Dictionary<Vector3, bool> _positions = new();
     private int _remainingAssets;
@@ -27,7 +26,7 @@ public class AssetsGenerator : MonoBehaviour
         foreach(Assets asset in assets)
             asset.RemainingCount = asset.MaxCount;
 
-        _points = GetPositions();
+        GetPositions();
 
         foreach (Vector3 point in _points)
         {
@@ -44,10 +43,8 @@ public class AssetsGenerator : MonoBehaviour
 
     // Metodo que obtem a area da sala para obter os pontos para fazer raycast
 
-    private List<Vector3> GetPositions()
+    private void GetPositions()
     {
-        List<Vector3> positions = new ();
-
         for (float x = _roomsBounds.min.x; x <= _roomsBounds.max.x; x += stepSize)
         {
             for (float z = _roomsBounds.min.z; z <= _roomsBounds.max.z; z += stepSize)
@@ -55,16 +52,20 @@ public class AssetsGenerator : MonoBehaviour
                 Vector3 origin = new Vector3(x, _roomsBounds.max.y + 1f, z);
                 if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, Mathf.Infinity, floorLayer))
                 {
-                    if(hit.transform.TryGetComponent(out Temp _)) continue;
                     float roundedX = Mathf.Round(hit.point.x / stepSize) * stepSize;
                     float roundedZ = Mathf.Round(hit.point.z / stepSize) * stepSize;
                     Vector3 roundedPoint = new Vector3(roundedX, hit.point.y, roundedZ);
-                    positions.Add(roundedPoint);
+
+                    if(hit.transform.TryGetComponent(out Temp _)) 
+                    {
+                        _unavaiablePoints.Add(roundedPoint);
+                        continue;
+                    }
+
+                    _points.Add(roundedPoint);
                 }
             }
         }
-
-        return positions;
     }
 
     private void OrganizePositions()
@@ -170,7 +171,7 @@ public class AssetsGenerator : MonoBehaviour
         if (assetList == null || assetList.Count == 0) return;
         
         List<Vector3> positionsList = new List<Vector3>(positionDict.Keys);
-        
+
         for (int i = 0; i < positionsList.Count; i++)
         {
             int randomIndex = rnd.Next(i, positionsList.Count);
@@ -192,17 +193,31 @@ public class AssetsGenerator : MonoBehaviour
             
             if (hasDirection)
             {
+                if(_unavaiablePoints.Contains(position + positionDict[position]))
+                    continue;
+
                 Vector3 destination = position + new Vector3(
-                    toDispose.SizePerStep.x * positionDict[position].z, 
+                    toDispose.SizePerStep.x * positionDict[position].z * stepSize, 
                     toDispose.SizePerStep.y, 
-                    toDispose.SizePerStep.z * positionDict[position].x);
+                    toDispose.SizePerStep.z * positionDict[position].x * stepSize);
                     
                 if (_positions.ContainsKey(destination) && !_positions[destination])
                 {
-                    Instantiate(toDispose.Prefab, (position + destination) / 2f, Quaternion.LookRotation(positionDict[position]), allMeshes.transform);
-                    for (int x = 0; x < toDispose.SizePerStep.x; x++)
+                    if (toDispose.SizePerStep.x == 0) destination.x -= 1;
+                    if (toDispose.SizePerStep.z == 0) destination.z -= 1;
+                    
+                    if (Physics.BoxCast((position + destination) / 2f, new Vector3(stepSize / 2f, 1f, stepSize / 2f), Vector3.down, Quaternion.identity, ~floorLayer))
                     {
-                        for (int z = 0; z < toDispose.SizePerStep.z; z++)
+                        toDispose.RemainingCount++;
+                        _remainingAssets++;
+                        assetList.Add(toDispose);
+                        continue;
+                    }
+
+                    Instantiate(toDispose.Prefab, (position + destination) / 2f, Quaternion.LookRotation(positionDict[position]), allMeshes.transform);
+                    for (int x = 0; x < toDispose.SizePerStep.z; x++)
+                    {
+                        for (int z = 0; z < toDispose.SizePerStep.x; z++)
                         {
                             Vector3 blockPos = position + new Vector3(x * stepSize, 0, z * stepSize);
                             if (_positions.ContainsKey(blockPos))
@@ -220,6 +235,14 @@ public class AssetsGenerator : MonoBehaviour
             }
             else
             {
+                if (Physics.BoxCast(position, new Vector3(stepSize / 2f, 1f, stepSize / 2f), Vector3.down, Quaternion.identity, ~floorLayer))
+                {
+                    toDispose.RemainingCount++;
+                    _remainingAssets++;
+                    assetList.Add(toDispose);
+                    continue;
+                }
+                    
                 if (!_positions[position])
                 {
                     Instantiate(toDispose.Prefab, position, Quaternion.identity, allMeshes.transform);

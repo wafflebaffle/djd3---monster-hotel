@@ -20,11 +20,11 @@ public class RoomGenerato
 
         foreach (Room room in rooms)
         {
-            //regra de salas não se podem repetir
-           if(!usedRooms.Contains(room))
-           {
+            //regra de salas nï¿½o se podem repetir
+           //if(!usedRooms.Contains(room))
+           //{
                 validRooms.Add(room);
-           }
+           //}
         }
 
         //fallback
