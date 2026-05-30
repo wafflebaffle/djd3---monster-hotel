@@ -4,6 +4,8 @@ using UnityEngine.UI;
 public class AudioSettings : MonoBehaviour
 {
     [SerializeField] private Slider masterSlider;
+    [SerializeField] private Slider MusicSlider;
+    [SerializeField] private Slider SFXSlider;
 
     private void Start()
     {
