@@ -3,16 +3,18 @@ using UnityEngine;
 
 public class EnemyCombat : Combat
 {
-    [SerializeField] private float attackTreshold = 1;
     [SerializeField] private Animator attackAnim;
     [SerializeField] private string attackAnimName = "Punch";
     [SerializeField] private float attackAnimDuration = 1.0f;
     private EnemyStats _enemy;
+    private EnemyMovement _movement;
+
     public bool HadAttack { get; private set; }
 
     private void Start()
     {
         _enemy = GetComponent<EnemyStats>();
+        _movement = GetComponent<EnemyMovement>();
     }
 
     public void DoAttack()
@@ -37,15 +39,13 @@ public class EnemyCombat : Combat
         {
             IDamageable damageable;
 
-            if (hit.TryGetComponent<IDamageable>(out damageable))
+            if (hit.TryGetComponent(out damageable))
             {
-                //Vector3 directionToTarget = (hit.transform.position - transform.position).normalized;
-
                 damageable.TakeDamage(attackDamage, this);
+
+                HadAttack = true;
             }
         }
-
-        HadAttack = true;
     }
 
     protected override void TryAttack()
@@ -54,13 +54,14 @@ public class EnemyCombat : Combat
             return;
 
         lastAttackTime = Time.time;
+
         attackAnim.SetTrigger(attackAnimName);
         StartCoroutine(Attack());
     }
 
     public bool CanAttack()
     {
-        return _enemy.GetTarget() && _enemy.DistanceToTarget() <= attackTreshold;
+        return _enemy.GetTarget() && _enemy.DistanceToTarget() <= attackRange;
     }
 
     private void OnDrawGizmosSelected()

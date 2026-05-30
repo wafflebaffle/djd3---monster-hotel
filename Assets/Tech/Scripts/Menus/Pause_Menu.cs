@@ -41,8 +41,6 @@ public class Pause_Menu : MonoBehaviour
         _isPaused = true;
         pauseMenu.SetActive(true);
         Time.timeScale = 0f;
-
-        Cursor.visible = true;
     }
 
     public void Resume()
@@ -51,7 +49,6 @@ public class Pause_Menu : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
 
-        Cursor.visible = false;
     }
     public void YouSure()
     {

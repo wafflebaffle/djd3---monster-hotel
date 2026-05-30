@@ -19,21 +19,39 @@ public class EnemySight : MonoBehaviour
         _respectiveRoom.OnPlayerEnter += canFollow => _canFollowPlayer = canFollow;
     }
 
-    public bool GetTarget()
+    public bool GetTarget(Transform submitTarget = null)
     {   
-        Transform target;
+        Transform target = submitTarget;
 
         if(_canFollowPlayer)
         {
+            if(target != null)
+
+                
             _timer += Time.deltaTime;
             target = SeekTarget();
 
-            if (!target && timeUntilLoseTarget > _timer)
+            if (target != null)
+            {
+                _saveTarget = target;
+                _timer = 0;
+            }
+            else if (_saveTarget != null && _timer <= timeUntilLoseTarget)
             {
                 target = _saveTarget;
             }
+            else
+            {
+                target = null;
+                _saveTarget = null;
+            }
         }
-        else target = null;
+        else
+        {
+            target = null;
+            _timer = 0;
+            _saveTarget = null;
+        }
 
         return target;
     }

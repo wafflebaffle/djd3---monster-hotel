@@ -19,4 +19,6 @@ MonoBehaviour:
   attackDamage: 10
   attackRange: 1.5
   attackCooldown: 0.5
-  shieldCooldown: 0
+  shieldCooldown: 10
+  stunDuration: 2
+  knockbackDistance: 4

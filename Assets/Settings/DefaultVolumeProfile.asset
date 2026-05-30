@@ -363,13 +363,13 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 0.4
+    m_Value: 0.1
   intensity:
     m_OverrideState: 1
     m_Value: 0.15
   scatter:
     m_OverrideState: 1
-    m_Value: 0.7
+    m_Value: 0.1
   clamp:
     m_OverrideState: 1
     m_Value: 65472
@@ -381,7 +381,7 @@ MonoBehaviour:
     m_Value: 0
   filter:
     m_OverrideState: 1
-    m_Value: 0
+    m_Value: 2
   downscale:
     m_OverrideState: 1
     m_Value: 0
@@ -799,7 +799,7 @@ MonoBehaviour:
     m_Value: 10
   gaussianEnd:
     m_OverrideState: 1
-    m_Value: 50
+    m_Value: 150
   gaussianMaxRadius:
     m_OverrideState: 1
     m_Value: 1.5

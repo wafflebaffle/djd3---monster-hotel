@@ -45,7 +45,7 @@ public class CameraBehaviour : MonoBehaviour
         _roaming = false;
 
         transform.position = camPos.position;
-        transform.rotation = camPos.rotation;
+        transform.rotation = Quaternion.Euler(battleAngle,_originalRot.y,_originalRot.z);
     }
 
     public void ActivateRoamingCamera()

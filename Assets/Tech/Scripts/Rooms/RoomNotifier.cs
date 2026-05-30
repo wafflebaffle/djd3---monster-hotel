@@ -5,16 +5,19 @@ using UnityEngine;
 
 public class RoomNotifier : MonoBehaviour
 {
-    [SerializeField] private Transform cameraPos;
+    [SerializeField] private Transform cameraPos, invertedCamPos;
     [SerializeField] private float cameraReturnBreak = 0.5f;
     [SerializeField] private GameObject allMeshes;
     public event Action<bool> OnPlayerEnter;
     private CameraBehaviour _cam;
-    private Vector3 _cameraDestination;
+    private Room _thisRoom;
+    private Quaternion _originalQuaternion;
 
     private void Start()
     {
         _cam = Camera.main.GetComponent<CameraBehaviour>();
+        _thisRoom = GetComponent<Room>();
+        _originalQuaternion = _thisRoom.OriginalQuaternion;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -27,7 +30,9 @@ public class RoomNotifier : MonoBehaviour
 
             CancelInvoke(nameof(ReturnToRoamingCamera));
 
-            _cam.ActivateBattleCamera(cameraPos);
+            if (transform.rotation == _originalQuaternion) 
+                _cam.ActivateBattleCamera(cameraPos);
+            else _cam.ActivateBattleCamera(invertedCamPos);
         }
     }
 

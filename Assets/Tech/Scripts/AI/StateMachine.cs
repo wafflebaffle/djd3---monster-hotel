@@ -1,6 +1,6 @@
 using System;
+using System.Diagnostics;
 using LibGameAI.FSMs;
-using UnityEngine;
 
 namespace LibGameAI.FSMs
 {
@@ -17,6 +17,13 @@ namespace LibGameAI.FSMs
         public StateMachine(State initialState)
         {
             currentState = initialState;
+            currentState.EntryActions?.Invoke();
+        }
+
+        public void ForceState(State newState)
+        {
+            currentState = newState;
+            currentState.EntryActions?.Invoke();
         }
 
         /// <summary>
@@ -61,7 +68,6 @@ namespace LibGameAI.FSMs
 
             // If no transition was triggered, return the actions for the
             // current state
-            Debug.Log(currentState.Name);
             return currentState.StateActions;
         }
     }

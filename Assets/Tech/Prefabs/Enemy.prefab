@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 7669271035762448323}
   - component: {fileID: 4987520812714257962}
   - component: {fileID: 1155325870458202383}
+  - component: {fileID: 2178970576814990034}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -153,6 +154,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &2178970576814990034
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7779485779827651406}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 767ba1791d5878f44b382689b46ad18b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 1
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &8068299934542467148
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,7 +191,6 @@ GameObject:
   - component: {fileID: 9223028777846313002}
   - component: {fileID: 2335371125738568523}
   - component: {fileID: 7606720754029555809}
-  - component: {fileID: 2753698611032960610}
   - component: {fileID: -2288762740815319940}
   m_Layer: 0
   m_Name: Enemy
@@ -242,11 +264,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   stats: {fileID: 11400000, guid: edffd5c99814ec14e9d64ae55a1d93c7, type: 2}
   events: {fileID: 11400000, guid: b004ae1660958df46b2675ccda2c6f74, type: 2}
-  enemyAnim: {fileID: 2753698611032960610}
+  enemyAnim: {fileID: 2178970576814990034}
   takeDamageAnimName: TakeDamage
   deathAnimName: Death
-  deathAnimTime: 0.5
-  hitStunDuration: 0.15
+  deathAnimTime: 0.15
 --- !u!195 &9223028777846313002
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -282,10 +303,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombat
   attackPoint: {fileID: 6704688132971903802}
-  attackTreshold: 1.5
-  attackAnim: {fileID: 2753698611032960610}
+  attackAnim: {fileID: 2178970576814990034}
   attackAnimName: Punch
-  attackAnimDuration: 0
+  attackAnimDuration: 0.1
 --- !u!136 &7606720754029555809
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -309,28 +329,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &2753698611032960610
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8068299934542467148}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 767ba1791d5878f44b382689b46ad18b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 1
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &-2288762740815319940
 MonoBehaviour:
   m_ObjectHideFlags: 0

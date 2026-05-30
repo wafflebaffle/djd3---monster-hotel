@@ -17,13 +17,11 @@ public class Visualizer : MonoBehaviour
         SubscribeToEvents();
 
         SetHealthBar();
-        SetCooldownBar();
     }
 
-    private void OnDestroy()
+    private void Update()
     {
-            _playerStats.OnHealthChanged -= SetHealthBar;
-            _playerParry.OnCooldownChanged -= SetCooldownBar;
+        SetCooldownBar();
     }
 
     private void FindObjects()
@@ -35,7 +33,6 @@ public class Visualizer : MonoBehaviour
     private void SubscribeToEvents()
     {
         _playerStats.OnHealthChanged += SetHealthBar;
-        _playerParry.OnCooldownChanged += SetCooldownBar;
     }
 
     private void SetHealthBar()

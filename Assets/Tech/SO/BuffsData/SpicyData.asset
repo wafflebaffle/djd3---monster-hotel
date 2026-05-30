@@ -16,4 +16,4 @@ MonoBehaviour:
   velocityBuff: 1.2
   attackCooldownBuff: 0.25
   duration: 5
-  destroyTimer: 1
+  destroyTimer: 0

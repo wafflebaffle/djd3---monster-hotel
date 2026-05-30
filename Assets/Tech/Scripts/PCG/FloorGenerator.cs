@@ -36,7 +36,6 @@ public class FloorGenerator : MonoBehaviour
 
             if (roomPrefab == null)
             {
-                Debug.Log("No more rooms avaliable");
                 break;
             }
 
@@ -52,6 +51,7 @@ public class FloorGenerator : MonoBehaviour
     private void AttachRoom(Room room, Transform conection)
     {
         Transform entrance = room.Entrance;
+        room.OriginalQuaternion = room.transform.rotation;
 
         //matem quem inventou quaternions, 2 horas nesta brincadeira
         Quaternion rotation = Quaternion.FromToRotation(entrance.forward, -conection.forward);
