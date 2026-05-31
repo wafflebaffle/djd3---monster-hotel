@@ -7,6 +7,15 @@ public class RunManager : MonoBehaviour
 
     [SerializeField] private bool randomSeed = true;
     [SerializeField] private int seed;
+    [SerializeField] private FloorGenerator floorGenerator;
+
+    private RunData runData;
+
+    private void Start()
+    {
+        runData = new RunData(Seed);
+        floorGenerator.GenerateFloor();
+    }
 
     private void Awake()
     {
