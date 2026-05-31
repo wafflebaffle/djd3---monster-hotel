@@ -25,6 +25,13 @@ public class RunManager : MonoBehaviour
         GenerateCurrentLevel();
     }
 
+    public void NextLevel()
+    {
+        floorGenerator.ClearLevel();
+        currentRun.NextLevel();
+        GenerateCurrentLevel();
+    }
+
     private void GenerateCurrentLevel()
     {
         int LevelSeed = currentRun.Seed + currentRun.CurrentLevel;
