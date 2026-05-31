@@ -2275,6 +2275,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Elevator
       objectReference: {fileID: 0}
+    - target: {fileID: 8433751974723561452, guid: 40f06b117d13a634ebbcd071fc349b9b, type: 3}
+      propertyPath: floorGenerator
+      value: 
+      objectReference: {fileID: 1943465280}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

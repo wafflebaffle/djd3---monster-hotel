@@ -30,8 +30,6 @@ public class FloorGenerator : MonoBehaviour
         GenerateRoom();
     }
 
-
-
     private void GenerateRoom()
     {
         List<Transform> shuffledConnections = ShuffleConnections();
@@ -98,5 +96,4 @@ public class FloorGenerator : MonoBehaviour
 
         generatedRooms.Clear();
     }
-
 }

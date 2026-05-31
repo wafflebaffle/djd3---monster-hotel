@@ -1,4 +1,5 @@
- using System.Collections.Generic;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AssetsGenerator : MonoBehaviour 
@@ -18,8 +19,10 @@ public class AssetsGenerator : MonoBehaviour
     private Dictionary<Vector3, bool> _positions = new();
     private int _remainingAssets;
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitForSeconds(1);
+
         rnd = new System.Random(RunManager.Seed);
         _roomsBounds = roomArea.bounds;
 
