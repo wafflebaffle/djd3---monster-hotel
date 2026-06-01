@@ -65,7 +65,9 @@ public class FloorGenerator : MonoBehaviour
 
         room.transform.position += conection.position - entrance.position;
 
-        room.transform.SetParent(conection);
+        generatedRooms.Add(room);
+
+        room.transform.SetParent(levelRoot);
     }
 
     private List<Transform> ShuffleConnections()
