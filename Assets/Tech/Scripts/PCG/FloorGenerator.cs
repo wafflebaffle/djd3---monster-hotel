@@ -87,6 +87,7 @@ public class FloorGenerator : MonoBehaviour
     private void CreateLevelRoot()
     {        
         levelRoot = new GameObject("LevelRoot").transform;
+        levelRoot.transform.SetParent(this.transform);
     }
 
     public void ClearLevel()

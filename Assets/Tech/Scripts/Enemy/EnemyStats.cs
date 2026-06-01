@@ -41,6 +41,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
         OnHealthChanged?.Invoke();
     }
 
+
     private void Awake()
     {
         events.RaiseEnemySpawned();
