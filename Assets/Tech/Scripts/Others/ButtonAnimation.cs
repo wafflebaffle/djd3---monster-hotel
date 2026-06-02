@@ -14,11 +14,11 @@ public class ButtonAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     public void OnPointerEnter(PointerEventData a)
     {
-        _anim.Play(animationEnterName);
+        _anim.SetTrigger(animationEnterName);
     }
 
     public void OnPointerExit(PointerEventData a)
     {
-        _anim.Play(animationExitName);
+        _anim.SetTrigger(animationExitName);
     }
 }

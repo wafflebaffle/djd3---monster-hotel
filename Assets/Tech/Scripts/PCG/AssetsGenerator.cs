@@ -62,7 +62,6 @@ public class AssetsGenerator : MonoBehaviour
                     if(hit.transform.TryGetComponent(out Temp _)) 
                     {
                         _unavaiablePoints.Add(roundedPoint);
-                        continue;
                     }
 
                     _points.Add(roundedPoint);
@@ -186,6 +185,8 @@ public class AssetsGenerator : MonoBehaviour
         foreach (Vector3 position in positionsList)
         {
             if (assetList.Count == 0) break;
+
+            if (_unavaiablePoints.Contains(position)) continue;
             
             if (_positions[position]) continue;
             
@@ -196,9 +197,6 @@ public class AssetsGenerator : MonoBehaviour
             
             if (hasDirection)
             {
-                if(_unavaiablePoints.Contains(position + positionDict[position]))
-                    continue;
-
                 Vector3 destination = position + new Vector3(
                     toDispose.SizePerStep.x * positionDict[position].z * stepSize, 
                     toDispose.SizePerStep.y, 
