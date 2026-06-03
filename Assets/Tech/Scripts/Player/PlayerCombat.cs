@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.InputSystem;
 
 public class PlayerCombat : Combat
@@ -14,6 +15,9 @@ public class PlayerCombat : Combat
     [SerializeField] private Animator attackAnim;
     [SerializeField] private string attackAnimName = "Punch";
     [SerializeField] private float attackAnimDuration = 1.0f;
+
+    [Header("Audio")]
+    [SerializeField] private AudioMixerGroup sfxGroup;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private AudioClip hitSound;
@@ -22,6 +26,11 @@ public class PlayerCombat : Combat
     {
         _attack = InputSystem.actions.FindAction(attackInput);
         _stats = GetComponent<PlayerStats>();
+
+        if (audioSource && sfxGroup)
+        {
+            audioSource.outputAudioMixerGroup = sfxGroup;
+        }
     }
     void Update()
     {

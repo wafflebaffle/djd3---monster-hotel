@@ -7,15 +7,40 @@ public class RunManager : MonoBehaviour
 
     [SerializeField] private bool randomSeed = true;
     [SerializeField] private int seed;
+    [SerializeField] private FloorGenerator floorGenerator;
 
-    private void Awake()
+    private RunData currentRun;
+
+    private void Start()
     {
-        if (randomSeed)
-        {
-            Seed = DateTime.Now.GetHashCode();
-        }
-        else Seed = seed;
+        StartRun();
+    }
 
-        Debug.Log("RUN SEED: " +  Seed);
+    private void StartRun()
+    {
+        int runSeed = randomSeed? DateTime.Now.GetHashCode() : seed;
+
+        currentRun = new RunData(runSeed);
+
+        GenerateCurrentLevel();
+    }
+
+    public void NextLevel()
+    {
+        floorGenerator.ClearLevel();
+        currentRun.NextLevel();
+        GenerateCurrentLevel();
+    }
+
+    private void GenerateCurrentLevel()
+    {
+        int LevelSeed = currentRun.Seed + currentRun.CurrentLevel;
+
+        floorGenerator.Generate(LevelSeed);
+    }
+
+    private void EndRun()
+    {
+        floorGenerator.ClearLevel();
     }
 }

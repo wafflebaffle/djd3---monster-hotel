@@ -1,6 +1,7 @@
-using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
+using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class Main_Menu : MonoBehaviour
 {
@@ -12,7 +13,9 @@ public class Main_Menu : MonoBehaviour
     [SerializeField] private string animStartName = "Start";
     [SerializeField] private string annimRestoreSettingsName = "Restore";
     [SerializeField] private float animationTime = 60.0f;
+
     [Header("AmbientMusic")]
+    [SerializeField] private AudioMixerGroup MusicGroup;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip music1;
 
@@ -20,6 +23,11 @@ public class Main_Menu : MonoBehaviour
     {
         audioSource.clip = music1;
         audioSource.Play();
+
+        if (audioSource && MusicGroup)
+        {
+            audioSource.outputAudioMixerGroup = MusicGroup;
+        }
     }
 
     public void StartGame(int sceneindex)

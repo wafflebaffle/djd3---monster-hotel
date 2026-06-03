@@ -7,6 +7,7 @@
  * */
 
 using UnityEngine;
+using System.Collections;
 
 public class RoomArea : MonoBehaviour
 {
@@ -17,8 +18,9 @@ public class RoomArea : MonoBehaviour
 
     [SerializeField] private Collider mesh;
     // Configure game area limits object
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitForSeconds(0.9f);
         // Get the sprite renderer and its bounds
         mesh = GetComponent<Collider>();
         Bounds bounds = mesh.bounds;
@@ -50,28 +52,5 @@ public class RoomArea : MonoBehaviour
             _ => new Vector2(),
         };
         return newPosition;
-    }
-
-    // Draw gizmos, namely borders around the game area
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.blueViolet;
-
-        Vector3[] points = new Vector3[]
-        {
-            new Vector3(Xmin, 0, Zmin),
-            new Vector3(Xmin, 0, Zmax),
-
-            new Vector3(Xmin, 0, Zmax),
-            new Vector3(Xmax, 0, Zmax),
-
-            new Vector3(Xmax, 0, Zmax),
-            new Vector3(Xmax, 0, Zmin),
-
-            new Vector3(Xmax, 0, Zmax),
-            new Vector3(Xmin, 0, Zmin)
-        };
-
-        Gizmos.DrawLineList(points);
     }
 }
