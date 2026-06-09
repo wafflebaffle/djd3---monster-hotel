@@ -4,16 +4,22 @@ using UnityEngine;
 
 public class CleanerBehaviour : AIBehaviour
 {
+    // References for the enemy systems.
     private EnemyMovement _movement;
     private EnemyCombat _combat;
     private EnemySight _sight;
     private EnemyStats _stats;
+
+    // State Machine variables.
     private StateMachine _fsm;
     private State _idle;
     private State _chase;
     private State _attack;
     private State _stun;
 
+    /// <summary>
+    /// Set up all references and prepares the state machine.
+    /// </summary>
     protected override void Start()
     {
         _movement = GetComponent<EnemyMovement>();
@@ -28,11 +34,11 @@ public class CleanerBehaviour : AIBehaviour
 
         Transition idleToChaseBySight = new Transition(() => _sight.GetTarget(), null, _chase);
         _idle.AddTransition(idleToChaseBySight);
-        Transition chaseToAttack = new Transition(_combat.CanAttack, null, _attack);
+        Transition chaseToAttack = new Transition(_combat.CanAttack, _movement.StopMove, _attack);
         _chase.AddTransition(chaseToAttack);
         Transition chaseToIdle = new Transition(() => _sight.GetTarget() == false, null, _idle);
         _chase.AddTransition(chaseToIdle);
-        Transition attackToIdle = new Transition(() => _combat.HadAttack, null, _idle);
+        Transition attackToIdle = new Transition(() => _combat.HadAttack, _movement.ReableMove, _idle);
         _attack.AddTransition(attackToIdle);
         Transition anyToStun = new Transition(() => _stats.IsStunned, _movement.StopMove, _stun);
         _idle.AddTransition(anyToStun);
@@ -44,6 +50,9 @@ public class CleanerBehaviour : AIBehaviour
         _fsm = new StateMachine(_idle);
     }
 
+    /// <summary>
+    /// Update every frame the state machine, only commanding to do things by events.
+    /// </summary>
     protected override void Update()
     {
         _fsm.Update()?.Invoke();

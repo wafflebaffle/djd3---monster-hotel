@@ -20,6 +20,10 @@ public class RoomNotifier : MonoBehaviour
         _originalQuaternion = _thisRoom.OriginalQuaternion;
     }
 
+    /// <summary>
+    /// Verify if the player entered a room. If yes, change camera and warn all enemies.
+    /// </summary>
+    /// <param name="other"> Collider received on enter trigger </param>
     private void OnTriggerEnter(Collider other)
     {
         if(other.TryGetComponent(out PlayerStats player))
@@ -36,6 +40,10 @@ public class RoomNotifier : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Verify if the player exit a room. If yes, change camera and warn all enemies.
+    /// </summary>
+    /// <param name="other"> Collider received on exit trigger </param>
     private void OnTriggerExit(Collider other)
     {
         if(other.TryGetComponent(out PlayerStats player))
@@ -47,7 +55,10 @@ public class RoomNotifier : MonoBehaviour
             Invoke(nameof(ReturnToRoamingCamera), cameraReturnBreak);
         }
     }
-    
+
+    /// <summary>
+    /// Return camera to roaming position and rotation.
+    /// </summary>
     private void ReturnToRoamingCamera()
     {
         _cam.ActivateRoamingCamera();

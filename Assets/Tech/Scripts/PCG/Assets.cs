@@ -1,9 +1,12 @@
 using UnityEngine;
 
+/// <summary>
+/// A class to set up assets directly on UnityEditor using System.Serializable.
+/// All variables are public since they need to be accessed by Assets Generator.cs. 
+/// </summary>
 [System.Serializable]
 public class Assets
 {
-    public AssetsType Category = AssetsType.Decoration;
     public GameObject Prefab;
     public int MaxCount = 1;
     public int RemainingCount = 1;

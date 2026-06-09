@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 3252231194309836934}
   - component: {fileID: 2619884269373252382}
   - component: {fileID: 55945277806279937}
+  - component: {fileID: 3884894802565572132}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -122,6 +123,28 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &3884894802565572132
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2709263545930108671}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1172a6f4548c058438ad75b1267526d0, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5148011015244680431
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +190,6 @@ GameObject:
   - component: {fileID: 6517078005134296062}
   - component: {fileID: 2841547102861326965}
   - component: {fileID: 4488107864063481622}
-  - component: {fileID: 1816556547768688783}
   - component: {fileID: 4155191600589375546}
   - component: {fileID: 7706862560038141603}
   m_Layer: 0
@@ -242,11 +264,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
   stats: {fileID: 11400000, guid: e0fa640311344a24b96e66fb991744b5, type: 2}
   events: {fileID: 11400000, guid: b004ae1660958df46b2675ccda2c6f74, type: 2}
-  enemyAnim: {fileID: 1816556547768688783}
+  enemyAnim: {fileID: 3884894802565572132}
   takeDamageAnimName: TakeDamage
   deathAnimName: Death
   deathAnimTime: 0.5
-  hitStunDuration: 0.15
 --- !u!195 &2841547102861326965
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -292,28 +313,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &1816556547768688783
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7101127942172274677}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 767ba1791d5878f44b382689b46ad18b, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 1
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &4155191600589375546
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,11 +326,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RangedEnemyCombat
   attackPoint: {fileID: 4691298773100498381}
-  attackTreshold: 2
-  attackAnim: {fileID: 1816556547768688783}
+  attackAnim: {fileID: 3884894802565572132}
   attackAnimName: Shot
   attackAnimDuration: 1
   projectile: {fileID: 516369130296258303, guid: 5a6111484abf3004aa7e5eb962f4edad, type: 3}
+  player:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &7706862560038141603
 MonoBehaviour:
   m_ObjectHideFlags: 0

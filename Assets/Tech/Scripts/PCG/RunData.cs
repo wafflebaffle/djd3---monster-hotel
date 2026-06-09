@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class RunData : MonoBehaviour
+public class RunData
 {
     public int Seed { get; private set; }
     public int CurrentLevel { get; private set; }

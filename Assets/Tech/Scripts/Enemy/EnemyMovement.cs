@@ -15,8 +15,6 @@ public class EnemyMovement : MonoBehaviour
     private Vector3? _lastTarget;
     private Vector3 _lastPos;
 
-    private bool _isStunned;
-
     private void Start()
     {
         _enemy = GetComponent<EnemyStats>();

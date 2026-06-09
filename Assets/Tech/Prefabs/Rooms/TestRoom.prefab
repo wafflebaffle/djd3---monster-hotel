@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 8636039861556132067}
   - component: {fileID: 5335722111113671908}
   m_Layer: 0
-  m_Name: RoomOne
+  m_Name: TestRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -250,33 +250,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AssetsGenerator
   assets:
-  - Category: 0
-    Prefab: {fileID: 7873731032062304759, guid: 6dddbb735e039b048bd3d00c88844d12, type: 3}
-    MaxCount: 2
-    RemainingCount: 1
-    SizePerStep: {x: 0, y: 0, z: 0}
-    PreferencePlacement: 1
-  - Category: 0
-    Prefab: {fileID: 2724122495360523850, guid: 488c007cfb6c9f047b2bc054c3580948, type: 3}
-    MaxCount: 2
-    RemainingCount: 1
-    SizePerStep: {x: 1, y: 0, z: 0}
-    PreferencePlacement: 1
-  - Category: 0
-    Prefab: {fileID: 7412673259067321843, guid: f0ee49d0f6744754393af7a34fbbb5d3, type: 3}
+  - Prefab: {fileID: 7101127942172274677, guid: 4616dfbc12f6f2a4085edfcc4473a711, type: 3}
     MaxCount: 1
-    RemainingCount: 1
-    SizePerStep: {x: 2, y: 0, z: 2}
-    PreferencePlacement: 0
-  - Category: 2
-    Prefab: {fileID: 7944465180534532267, guid: eed2d009f85d46e47b67bdd682ccd4d9, type: 3}
-    MaxCount: 1
-    RemainingCount: 1
-    SizePerStep: {x: 0, y: 0, z: 0}
-    PreferencePlacement: 2
-  - Category: 1
-    Prefab: {fileID: 8068299934542467148, guid: b1b08baf384627348b8821ebfee87d80, type: 3}
-    MaxCount: 4
     RemainingCount: 1
     SizePerStep: {x: 0, y: 0, z: 0}
     PreferencePlacement: 2

@@ -27,7 +27,6 @@ public class EnemySight : MonoBehaviour
         {
             if(target != null)
 
-                
             _timer += Time.deltaTime;
             target = SeekTarget();
 

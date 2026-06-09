@@ -8,18 +8,11 @@ public class FloorGenerator : MonoBehaviour
     [SerializeField] private Transform[] corridorConection;
 
     private System.Random random;
-    private NavMeshSurface _surfaceAI;
 
     private RoomGenerato roomGenerator;
 
     private Transform levelRoot;
     private readonly List<Room> generatedRooms = new();
-    
-
-    private void Awake()
-    {
-        _surfaceAI = GetComponent<NavMeshSurface>();
-    }
 
     public void Generate(int seed)
     {
@@ -49,8 +42,6 @@ public class FloorGenerator : MonoBehaviour
 
             AttachRoom(room, connection);
         }
-
-        _surfaceAI.BuildNavMesh();
     }
 
 

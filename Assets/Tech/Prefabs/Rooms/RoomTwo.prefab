@@ -52,8 +52,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.2782247, y: 0.31247365, z: 5.0641537}
-  m_Center: {x: 0.08572996, y: 0.30762368, z: -2.0320764}
+  m_Size: {x: 2.5670893, y: 0.3968006, z: 5.0641537}
+  m_Center: {x: -0.018297315, y: 0.1464244, z: -2.0320764}
 --- !u!114 &1381971727509835662
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,6 +334,7 @@ GameObject:
   - component: {fileID: 372855261225381373}
   - component: {fileID: 380948214948031639}
   - component: {fileID: 468494698969049794}
+  - component: {fileID: 2810667686094051440}
   m_Layer: 0
   m_Name: RoomTwo
   m_TagString: Untagged
@@ -380,8 +381,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 8.278732, y: 1, z: 12.343117}
-  m_Center: {x: 2.5423002, y: 0, z: -4.176239}
+  m_Size: {x: 8, y: 1, z: 12}
+  m_Center: {x: 2.5, y: 0, z: -4.25}
 --- !u!114 &7244985864267709562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -454,7 +455,7 @@ MonoBehaviour:
     Prefab: {fileID: 7412673259067321843, guid: f0ee49d0f6744754393af7a34fbbb5d3, type: 3}
     MaxCount: 1
     RemainingCount: 1
-    SizePerStep: {x: 1, y: 0, z: 2}
+    SizePerStep: {x: 2, y: 0, z: 2}
     PreferencePlacement: 0
   - Category: 2
     Prefab: {fileID: 5125655322329505420, guid: f884365454dc21a4b91c73d492d99030, type: 3}
@@ -474,8 +475,40 @@ MonoBehaviour:
   floorLayer:
     serializedVersion: 2
     m_Bits: 768
-  chanceToSpawnAsset: 0.74
+  chanceToSpawnAsset: 0.5
   maxIterations: 100
+--- !u!114 &2810667686094051440
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7572037830115364429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 2
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 1
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.083333336
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: 932c69c7c613c9e4f83f204bea20c25b, type: 2}
+  m_BuildHeightMesh: 0
 --- !u!1 &7951336819871690151
 GameObject:
   m_ObjectHideFlags: 0

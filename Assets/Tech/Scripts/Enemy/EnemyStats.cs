@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 
 public class EnemyStats : MonoBehaviour, IDamageable, IParryable
 {
@@ -12,6 +11,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     [SerializeField] private string deathAnimName = "Death";
     [SerializeField] private float deathAnimTime = 0.5f;
     public Animator Animator => enemyAnim;
+    private Vector3 _startPos = new();
 
     private Renderer[] _renderers;
     private Color[] _originalColors;
@@ -41,10 +41,15 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
         OnHealthChanged?.Invoke();
     }
 
+    private void OnDisable()
+    {
+        transform.position = _startPos;
+    }
 
     private void Awake()
     {
         events.RaiseEnemySpawned();
+        _startPos = transform.position;
 
         _enemyMovement = GetComponent<EnemyMovement>();
         _enemySight = GetComponent<EnemySight>();

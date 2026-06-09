@@ -1,27 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
+using UnityEngine.AI;
 using UnityEngine;
 
 public class AssetsGenerator : MonoBehaviour 
 {
+    // List of all assets, adjustable in editor;
     [SerializeField] private List<Assets> assets;
+    // Area of the room;
     [SerializeField] private Collider roomArea;
+    // Every mesh in the gameobject;
     [SerializeField] private GameObject allMeshes;
+    // Size between in point;
     [SerializeField] private float stepSize;
+    // Floor layer for raycast;
     [SerializeField] private LayerMask floorLayer;
+    // The chance of spawning an asset during the loop;
     [SerializeField] private float chanceToSpawnAsset;
+    /// Max interarions to spawn assets to force the loop to stop;
     [SerializeField] private int maxIterations;
+    // Random from System;
     private System.Random rnd;
+    // Boundaries of the room;
     private Bounds _roomsBounds;
-    private List<Vector3> _points = new();
-    private List<Vector3> _unavaiablePoints = new();
+    // A list of all points;
+    private HashSet<Vector3> _points = new();
+    // A list of all unavailable points;
+    private HashSet<Vector3> _unavailablePoints = new();
+    // Dictionary for types of positions for each side of the room, storing their position as keys and direction as values;
     private Dictionary<Vector3, Vector3> _corners = new (), _walls = new (), _center = new ();
+    // Dictionary for all position of the room, storing position as keys and if occupied as value;
     private Dictionary<Vector3, bool> _positions = new();
+    // Cache storage for the quantity of assets that remais to dispose;
     private int _remainingAssets;
+    // Reference for the NavMeshSurface, to bake it and got points from it;
+    private NavMeshSurface _surfaceAI;
 
+    /// <summary>
+    /// It set ups the NavMeshSurface and bake it, instance the random using our universal seed, get the points on the room
+    /// and dispose all assets.
+    /// </summary>
+    /// <returns> Returns a WaitForSeconds of 1 second, since the room doesn't start directly on the right position. </returns>
     private IEnumerator Start()
     {
         yield return new WaitForSeconds(1);
+
+        _surfaceAI = GetComponent<NavMeshSurface>();
+        _surfaceAI.BuildNavMesh();
 
         rnd = new System.Random(RunManager.Seed);
         _roomsBounds = roomArea.bounds;
@@ -39,37 +65,60 @@ public class AssetsGenerator : MonoBehaviour
         OrganizePositions();
         DisposeAssets();
 
-        //allMeshes.SetActive(false);
+        allMeshes.SetActive(false);
     }
 
-    // Lista de Assets disponíveis, separados por tamanho e função, provavelmente uma classe
-
-    // Metodo que obtem a area da sala para obter os pontos para fazer raycast
-
+    /// <summary>
+    /// Save all points inside the boundaries of the room on the _points list. It uses the NavMeshSurface to check if that position exists.
+    /// </summary>
     private void GetPositions()
     {
         for (float x = _roomsBounds.min.x; x <= _roomsBounds.max.x; x += stepSize)
         {
             for (float z = _roomsBounds.min.z; z <= _roomsBounds.max.z; z += stepSize)
             {
-                Vector3 origin = new Vector3(x, _roomsBounds.max.y + 1f, z);
-                if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, Mathf.Infinity, floorLayer))
+                Vector3 samplePoint = new Vector3(x, _roomsBounds.center.y, z);
+                
+                float sampleRadius = stepSize * 0.5f;
+                if (NavMesh.SamplePosition(samplePoint, out NavMeshHit hit, sampleRadius, NavMesh.AllAreas))
                 {
-                    float roundedX = Mathf.Round(hit.point.x / stepSize) * stepSize;
-                    float roundedZ = Mathf.Round(hit.point.z / stepSize) * stepSize;
-                    Vector3 roundedPoint = new Vector3(roundedX, hit.point.y, roundedZ);
+                    float roundedX = Mathf.Round(hit.position.x / stepSize) * stepSize;
+                    float roundedZ = Mathf.Round(hit.position.z / stepSize) * stepSize;
+                    float roundedY = Mathf.Round(hit.position.y / stepSize) * stepSize;
+                    Vector3 roundedPoint = new Vector3(roundedX, roundedY, roundedZ);
 
-                    if(hit.transform.TryGetComponent(out Temp _)) 
-                    {
-                        _unavaiablePoints.Add(roundedPoint);
-                    }
-
+                    if (Physics.Raycast(roundedPoint + Vector3.up, Vector3.down, out RaycastHit rayHit, 2f, floorLayer))
+                        if (rayHit.transform.TryGetComponent(out Temp _))
+                            _unavailablePoints.Add(roundedPoint);
+    
                     _points.Add(roundedPoint);
                 }
             }
         }
     }
 
+    /// <summary>
+    /// A boolean check if a position is available.
+    /// </summary>
+    /// <param name="point"></param>
+    /// <returns> return true if a point is occupied </returns>
+    private bool IsUnavailable(Vector3 point)
+    {
+        foreach (Vector3 p in _unavailablePoints)
+        {
+            if (Mathf.Approximately(p.x, point.x) && 
+                Mathf.Approximately(p.z, point.z))
+                return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// Organize every point for diferent sides of the room, for the dictionaries from above: _center, _wall and _corner;
+    /// Center points do not have directions.
+    /// Wall points store as values the direction they are facing.
+    /// Corner points store as values the direction they are facing.
+    /// </summary>
     private void OrganizePositions()
     {
         foreach (Vector3 point in _points)
@@ -100,18 +149,16 @@ public class AssetsGenerator : MonoBehaviour
                 }
                 else
                 {
-                    if (hasXPlus && hasXMinus) _walls.Add(point, Vector3.zero);
-                    else if (hasZPlus && hasZMinus) _walls.Add(point, Vector3.zero);
-                    else if (hasXPlus) _walls.Add(point, Vector3.forward);
-                    else if (hasXMinus) _walls.Add(point, Vector3.back);
+                    if (hasXPlus) _walls.Add(point, Vector3.back);
+                    else if (hasXMinus) _walls.Add(point, Vector3.forward);
                     else if (hasZPlus) _walls.Add(point, Vector3.right);
                     else if (hasZMinus) _walls.Add(point, Vector3.left);
                 }
             }
             else if (neighborCount == 3)
             {
-                if (!hasXPlus && hasXMinus && hasZPlus && hasZMinus) _walls.Add(point, Vector3.forward);
-                else if (!hasXMinus && hasXPlus && hasZPlus && hasZMinus) _walls.Add(point, Vector3.back);
+                if (!hasXPlus && hasXMinus && hasZPlus && hasZMinus) _walls.Add(point, Vector3.back);
+                else if (!hasXMinus && hasXPlus && hasZPlus && hasZMinus) _walls.Add(point, Vector3.forward);
                 else if (!hasZPlus && hasXPlus && hasXMinus && hasZMinus) _walls.Add(point, Vector3.right);
                 else if (!hasZMinus && hasXPlus && hasXMinus && hasZPlus) _walls.Add(point, Vector3.left);
             }
@@ -121,9 +168,11 @@ public class AssetsGenerator : MonoBehaviour
             }
         }
     }
-    // Metodo para fazer raycast ao chão
-
-    // Metodo para selecionar o objeto ideal
+  
+    /// <summary>
+    /// Dispose assets on the room, storing them separatly by their preference placement, and then doing a loop
+    /// until reach the max interation.
+    /// </summary>
     private void DisposeAssets()
     {
         List<Assets> cornerAssets = new();
@@ -168,28 +217,32 @@ public class AssetsGenerator : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Verify all positions on the dictionary that has the same placement preference as the asset list used. If it has directions,
+    /// it checks every position that could block the asset. Else, just place it randomly.
+    /// </summary>
+    /// <param name="assetList"> List of assets to dispose </param>
+    /// <param name="positionDict"> Positions to place those assets </param>
+    /// <param name="hasDirection"> If has a direction(if isn't a center piece) </param>
     private void DisposePerPoint(List<Assets> assetList, Dictionary<Vector3, Vector3> positionDict, bool hasDirection)
     {
         if (assetList == null || assetList.Count == 0) return;
         
         List<Vector3> positionsList = new List<Vector3>(positionDict.Keys);
 
+        // Fisher-Yates shuffle, was recomended by ClaudAI.
         for (int i = 0; i < positionsList.Count; i++)
         {
             int randomIndex = rnd.Next(i, positionsList.Count);
-            Vector3 temp = positionsList[i];
-            positionsList[i] = positionsList[randomIndex];
-            positionsList[randomIndex] = temp;
+            (positionsList[i], positionsList[randomIndex]) = 
+                (positionsList[randomIndex], positionsList[i]);
         }
         
         foreach (Vector3 position in positionsList)
         {
             if (assetList.Count == 0) break;
-
-            if (_unavaiablePoints.Contains(position)) continue;
-            
-            if (_positions[position]) continue;
-            
+            if (IsUnavailable(position)) continue;
+            if (_positions.TryGetValue(position, out bool occupied) && occupied) continue;
             if (rnd.NextDouble() > chanceToSpawnAsset) continue;
             
             Assets toDispose = DisposeAsset(assetList);
@@ -197,62 +250,66 @@ public class AssetsGenerator : MonoBehaviour
             
             if (hasDirection)
             {
-                Vector3 destination = position + new Vector3(
-                    toDispose.SizePerStep.x * positionDict[position].z * stepSize, 
-                    toDispose.SizePerStep.y, 
-                    toDispose.SizePerStep.z * positionDict[position].x * stepSize);
-                    
-                if (_positions.ContainsKey(destination) && !_positions[destination])
-                {
-                    if (toDispose.SizePerStep.x == 0) destination.x -= 1;
-                    if (toDispose.SizePerStep.z == 0) destination.z -= 1;
-                    
-                    if (Physics.BoxCast((position + destination) / 2f, new Vector3(stepSize / 2f, 1f, stepSize / 2f), Vector3.down, Quaternion.identity, ~floorLayer))
-                    {
-                        toDispose.RemainingCount++;
-                        _remainingAssets++;
-                        assetList.Add(toDispose);
-                        continue;
-                    }
+                Vector3 dir = positionDict[position];
+                List<Vector3> blockedPositions = new List<Vector3>();
+                bool canPlace = true;
 
-                    Instantiate(toDispose.Prefab, (position + destination) / 2f, Quaternion.LookRotation(positionDict[position]), allMeshes.transform);
-                    for (int x = 0; x < toDispose.SizePerStep.z; x++)
+                int stepsX = Mathf.Max(1, (int)toDispose.SizePerStep.x);
+                int stepsZ = Mathf.Max(1, (int)toDispose.SizePerStep.z);
+
+                for (int a = 0; a < stepsX+1; a++)
+                {
+                    for (int b = 0; b < stepsZ+1; b++)
                     {
-                        for (int z = 0; z < toDispose.SizePerStep.x; z++)
+                        Vector3 blockPos = position + new Vector3(
+                            a * dir.x * stepSize,
+                            0,
+                            b * dir.z * stepSize);
+
+                        if (!_positions.TryGetValue(blockPos, out bool isOccupied) || isOccupied)
                         {
-                            Vector3 blockPos = position + new Vector3(x * stepSize, 0, z * stepSize);
-                            if (_positions.ContainsKey(blockPos))
-                                _positions[blockPos] = true;
+                            canPlace = false;
+                            break;
                         }
+
+                        blockedPositions.Add(blockPos);
                     }
-                    _positions[destination] = true;
+                    if (!canPlace) break;
+                }
+                    
+                if (canPlace && blockedPositions.Count > 0)
+                {
+                    Vector3 spawnPos = Vector3.zero;
+                    foreach (Vector3 p in blockedPositions) spawnPos += p;
+                    spawnPos /= blockedPositions.Count;
+                    spawnPos.y = position.y + toDispose.SizePerStep.y;
+
+                    Instantiate(toDispose.Prefab, spawnPos, Quaternion.LookRotation(positionDict[position]), allMeshes.transform);
+                    
+                    foreach (Vector3 p in blockedPositions)
+                        _positions[p] = true;
                 }
                 else
                 {
                     toDispose.RemainingCount++;
                     _remainingAssets++;
-                    assetList.Add(toDispose);
+                    if (!assetList.Contains(toDispose))
+                        assetList.Add(toDispose);
                 }
             }
             else
             {
-                if (Physics.BoxCast(position, new Vector3(stepSize / 2f, 1f, stepSize / 2f), Vector3.down, Quaternion.identity, ~floorLayer))
-                {
-                    toDispose.RemainingCount++;
-                    _remainingAssets++;
-                    assetList.Add(toDispose);
-                    continue;
-                }
-                    
-                if (!_positions[position])
-                {
-                    Instantiate(toDispose.Prefab, position, Quaternion.identity, allMeshes.transform);
-                    _positions[position] = true;
-                }
+                Instantiate(toDispose.Prefab, position, Quaternion.identity, allMeshes.transform);
+                _positions[position] = true;
             }
         }
     }
 
+    /// <summary>
+    /// To try dispose an asset on the designed position.
+    /// </summary>
+    /// <param name="thoseAssets"> List of all possible assets to place there </param>
+    /// <returns> Returns the asset to dispose </returns>
     private Assets DisposeAsset(List<Assets> thoseAssets)
     {
         if (thoseAssets == null || thoseAssets.Count == 0)
@@ -260,8 +317,12 @@ public class AssetsGenerator : MonoBehaviour
 
         List<Assets> availableAssets = thoseAssets
                                         .FindAll(a => a.RemainingCount > 0);
-        if (availableAssets.Count == 0) 
-            return null;
+        if (availableAssets.Count == 0)
+        {
+            thoseAssets.Clear();
+            return null;            
+        }
+
 
         Assets result = availableAssets[rnd.Next(0, availableAssets.Count)];
         result.RemainingCount--;
@@ -270,6 +331,9 @@ public class AssetsGenerator : MonoBehaviour
         return result;
     }
 
+    /// <summary>
+    /// For debugging. To see the points spawn on the room.
+    /// </summary>
     private void OnDrawGizmosSelected()
     {
         if (_points != null)
