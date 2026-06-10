@@ -23,10 +23,21 @@ public class RunManager : MonoBehaviour
 
     private void StartRun()
     {
-        int runSeed = randomSeed? DateTime.Now.GetHashCode() : seed;
+        int runSeed;
+        if (PlayerPrefs.HasKey("RunSeed"))
+        {
+            runSeed = PlayerPrefs.GetInt("RunSeed");
+            PlayerPrefs.DeleteKey("RunSeed");
+        }
+        else
+        {
+            //Fallback
+            runSeed = randomSeed ? DateTime.Now.GetHashCode() : seed;
+        }
 
-        currentRun = new RunData(runSeed);
-
+        seed = runSeed;
+        Seed = seed;
+        currentRun = new RunData(Seed);
         GenerateCurrentLevel();
     }
 
