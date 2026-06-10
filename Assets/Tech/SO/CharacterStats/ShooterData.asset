@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StatsData
   maxHealth: 25
   currentHealth: 0
-  moveSpeed: 2
-  angularSpeed: 120
+  moveSpeed: 1
+  angularSpeed: 480
   attackDamage: 10
   attackRange: 10
   attackCooldown: 0.5
   shieldCooldown: 0
+  stunDuration: 0
+  knockbackDistance: 0

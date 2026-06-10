@@ -31,7 +31,7 @@ public class WaiterShooterBehaviour : AIBehaviour
         _stats = GetComponent<EnemyStats>();
 
         _idle = new State("Idle", null, _movement.MoveRandom, null);
-        _chase = new State("Chase", null, _movement.Move, null);
+        _chase = new State("Chase", _movement.RotateToTarget, _movement.MoveWithDistance, null);
         _attack = new State("Attack", _combat.DoAttack, null, null);
         _stun = new State("Stun", null, null, () => _sight.GetTarget(_sight.Target));
 
@@ -53,7 +53,7 @@ public class WaiterShooterBehaviour : AIBehaviour
         _flee = new State("Flee", null, _movement.Flee, null);
         Transition chaseToFlee = new Transition(() => _movement.DistanceToTarget() < fleeDistance, null, _flee);
         _chase.AddTransition(chaseToFlee);
-        Transition fleeToChase = new Transition(() => _movement.DistanceToTarget() > fleeDistance, null, _chase);
+        Transition fleeToChase = new Transition(() => _movement.DistanceToTarget() > fleeDistance + 1 || _movement.isStopped(), null, _chase);
         _flee.AddTransition(fleeToChase);
 
         _fsm = new StateMachine(_idle);
