@@ -24,17 +24,19 @@ public class WaiterShooterBehaviour : AIBehaviour
     /// </summary>
     protected override void Start()
     {
-
+        // Set up
         _movement = GetComponent<EnemyMovement>();
         _combat = GetComponent<RangedEnemyCombat>();
         _sight = GetComponent<EnemySight>();
         _stats = GetComponent<EnemyStats>();
 
+        // States
         _idle = new State("Idle", null, _movement.MoveRandom, null);
         _chase = new State("Chase", _movement.RotateToTarget, _movement.MoveWithDistance, null);
         _attack = new State("Attack", _combat.DoAttack, null, null);
         _stun = new State("Stun", null, null, () => _sight.GetTarget(_sight.Target));
 
+        // Transitions
         Transition idleToChaseBySight = new Transition(() => _sight.GetTarget(), null, _chase);
         _idle.AddTransition(idleToChaseBySight);
         Transition chaseToAttack = new Transition(_combat.CanAttack, _movement.StopMove, _attack);
@@ -49,7 +51,6 @@ public class WaiterShooterBehaviour : AIBehaviour
         _attack.AddTransition(anyToStun);
         Transition stunToChase = new Transition(() => _stats.IsStunned == false, _movement.ReableMove, _chase);
         _stun.AddTransition(stunToChase);
-
         _flee = new State("Flee", null, _movement.Flee, null);
         Transition chaseToFlee = new Transition(() => _movement.DistanceToTarget() < fleeDistance, null, _flee);
         _chase.AddTransition(chaseToFlee);

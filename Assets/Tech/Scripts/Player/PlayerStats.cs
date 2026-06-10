@@ -2,9 +2,10 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable
+public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISaveable
 {
     [SerializeField] private StatsData stats;
+    [SerializeField] private Animator animator;
 
     private float _health;
     private PlayerMovement _playerMovement;
@@ -18,11 +19,14 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable
     public float CurrentHealth => _health;
     public float MaxHealth => stats.maxHealth;
     public float AttackDamage => stats.attackDamage;
+    public float AttackRange => stats.attackRange;
+    public float AttackCooldown => stats.attackCooldown;
     public float ShieldCooldown => stats.shieldCooldown;
     public float Speed => stats.moveSpeed;
     public float AngularSpeed => stats.angularSpeed;
     public float StunDuration => stats.stunDuration;
     public float KnockbackDistance => stats.knockbackDistance;
+    public Animator Animator => animator;
 
     //Instancias Temporárias
     private bool _isBuff;
@@ -133,11 +137,6 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable
         _parry.SetCooldown(_parry.Cooldown - timeToReduce);
     }
 
-    public void SaveStats()
-    {
-        //Send to PlayerPrefs
-    }
-
     public void SaveTempStats()
     {
         stats.maxHealth = MaxHealth;
@@ -175,5 +174,67 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable
             _health = 0;
             Death();
         }
+    }
+
+    public string GetSaveID()
+    {
+        return name + ":" + GetType().Name;
+    }
+
+    public object GetSaveData()
+    {
+        SaveData saveData;
+
+        saveData.maxHealth = MaxHealth;
+        saveData.currentHealth = CurrentHealth;
+        saveData.moveSpeed = Speed;
+        saveData.angularSpeed = AngularSpeed;
+        saveData.attackDamage = AttackDamage;
+        saveData.attackRange = AttackRange;
+        saveData.attackCooldown = AttackCooldown;
+        saveData.shieldCooldown = ShieldCooldown;
+        saveData.stunDuration = StunDuration;
+        saveData.knockbackDistance = KnockbackDistance;
+        saveData.animationTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        saveData.animationState = animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
+
+        return saveData;
+    }
+
+    public void LoadSaveData(object data)
+    {
+        SaveData saveData = (SaveData)data;
+
+        stats.maxHealth = saveData.maxHealth;
+        stats.currentHealth = saveData.currentHealth;
+        stats.moveSpeed = saveData.moveSpeed;
+        stats.angularSpeed = saveData.angularSpeed;
+        stats.attackDamage = saveData.attackDamage;
+        stats.attackRange = saveData.attackRange;
+        stats.attackCooldown = saveData.attackCooldown;
+        stats.shieldCooldown = saveData.shieldCooldown;
+        stats.stunDuration = saveData.stunDuration;
+        stats.knockbackDistance = saveData.knockbackDistance;
+        
+        animator.Play(saveData.animationState, 0, saveData.animationTime);
+
+        DispatchHealthChanged();
+    }
+
+    [System.Serializable]
+    private struct SaveData
+    {
+        public float maxHealth;
+        public float currentHealth;
+        public float moveSpeed;
+        public float angularSpeed;
+        public float attackDamage;
+        public float attackRange;
+        public float attackCooldown;
+        public float shieldCooldown;
+        public float stunDuration;
+        public float knockbackDistance;
+        public float    animationTime;
+        public int    animationState;
     }
 }
