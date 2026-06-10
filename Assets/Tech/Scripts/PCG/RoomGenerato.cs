@@ -6,37 +6,30 @@ public class RoomGenerato
 {
     private System.Random random;
 
-    private HashSet<Room> usedRooms = new HashSet<Room>();
+    private List<Room> avaliableRooms;
 
 
-    public RoomGenerato(int seed)
+    public RoomGenerato(System.Random random)
     {
-        random = new System.Random(seed);
+        this.random = random;
     }
 
+    //sem repetição de salas só pra testar
     public Room PickRoom(Room[] rooms)
     {
-        List<Room> validRooms = new List<Room>();
-
-        foreach (Room room in rooms)
+        if (avaliableRooms == null|| avaliableRooms.Count == 0)
         {
-            //regra de salas n�o se podem repetir
-           //if(!usedRooms.Contains(room))
-           //{
-                validRooms.Add(room);
-           //}
+            avaliableRooms = new List<Room>(rooms);
         }
 
-        //fallback
-        if (validRooms.Count == 0)
+        if(avaliableRooms.Count == 0)
         {
             return null;
         }
 
-        Room chosen = validRooms[random.Next(validRooms.Count)];
-
-        usedRooms.Add(chosen);
-
+        int index = random.Next(avaliableRooms.Count);
+        Room chosen = avaliableRooms[index];
+        avaliableRooms.RemoveAt(index);
         return chosen;
     }
 }

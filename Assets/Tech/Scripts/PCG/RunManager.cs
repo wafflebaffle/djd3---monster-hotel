@@ -34,9 +34,7 @@ public class RunManager : MonoBehaviour
 
     private void GenerateCurrentLevel()
     {
-        int LevelSeed = currentRun.Seed + currentRun.CurrentLevel;
-
-        floorGenerator.Generate(LevelSeed);
+        floorGenerator.Generate(currentRun.Random);
     }
 
     private void EndRun()

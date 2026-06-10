@@ -883,8 +883,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfc456768f28a224e8a5b3bc9bbe3ea3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RunManager
-  randomSeed: 1
-  seed: 0
+  randomSeed: 0
+  seed: 200
   floorGenerator: {fileID: 1509325414}
 --- !u!4 &2127088994
 Transform:

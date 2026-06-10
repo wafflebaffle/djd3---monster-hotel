@@ -7,40 +7,36 @@ public class FloorGenerator : MonoBehaviour
     [SerializeField] private Room[] rooms;
     [SerializeField] private Transform[] corridorConection;
 
-    private System.Random random;
-
-    private RoomGenerato roomGenerator;
-
     private Transform levelRoot;
     private readonly List<Room> generatedRooms = new();
 
-    public void Generate(int seed)
+    public void Generate(System.Random random)
     {
-        random = new System.Random(seed);
-        roomGenerator = new RoomGenerato(seed);
-
         CreateLevelRoot();
-        GenerateRoom();
+        GenerateRoom(random);
     }
 
-    private void GenerateRoom()
+    private void GenerateRoom(System.Random random)
     {
-        List<Transform> shuffledConnections = ShuffleConnections();
+        List<Transform> shuffledConnections = ShuffleConnections(random);
 
-        for (int i = 0; i < shuffledConnections.Count; i++) 
+        Room[] chosenRooms = new Room[shuffledConnections.Count];
+        RoomGenerato roomGen = new RoomGenerato(random);
+
+        for (int i = 0; i < shuffledConnections.Count; i++)
         {
-            Transform connection = shuffledConnections[i];
+            chosenRooms[i] = roomGen.PickRoom(rooms);
+        }
 
-            Room roomPrefab = roomGenerator.PickRoom(rooms);
-
-            if (roomPrefab == null)
+        for (int i = 0; i < shuffledConnections.Count; i++)
+        {
+            Room roomprefab = chosenRooms[i];
+            if (roomprefab != null)
             {
-                break;
+                Room room = Instantiate(roomprefab);
+                AttachRoom(room, shuffledConnections[i]);
+                generatedRooms.Add(room);
             }
-
-            Room room = Instantiate(roomPrefab);
-
-            AttachRoom(room, connection);
         }
     }
 
@@ -61,7 +57,7 @@ public class FloorGenerator : MonoBehaviour
         room.transform.SetParent(levelRoot);
     }
 
-    private List<Transform> ShuffleConnections()
+    private List<Transform> ShuffleConnections(System.Random random)
     {
         List<Transform> list = new List<Transform>(corridorConection);
 
