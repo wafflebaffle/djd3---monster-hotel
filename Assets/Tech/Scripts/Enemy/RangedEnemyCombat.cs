@@ -7,6 +7,7 @@ public class RangedEnemyCombat : Combat
     [SerializeField] private Animator attackAnim;
     [SerializeField] private string attackAnimName = "Shot";
     [SerializeField] private float attackAnimDuration = 1.0f;
+    [SerializeField] private float attackAngleTolerance = 10.0f;
     [SerializeField] private GameObject projectile;
     [SerializeField] private LayerMask player;
     private EnemyStats _enemy;
@@ -27,9 +28,9 @@ public class RangedEnemyCombat : Combat
         YieldInstruction wfs = new WaitForSeconds(attackAnimDuration);
         YieldInstruction wfsCooldown = new WaitForSeconds(attackAnimDuration);
 
-        yield return wfs;
-        
         HadAttack = false;
+
+        yield return wfs;
 
         Instantiate(projectile, attackPoint);
         HadAttack = true;
@@ -49,7 +50,10 @@ public class RangedEnemyCombat : Combat
 
     public bool CanAttack()
     {
-        return Physics.Raycast(transform.position, transform.forward, attackRange, player) && _enemy.DistanceToTarget() <= attackRange;
+        float angle = Vector3.Angle(transform.forward, (_enemy.GetTarget().position - transform.position).normalized);
+        bool isFacing = angle <= attackAngleTolerance;
+
+        return isFacing && _enemy.DistanceToTarget() <= attackRange;
     }
 
     private void OnDrawGizmosSelected()

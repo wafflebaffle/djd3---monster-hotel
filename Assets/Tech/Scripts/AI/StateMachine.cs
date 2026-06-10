@@ -1,5 +1,4 @@
 using System;
-using System.Diagnostics;
 using LibGameAI.FSMs;
 
 namespace LibGameAI.FSMs
@@ -68,6 +67,7 @@ namespace LibGameAI.FSMs
 
             // If no transition was triggered, return the actions for the
             // current state
+            UnityEngine.Debug.Log("Current State is: " + currentState.Name);
             return currentState.StateActions;
         }
     }
