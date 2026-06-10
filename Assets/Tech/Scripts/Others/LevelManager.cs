@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip music1;
 
+    [SerializeField] private RunManager runManager;
     private int _enemiesAlive;
     private void EnemyHasSpawn() => _enemiesAlive++;
     private void EnemyHasDied()
@@ -46,12 +47,21 @@ public class LevelManager : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (_enemiesAlive <= 0)
-            if(other.TryGetComponent(out PlayerStats player))
+        {
+            if (other.TryGetComponent(out PlayerStats player))
             {
-                player.RemoveBuff();
-                upgradePanel.SetPlayer(player);
-                upgradePanel.gameObject.SetActive(true);
+                if (runManager.CurrentLevel >= runManager.MaxLevels)
+                {
+                    runManager.EndGame();
+                }
+                else
+                {
+                    player.RemoveBuff();
+                    upgradePanel.SetPlayer(player);
+                    upgradePanel.gameObject.SetActive(true);
+                }
             }
+        }
     }
 
     private void DeactivateSeal()
