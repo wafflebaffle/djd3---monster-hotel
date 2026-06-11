@@ -1983,63 +1983,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1075536763}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &174056598
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.0000003060328
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
-      propertyPath: m_Name
-      value: chupacabra sem esqueleto
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
 --- !u!1001 &178251444
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13146,6 +13089,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d8fe2f640b612994ba7042e1a4ccf4a8, type: 3}
   m_PrefabInstance: {fileID: 846508805}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &848986252
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.1282712
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0000000143394345
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.4380457
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
+      propertyPath: m_Name
+      value: Chupacabra
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4da89c9ff9d042f4086d4a6ae510dd05, type: 3}
 --- !u!1001 &852912960
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16672,7 +16672,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1075536763
 Transform:
   m_ObjectHideFlags: 0
@@ -34133,4 +34133,4 @@ SceneRoots:
   - {fileID: 2137831045}
   - {fileID: 2056506060}
   - {fileID: 1075536763}
-  - {fileID: 174056598}
+  - {fileID: 848986252}
