@@ -1,9 +1,14 @@
 fileFormatVersion: 2
-guid: ae6aea22501ef8349aa849df727957a8
+guid: 2ab0292a541e7134aa3dcce25e619b63
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: openPBR_shader4
+    second: {fileID: 2100000, guid: 160a3276041053646a5dec22ccd910b1, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -68,7 +73,7 @@ ModelImporter:
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
-    useFileScale: 1
+    useFileScale: 0
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
