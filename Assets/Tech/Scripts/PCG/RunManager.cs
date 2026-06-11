@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class RunManager : MonoBehaviour
+public class RunManager : MonoBehaviour, ISaveable
 {
     public static int Seed {  get; private set; }
 
@@ -67,5 +67,33 @@ public class RunManager : MonoBehaviour
     private void EndRun()
     {
         floorGenerator.ClearLevel();
+    }
+
+    public string GetSaveID()
+    {
+        return name + ":" + GetType().Name;
+    }
+
+    public object GetSaveData()
+    {
+        SaveData saveData;
+
+        saveData.runData = currentRun;
+        //Falta um load do nível
+
+        return saveData;
+    }
+
+    public void LoadSaveData(object data)
+    {
+        SaveData saveData = (SaveData)data;
+
+        currentRun = saveData.runData;
+    }
+
+    [System.Serializable]
+    private struct SaveData
+    {
+        public RunData runData;
     }
 }
