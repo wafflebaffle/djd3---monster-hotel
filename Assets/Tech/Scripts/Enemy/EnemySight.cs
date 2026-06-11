@@ -13,10 +13,15 @@ public class EnemySight : MonoBehaviour
     private Transform _saveTarget;
     public Transform Target => _saveTarget;
 
-    private void Start()
+    private void OnEnable()
     {
         if (!_respectiveRoom) _respectiveRoom = GetComponentInParent<RoomNotifier>();
         _respectiveRoom.OnPlayerEnter += canFollow => _canFollowPlayer = canFollow;
+    }
+
+    private void OnDisable()
+    {
+        _respectiveRoom.OnPlayerEnter -= canFollow => _canFollowPlayer = canFollow;
     }
 
     public bool GetTarget(Transform submitTarget = null)
@@ -52,6 +57,7 @@ public class EnemySight : MonoBehaviour
             _saveTarget = null;
         }
 
+        Debug.Log("Is player on room: " + _canFollowPlayer + " and the target is: " + target);
         return target;
     }
 

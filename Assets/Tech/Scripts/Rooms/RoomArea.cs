@@ -20,7 +20,7 @@ public class RoomArea : MonoBehaviour
     // Configure game area limits object
     private IEnumerator Start()
     {
-        yield return new WaitForSeconds(0.9f);
+        yield return null;
         // Get the sprite renderer and its bounds
         mesh = GetComponent<Collider>();
         Bounds bounds = mesh.bounds;

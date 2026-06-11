@@ -44,7 +44,7 @@ public class AssetsGenerator : MonoBehaviour
     /// <returns> Returns a WaitForSeconds of 1 second, since the room doesn't start directly on the right position. </returns>
     private IEnumerator Start()
     {
-        yield return new WaitForSeconds(1);
+        yield return null;
 
         _surfaceAI = GetComponent<NavMeshSurface>();
         _surfaceAI.BuildNavMesh();

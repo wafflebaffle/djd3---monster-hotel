@@ -15,7 +15,7 @@ public class EnemyMovement : MonoBehaviour
     private Vector3? _lastTarget;
     private Vector3 _lastPos;
 
-    private void Awake()
+    private void Start()
     {
         _enemy = GetComponent<EnemyStats>();
         _agent = GetComponent<NavMeshAgent>();
