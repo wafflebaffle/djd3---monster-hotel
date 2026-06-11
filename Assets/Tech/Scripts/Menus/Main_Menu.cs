@@ -1,12 +1,17 @@
+using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Main_Menu : MonoBehaviour
 {
     [SerializeField] private GameObject settingsScreen;
     [SerializeField] private GameObject startScreen;
+    [SerializeField] private GameObject seedChoiceScreen;
+
     [Header("Animations")]
     [SerializeField] private Animator camAnim;
     [SerializeField] private string animSettingsName = "Settings";
@@ -19,6 +24,9 @@ public class Main_Menu : MonoBehaviour
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip music1;
 
+    [Header("Seed Settings")]
+    [SerializeField] private TMP_InputField seedInputField;
+
     private void Start()
     {
         audioSource.clip = music1;
@@ -30,10 +38,41 @@ public class Main_Menu : MonoBehaviour
         }
     }
 
-    public void StartGame(int sceneindex)
+    public void OpenSeedChoice()
     {
+        startScreen.SetActive(false);
+        seedChoiceScreen.SetActive(true);
+    }
+
+    public void StartRandomSeed()
+    {
+        int runSeed = UnityEngine.Random.Range(0, int.MaxValue);
+        SeedStart(runSeed);
+        seedChoiceScreen.SetActive(false);
+    }
+    
+    public void StartWithCustomSeed()
+    {
+        int runSeed;
+        if (seedInputField != null && !string.IsNullOrWhiteSpace(seedInputField.text) && int.TryParse(seedInputField.text, out int parsedSeed)) 
+        {
+            runSeed = parsedSeed;
+        }
+        else
+        {
+            runSeed = UnityEngine.Random.Range(0, int.MaxValue);
+        }
+        SeedStart(runSeed);
+    }
+
+    private void SeedStart(int runSeed)
+    {
+        PlayerPrefs.SetInt("RunSeed", runSeed);
+        PlayerPrefs.Save();
+        seedChoiceScreen.SetActive(false);
+
         camAnim.SetTrigger(animStartName);
-        StartCoroutine(StartAfterAnim(sceneindex));
+        StartCoroutine(StartAfterAnim(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
     public void SettingsScreen()
@@ -47,6 +86,12 @@ public class Main_Menu : MonoBehaviour
     {
         camAnim.SetTrigger(annimRestoreSettingsName);
         settingsScreen.SetActive(false);
+        startScreen.SetActive(true);
+    }
+
+    public void ExitSeedChoice()
+    {
+        seedChoiceScreen.SetActive(false);
         startScreen.SetActive(true);
     }
 
