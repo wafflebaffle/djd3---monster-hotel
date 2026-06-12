@@ -46,8 +46,6 @@ public class AssetsGenerator : MonoBehaviour
     {
         yield return null;
 
-        Debug.Log("Loading");
-
         _surfaceAI = GetComponent<NavMeshSurface>();
         _surfaceAI.BuildNavMesh();
 
@@ -58,7 +56,6 @@ public class AssetsGenerator : MonoBehaviour
             asset.RemainingCount = asset.MaxCount;
 
         GetPositions();
-        Debug.Log("How many points: " + _points.Count);
 
         foreach (Vector3 point in _points)
         {
@@ -87,8 +84,7 @@ public class AssetsGenerator : MonoBehaviour
                 {
                     float roundedX = Mathf.Round(hit.position.x / stepSize) * stepSize;
                     float roundedZ = Mathf.Round(hit.position.z / stepSize) * stepSize;
-                    float roundedY = Mathf.Round(hit.position.y / stepSize) * stepSize;
-                    Vector3 roundedPoint = new Vector3(roundedX, roundedY, roundedZ);
+                    Vector3 roundedPoint = new Vector3(roundedX, hit.position.y, roundedZ);
 
                     if (Physics.Raycast(roundedPoint + Vector3.up, Vector3.down, out RaycastHit rayHit, 2f, floorLayer))
                         if (rayHit.transform.TryGetComponent(out Temp _))
