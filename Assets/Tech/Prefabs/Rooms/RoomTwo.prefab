@@ -10401,6 +10401,42 @@ MonoBehaviour:
     chanceToSpawn: 0.2
     SizePerStep: {x: 4, y: 0, z: 4}
     PreferencePlacement: 1
+  - Prefab: {fileID: 5966207963488011899, guid: f419e73645737dd46a2cac527788c96d, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 4, y: 0, z: 4}
+    PreferencePlacement: 1
+  - Prefab: {fileID: 6527704809405999172, guid: 035e014aa00662f47ac09457f304ca10, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 4, y: 0, z: 4}
+    PreferencePlacement: 1
+  - Prefab: {fileID: 6822296703138926824, guid: 0c69e53a5a11495479b85d7925d21aad, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 4, y: 0, z: 4}
+    PreferencePlacement: 1
+  - Prefab: {fileID: 267843793458991456, guid: 395890296f555184996a4c6f37dbafdc, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 4, y: 0, z: 4}
+    PreferencePlacement: 1
+  - Prefab: {fileID: 8270348907462355912, guid: be7cb236b51a09f499d79cd2d766274d, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 4, y: 0, z: 4}
+    PreferencePlacement: 1
+  - Prefab: {fileID: 6554484229017848873, guid: 3ac1f311354f57942882d16a6e299a09, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 4, y: 0, z: 4}
+    PreferencePlacement: 1
   roomArea: {fileID: 753201918008680246}
   allMeshes: {fileID: 368073584871054751}
   stepSize: 1
