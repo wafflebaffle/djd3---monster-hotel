@@ -46,6 +46,8 @@ public class AssetsGenerator : MonoBehaviour
     {
         yield return null;
 
+        Debug.Log("Loading");
+
         _surfaceAI = GetComponent<NavMeshSurface>();
         _surfaceAI.BuildNavMesh();
 
@@ -56,6 +58,7 @@ public class AssetsGenerator : MonoBehaviour
             asset.RemainingCount = asset.MaxCount;
 
         GetPositions();
+        Debug.Log("How many points: " + _points.Count);
 
         foreach (Vector3 point in _points)
         {
@@ -79,7 +82,7 @@ public class AssetsGenerator : MonoBehaviour
             {
                 Vector3 samplePoint = new Vector3(x, _roomsBounds.center.y, z);
                 
-                float sampleRadius = stepSize * 0.5f;
+                float sampleRadius = stepSize * 2f;
                 if (NavMesh.SamplePosition(samplePoint, out NavMeshHit hit, sampleRadius, NavMesh.AllAreas))
                 {
                     float roundedX = Mathf.Round(hit.position.x / stepSize) * stepSize;
@@ -341,6 +344,7 @@ public class AssetsGenerator : MonoBehaviour
             Gizmos.color = Color.green;
             foreach (Vector3 pos in _points)
             {
+                if (_unavailablePoints.Contains(pos)) continue;
                 Gizmos.DrawWireSphere(pos, 0.2f);
             }
         }
