@@ -65,4 +65,13 @@ public class Pause_Menu : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
+
+    public void SaveGame()
+    {
+        SaveManager sm = FindFirstObjectByType<SaveManager>();
+        if (sm != null)
+        {
+            sm.SaveGame();
+        }
+    }
 }

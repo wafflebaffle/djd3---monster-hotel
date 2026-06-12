@@ -79,13 +79,12 @@ public class AssetsGenerator : MonoBehaviour
             {
                 Vector3 samplePoint = new Vector3(x, _roomsBounds.center.y, z);
                 
-                float sampleRadius = stepSize * 0.5f;
+                float sampleRadius = stepSize * 2f;
                 if (NavMesh.SamplePosition(samplePoint, out NavMeshHit hit, sampleRadius, NavMesh.AllAreas))
                 {
                     float roundedX = Mathf.Round(hit.position.x / stepSize) * stepSize;
                     float roundedZ = Mathf.Round(hit.position.z / stepSize) * stepSize;
-                    float roundedY = Mathf.Round(hit.position.y / stepSize) * stepSize;
-                    Vector3 roundedPoint = new Vector3(roundedX, roundedY, roundedZ);
+                    Vector3 roundedPoint = new Vector3(roundedX, hit.position.y, roundedZ);
 
                     if (Physics.Raycast(roundedPoint + Vector3.up, Vector3.down, out RaycastHit rayHit, 2f, floorLayer))
                         if (rayHit.transform.TryGetComponent(out Temp _))
@@ -341,6 +340,7 @@ public class AssetsGenerator : MonoBehaviour
             Gizmos.color = Color.green;
             foreach (Vector3 pos in _points)
             {
+                if (_unavailablePoints.Contains(pos)) continue;
                 Gizmos.DrawWireSphere(pos, 0.2f);
             }
         }

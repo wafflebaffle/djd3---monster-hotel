@@ -57,7 +57,6 @@ public class EnemySight : MonoBehaviour
             _saveTarget = null;
         }
 
-        Debug.Log("Is player on room: " + _canFollowPlayer + " and the target is: " + target);
         return target;
     }
 
