@@ -10365,39 +10365,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AssetsGenerator
   assets:
-  - Prefab: {fileID: 0}
-    MaxCount: 0
-    RemainingCount: 0
-    SizePerStep: {x: 0, y: 0, z: 0}
-    PreferencePlacement: 0
   - Prefab: {fileID: 7412673259067321843, guid: f0ee49d0f6744754393af7a34fbbb5d3, type: 3}
     MaxCount: 1
     RemainingCount: 1
-    SizePerStep: {x: 2, y: 0, z: 2}
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 3, y: 0, z: 3}
     PreferencePlacement: 0
   - Prefab: {fileID: 2724122495360523850, guid: 488c007cfb6c9f047b2bc054c3580948, type: 3}
     MaxCount: 2
     RemainingCount: 1
+    chanceToSpawn: 0.2
     SizePerStep: {x: 1, y: 0, z: 0}
     PreferencePlacement: 1
   - Prefab: {fileID: 7873731032062304759, guid: 6dddbb735e039b048bd3d00c88844d12, type: 3}
     MaxCount: 2
     RemainingCount: 1
+    chanceToSpawn: 0.2
     SizePerStep: {x: 0, y: 0, z: 0}
     PreferencePlacement: 1
   - Prefab: {fileID: 8068299934542467148, guid: b1b08baf384627348b8821ebfee87d80, type: 3}
     MaxCount: 4
     RemainingCount: 1
+    chanceToSpawn: 1
     SizePerStep: {x: 0, y: 0, z: 0}
     PreferencePlacement: 2
+  - Prefab: {fileID: 7944465180534532267, guid: eed2d009f85d46e47b67bdd682ccd4d9, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.0035
+    SizePerStep: {x: 0, y: 0, z: 0}
+    PreferencePlacement: 2
+  - Prefab: {fileID: 582219970254520579, guid: d283c7b0bb6cfa1429a91d67166e0813, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 4, y: 0, z: 4}
+    PreferencePlacement: 1
   roomArea: {fileID: 753201918008680246}
   allMeshes: {fileID: 368073584871054751}
   stepSize: 1
   floorLayer:
     serializedVersion: 2
     m_Bits: 256
-  chanceToSpawnAsset: 0.5
-  maxIterations: 50
+  maxIterations: 5
 --- !u!1 &8607292086093457547
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class Assets
     public GameObject Prefab;
     public int MaxCount = 1;
     public int RemainingCount = 1;
+    public float chanceToSpawn = 0.2f;
     public Vector3 SizePerStep = new (1,0,1);
     public AssetsPreference PreferencePlacement = AssetsPreference.Center;
 }

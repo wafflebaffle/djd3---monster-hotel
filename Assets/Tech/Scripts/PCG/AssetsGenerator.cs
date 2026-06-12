@@ -16,8 +16,6 @@ public class AssetsGenerator : MonoBehaviour
     [SerializeField] private float stepSize;
     // Floor layer for raycast;
     [SerializeField] private LayerMask floorLayer;
-    // The chance of spawning an asset during the loop;
-    [SerializeField] private float chanceToSpawnAsset;
     /// Max interarions to spawn assets to force the loop to stop;
     [SerializeField] private int maxIterations;
     // Random from System;
@@ -242,38 +240,104 @@ public class AssetsGenerator : MonoBehaviour
             if (assetList.Count == 0) break;
             if (IsUnavailable(position)) continue;
             if (_positions.TryGetValue(position, out bool occupied) && occupied) continue;
-            if (rnd.NextDouble() > chanceToSpawnAsset) continue;
-            
-            Assets toDispose = DisposeAsset(assetList);
+
+            List<Assets> availableAssets = assetList.FindAll(a => a.RemainingCount > 0);
+            if (availableAssets.Count == 0) break;
+
+            Assets toDispose = availableAssets[rnd.Next(0, availableAssets.Count)];
+
+            if (rnd.NextDouble() > toDispose.chanceToSpawn)
+                continue;
+
+            toDispose.RemainingCount--;
+            _remainingAssets--;
+
             if (toDispose == null) continue;
             
             if (hasDirection)
             {
                 Vector3 dir = positionDict[position];
+                bool isCardinal = (Mathf.Abs(dir.x) + Mathf.Abs(dir.z)) == 1f;
+                bool isDiagonal = (Mathf.Abs(dir.x) + Mathf.Abs(dir.z)) == 2f;
                 List<Vector3> blockedPositions = new List<Vector3>();
                 bool canPlace = true;
 
                 int stepsX = Mathf.Max(1, (int)toDispose.SizePerStep.x);
                 int stepsZ = Mathf.Max(1, (int)toDispose.SizePerStep.z);
 
-                for (int a = 0; a < stepsX+1; a++)
+                if (isCardinal)
                 {
-                    for (int b = 0; b < stepsZ+1; b++)
+                    if (Mathf.Abs(dir.x) > 0)
                     {
-                        Vector3 blockPos = position + new Vector3(
-                            a * dir.x * stepSize,
-                            0,
-                            b * dir.z * stepSize);
-
-                        if (!_positions.TryGetValue(blockPos, out bool isOccupied) || isOccupied)
+                        for (int a = 0; a < stepsX; a++)
                         {
-                            canPlace = false;
-                            break;
+                            Vector3 blockPos = position + new Vector3(a * dir.x * stepSize, 0, 0);
+                            
+                            if (!_positions.TryGetValue(blockPos, out bool isOccupied) || isOccupied)
+                            {
+                                canPlace = false;
+                                break;
+                            }
+                            
+                            for (int b = 0; b < stepsZ; b++)
+                            {
+                                Vector3 widthPos = blockPos + new Vector3(0, 0, b * stepSize);
+                                if (!_positions.TryGetValue(widthPos, out bool widthOccupied) || widthOccupied)
+                                {
+                                    canPlace = false;
+                                    break;
+                                }
+                                blockedPositions.Add(widthPos);
+                            }
+                            if (!canPlace) break;
                         }
-
-                        blockedPositions.Add(blockPos);
                     }
-                    if (!canPlace) break;
+                    else
+                    {
+                        for (int b = 0; b < stepsZ; b++)
+                        {
+                            Vector3 blockPos = position + new Vector3(0, 0, b * dir.z * stepSize);
+                            
+                            if (!_positions.TryGetValue(blockPos, out bool isOccupied) || isOccupied)
+                            {
+                                canPlace = false;
+                                break;
+                            }
+                            
+                            for (int a = 0; a < stepsX; a++)
+                            {
+                                Vector3 widthPos = blockPos + new Vector3(a * stepSize, 0, 0);
+                                if (!_positions.TryGetValue(widthPos, out bool widthOccupied) || widthOccupied)
+                                {
+                                    canPlace = false;
+                                    break;
+                                }
+                                blockedPositions.Add(widthPos);
+                            }
+                            if (!canPlace) break;
+                        }
+                    }
+                }
+                else
+                {
+                    for (int a = 0; a < stepsX; a++)
+                    {
+                        for (int b = 0; b < stepsZ; b++)
+                        {
+                            Vector3 blockPos = position + new Vector3(
+                                a * dir.x * stepSize,
+                                0,
+                                b * dir.z * stepSize);
+                            
+                            if (!_positions.TryGetValue(blockPos, out bool isOccupied) || isOccupied)
+                            {
+                                canPlace = false;
+                                break;
+                            }
+                            blockedPositions.Add(blockPos);
+                        }
+                        if (!canPlace) break;
+                    }
                 }
                     
                 if (canPlace && blockedPositions.Count > 0)
@@ -312,22 +376,16 @@ public class AssetsGenerator : MonoBehaviour
     private Assets DisposeAsset(List<Assets> thoseAssets)
     {
         if (thoseAssets == null || thoseAssets.Count == 0)
-            return null;
+        return null;
 
-        List<Assets> availableAssets = thoseAssets
-                                        .FindAll(a => a.RemainingCount > 0);
+        List<Assets> availableAssets = thoseAssets.FindAll(a => a.RemainingCount > 0);
         if (availableAssets.Count == 0)
         {
             thoseAssets.Clear();
             return null;            
         }
 
-
-        Assets result = availableAssets[rnd.Next(0, availableAssets.Count)];
-        result.RemainingCount--;
-        _remainingAssets--;
-
-        return result;
+        return availableAssets[rnd.Next(0, availableAssets.Count)];
     }
 
     /// <summary>
