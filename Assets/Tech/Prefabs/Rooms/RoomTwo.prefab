@@ -10401,7 +10401,31 @@ MonoBehaviour:
     chanceToSpawn: 0.2
     SizePerStep: {x: 4, y: 0, z: 4}
     PreferencePlacement: 1
-  - Prefab: {fileID: 5966207963488011899, guid: f419e73645737dd46a2cac527788c96d, type: 3}
+  - Prefab: {fileID: 8608404789749081609, guid: fad6374084bba474ea37cb4c84928a90, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 4, y: 0, z: 4}
+    PreferencePlacement: 1
+  - Prefab: {fileID: 6554484229017848873, guid: 3ac1f311354f57942882d16a6e299a09, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 4, y: 0, z: 4}
+    PreferencePlacement: 1
+  - Prefab: {fileID: 6554484229017848873, guid: 3ac1f311354f57942882d16a6e299a09, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 4, y: 0, z: 4}
+    PreferencePlacement: 1
+  - Prefab: {fileID: 2954177203664564397, guid: 428de3f747fff524992de2e0883af9f2, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 4, y: 0, z: 4}
+    PreferencePlacement: 1
+  - Prefab: {fileID: 3292473876817111598, guid: 4557700f11e55264f91846678cb7610d, type: 3}
     MaxCount: 1
     RemainingCount: 1
     chanceToSpawn: 0.2
@@ -10431,7 +10455,13 @@ MonoBehaviour:
     chanceToSpawn: 0.2
     SizePerStep: {x: 4, y: 0, z: 4}
     PreferencePlacement: 1
-  - Prefab: {fileID: 6554484229017848873, guid: 3ac1f311354f57942882d16a6e299a09, type: 3}
+  - Prefab: {fileID: 5966207963488011899, guid: f419e73645737dd46a2cac527788c96d, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 4, y: 0, z: 4}
+    PreferencePlacement: 1
+  - Prefab: {fileID: 4008751478015918035, guid: ccf6698b28565ff459b7815133091d5e, type: 3}
     MaxCount: 1
     RemainingCount: 1
     chanceToSpawn: 0.2

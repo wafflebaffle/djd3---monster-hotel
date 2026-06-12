@@ -191,13 +191,7 @@ MonoBehaviour:
     chanceToSpawn: 0.2
     SizePerStep: {x: 0, y: 0, z: 0}
     PreferencePlacement: 2
-  - Prefab: {fileID: 8608404789749081609, guid: fad6374084bba474ea37cb4c84928a90, type: 3}
-    MaxCount: 1
-    RemainingCount: 1
-    chanceToSpawn: 0.2
-    SizePerStep: {x: 0, y: 0, z: 0}
-    PreferencePlacement: 2
-  - Prefab: {fileID: 3292473876817111598, guid: 4557700f11e55264f91846678cb7610d, type: 3}
+  - Prefab: {fileID: 582219970254520579, guid: d283c7b0bb6cfa1429a91d67166e0813, type: 3}
     MaxCount: 1
     RemainingCount: 1
     chanceToSpawn: 0.2
@@ -210,6 +204,42 @@ MonoBehaviour:
     SizePerStep: {x: 0, y: 0, z: 0}
     PreferencePlacement: 2
   - Prefab: {fileID: 8270348907462355912, guid: be7cb236b51a09f499d79cd2d766274d, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 0, y: 0, z: 0}
+    PreferencePlacement: 2
+  - Prefab: {fileID: 5966207963488011899, guid: f419e73645737dd46a2cac527788c96d, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 0, y: 0, z: 0}
+    PreferencePlacement: 2
+  - Prefab: {fileID: 6822296703138926824, guid: 0c69e53a5a11495479b85d7925d21aad, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 0, y: 0, z: 0}
+    PreferencePlacement: 2
+  - Prefab: {fileID: 267843793458991456, guid: 395890296f555184996a4c6f37dbafdc, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 0, y: 0, z: 0}
+    PreferencePlacement: 2
+  - Prefab: {fileID: 6527704809405999172, guid: 035e014aa00662f47ac09457f304ca10, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 0, y: 0, z: 0}
+    PreferencePlacement: 2
+  - Prefab: {fileID: 3292473876817111598, guid: 4557700f11e55264f91846678cb7610d, type: 3}
+    MaxCount: 1
+    RemainingCount: 1
+    chanceToSpawn: 0.2
+    SizePerStep: {x: 0, y: 0, z: 0}
+    PreferencePlacement: 2
+  - Prefab: {fileID: 6554484229017848873, guid: 3ac1f311354f57942882d16a6e299a09, type: 3}
     MaxCount: 1
     RemainingCount: 1
     chanceToSpawn: 0.2
