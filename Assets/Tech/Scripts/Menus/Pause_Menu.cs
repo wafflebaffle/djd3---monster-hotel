@@ -69,9 +69,6 @@ public class Pause_Menu : MonoBehaviour
     public void SaveGame()
     {
         SaveManager sm = FindFirstObjectByType<SaveManager>();
-        if (sm != null)
-        {
-            sm.SaveGame();
-        }
+        if (sm != null) sm.SaveGame();
     }
 }

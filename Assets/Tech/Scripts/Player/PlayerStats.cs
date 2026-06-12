@@ -41,13 +41,9 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
 
     private void Awake()
     {
-        _isBuff = false;
+        SaveManager sm = FindFirstObjectByType<SaveManager>();
+        if (sm != null) sm.RegisterSaveable(this);
 
-        // Fazer um if para checkar se os valores 
-        // do player prefs são zero. 
-        // Se não, vai buscar os valores lá.
-
-        //else
         _playerCombat = GetComponent<PlayerCombat>();
         _playerCombat.SetDamage(stats.attackDamage);
         _playerCombat.SetRange(stats.attackRange);
@@ -178,51 +174,56 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
 
     public string GetSaveID()
     {
-        return name + ":" + GetType().Name;
+        return "PlayerStats";
     }
 
-    public object GetSaveData()
+    public string GetSaveDataAsJson()
     {
-        SaveData saveData;
-
-        saveData.maxHealth = MaxHealth;
-        saveData.currentHealth = CurrentHealth;
-        saveData.moveSpeed = Speed;
-        saveData.angularSpeed = AngularSpeed;
-        saveData.attackDamage = AttackDamage;
-        saveData.attackRange = AttackRange;
-        saveData.attackCooldown = AttackCooldown;
-        saveData.shieldCooldown = ShieldCooldown;
-        saveData.stunDuration = StunDuration;
-        saveData.knockbackDistance = KnockbackDistance;
-        saveData.animationTime = animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-        saveData.animationState = animator.GetCurrentAnimatorStateInfo(0).shortNameHash;
-
-        return saveData;
+        SaveData data = new SaveData
+        {
+            maxHealth = stats.maxHealth,
+            currentHealth = _health,
+            moveSpeed = _playerMovement.Speed,
+            angularSpeed = stats.angularSpeed,
+            attackDamage = _playerCombat.AttackDamage,
+            attackRange = stats.attackRange,
+            attackCooldown = _playerCombat.AttackCooldown,
+            shieldCooldown = _parry.Cooldown,
+            stunDuration = stats.stunDuration,
+            knockbackDistance = stats.knockbackDistance,
+            isBuff = _isBuff,
+            buffDuration = _buffDuration,
+            buffTimer = _buffTimer
+        };
+        return JsonUtility.ToJson(data);
     }
 
-    public void LoadSaveData(object data)
+    public void LoadFromJson(string json)
     {
-        SaveData saveData = (SaveData)data;
+        SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-        stats.maxHealth = saveData.maxHealth;
-        stats.currentHealth = saveData.currentHealth;
-        stats.moveSpeed = saveData.moveSpeed;
-        stats.angularSpeed = saveData.angularSpeed;
-        stats.attackDamage = saveData.attackDamage;
-        stats.attackRange = saveData.attackRange;
-        stats.attackCooldown = saveData.attackCooldown;
-        stats.shieldCooldown = saveData.shieldCooldown;
-        stats.stunDuration = saveData.stunDuration;
-        stats.knockbackDistance = saveData.knockbackDistance;
-        
-        animator.Play(saveData.animationState, 0, saveData.animationTime);
+        stats.maxHealth = data.maxHealth;
+        stats.currentHealth = data.currentHealth;
+        stats.moveSpeed = data.moveSpeed;
+        stats.angularSpeed = data.angularSpeed;
+        stats.attackDamage = data.attackDamage;
+        stats.attackRange = data.attackRange;
+        stats.attackCooldown = data.attackCooldown;
+        stats.shieldCooldown = data.shieldCooldown;
+        stats.stunDuration = data.stunDuration;
+        stats.knockbackDistance = data.knockbackDistance;
+
+        _health = data.currentHealth;
+        _playerMovement.SetSpeed(data.moveSpeed);
+        _playerCombat.SetDamage(data.attackDamage);
+        _playerCombat.SetCooldown(data.attackCooldown);
+        _parry.SetCooldown(data.shieldCooldown);
 
         DispatchHealthChanged();
     }
 
-    [System.Serializable]
-    private struct SaveData
+    [Serializable]
+    public struct SaveData
     {
         public float maxHealth;
         public float currentHealth;
@@ -234,7 +235,8 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
         public float shieldCooldown;
         public float stunDuration;
         public float knockbackDistance;
-        public float    animationTime;
-        public int    animationState;
+        public bool isBuff;
+        public float buffDuration;
+        public float buffTimer;
     }
 }

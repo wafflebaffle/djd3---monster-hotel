@@ -2,7 +2,7 @@ public interface ISaveable
 {
     public string GetSaveID();
 
-    public object GetSaveData();
+    public string GetSaveDataAsJson();
 
-    public void LoadSaveData(object data);
+    public void LoadFromJson(string json);
 }

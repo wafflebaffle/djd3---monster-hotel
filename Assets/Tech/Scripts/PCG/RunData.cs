@@ -1,18 +1,27 @@
+using UnityEngine;
+
 public class RunData
 {
-    public int Seed { get; private set; }
-    public int CurrentLevel { get; private set; }
-    public System.Random Random { get; private set; }
+    [SerializeField] private int _seed;
+    [SerializeField] private int _currentLevel;
+
+    public int Seed => _seed;
+    public int CurrentLevel => _currentLevel;
 
     public RunData(int seed)
     {
-        Seed = seed;
-        CurrentLevel = 1;
-        Random = new System.Random(seed);
+        _seed = seed;
+        _currentLevel = 1;
     }
 
     public void NextLevel()
     {
-        CurrentLevel++;
+        _currentLevel++;
+    }
+
+    public System.Random GetLevelRandom()
+    {
+        int levelSeed = _seed + _currentLevel;
+        return new System.Random(levelSeed);
     }
 }

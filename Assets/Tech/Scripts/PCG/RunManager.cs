@@ -12,13 +12,33 @@ public class RunManager : MonoBehaviour, ISaveable
     [SerializeField] private string finalScene;
 
     private RunData currentRun;
+    private SaveManager saveManager;
 
     public int CurrentLevel => currentRun.CurrentLevel;
     public int MaxLevels => maxLevels;
 
+    private void Awake()
+    {
+        saveManager = FindFirstObjectByType<SaveManager>();
+        if (saveManager != null)
+            saveManager.RegisterSaveable(this);
+        else
+            Debug.LogError("SaveManager not found in scene!");
+    }
     private void Start()
     {
-        StartRun();
+        if (PlayerPrefs.HasKey("LoadExistingSave") && PlayerPrefs.GetInt("LoadExistingSave") == 1)
+        {
+            PlayerPrefs.DeleteKey("LoadExistingSave");
+            if (saveManager != null && saveManager.HasSavedGame())
+                saveManager.LoadGame();
+            else
+                StartRun();
+        }
+        else
+        {
+            StartRun();
+        }
     }
 
     private void StartRun()
@@ -31,10 +51,8 @@ public class RunManager : MonoBehaviour, ISaveable
         }
         else
         {
-            //Fallback
-            runSeed = randomSeed ? DateTime.Now.GetHashCode() : seed;
+            runSeed = randomSeed ? System.DateTime.Now.GetHashCode() : seed;
         }
-
         seed = runSeed;
         Seed = seed;
         currentRun = new RunData(Seed);
@@ -51,6 +69,9 @@ public class RunManager : MonoBehaviour, ISaveable
         floorGenerator.ClearLevel();
         currentRun.NextLevel();
         GenerateCurrentLevel();
+
+        if (saveManager != null)
+            saveManager.SaveGame();
     }
 
     public void EndGame()
@@ -61,7 +82,7 @@ public class RunManager : MonoBehaviour, ISaveable
 
     private void GenerateCurrentLevel()
     {
-        floorGenerator.Generate(currentRun.Random);
+        floorGenerator.Generate(currentRun.GetLevelRandom());
     }
 
     private void EndRun()
@@ -69,26 +90,40 @@ public class RunManager : MonoBehaviour, ISaveable
         floorGenerator.ClearLevel();
     }
 
-    public string GetSaveID()
+    public string GetSaveID() => "RunManager";
+
+    public string GetSaveDataAsJson()
     {
-        return name + ":" + GetType().Name;
+        SaveData data = new SaveData { runData = currentRun };
+        return JsonUtility.ToJson(data);
     }
 
-    public object GetSaveData()
+    public void LoadFromJson(string json)
     {
-        SaveData saveData;
+        if (string.IsNullOrEmpty(json))
+        {
+            Debug.LogError("LoadFromJson: JSON string is empty or null.");
+            return;
+        }
 
-        saveData.runData = currentRun;
-        //Falta um load do nível
+        SaveData data = JsonUtility.FromJson<SaveData>(json);
+        if (data.runData == null)
+        {
+            Debug.LogError("LoadFromJson: Failed to deserialize RunData from JSON.");
+            return;
+        }
 
-        return saveData;
-    }
+        currentRun = data.runData;
+        Seed = currentRun.Seed;
 
-    public void LoadSaveData(object data)
-    {
-        SaveData saveData = (SaveData)data;
+        if (floorGenerator == null)
+        {
+            Debug.LogError("LoadFromJson: FloorGenerator is not assigned in the Inspector!");
+            return;
+        }
 
-        currentRun = saveData.runData;
+        floorGenerator.ClearLevel();
+        GenerateCurrentLevel();
     }
 
     [System.Serializable]
