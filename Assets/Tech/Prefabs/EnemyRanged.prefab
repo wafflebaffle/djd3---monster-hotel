@@ -117,7 +117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc03389efacfb1047ac7efc6261cf1fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyStats
-  stats: {fileID: 11400000, guid: edffd5c99814ec14e9d64ae55a1d93c7, type: 2}
+  stats: {fileID: 11400000, guid: e0fa640311344a24b96e66fb991744b5, type: 2}
   events: {fileID: 11400000, guid: b004ae1660958df46b2675ccda2c6f74, type: 2}
   enemyAnim: {fileID: 6720982209825109355}
   takeDamageAnimName: TakeDamage
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RangedEnemyCombat
   attackPoint: {fileID: 6669680774797470377}
-  attackAnim: {fileID: 0}
+  attackAnim: {fileID: 6720982209825109355}
   attackAnimName: Shot
   attackAnimDuration: 1
   attackAngleTolerance: 10
@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fe9f2271341cfe49808c5bfea2d1492, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WaiterShooterBehaviour
-  fleeDistance: 0
+  fleeDistance: 4
 --- !u!1 &7476989357196130141
 GameObject:
   m_ObjectHideFlags: 0

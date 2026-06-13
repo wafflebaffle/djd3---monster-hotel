@@ -10538,12 +10538,6 @@ MonoBehaviour:
     chanceToSpawn: 0.2
     SizePerStep: {x: 0, y: 0, z: 0}
     PreferencePlacement: 1
-  - Prefab: {fileID: 8068299934542467148, guid: b1b08baf384627348b8821ebfee87d80, type: 3}
-    MaxCount: 4
-    RemainingCount: 1
-    chanceToSpawn: 1
-    SizePerStep: {x: 0, y: 0, z: 0}
-    PreferencePlacement: 2
   - Prefab: {fileID: 7944465180534532267, guid: eed2d009f85d46e47b67bdd682ccd4d9, type: 3}
     MaxCount: 1
     RemainingCount: 1
@@ -10586,6 +10580,12 @@ MonoBehaviour:
     chanceToSpawn: 0.2
     SizePerStep: {x: 2, y: 0, z: 1}
     PreferencePlacement: 1
+  - Prefab: {fileID: 6013375959613496983, guid: f9012f151359b514e9a744f918bdad2c, type: 3}
+    MaxCount: 2
+    RemainingCount: 1
+    chanceToSpawn: 0.5
+    SizePerStep: {x: 0, y: 0, z: 0}
+    PreferencePlacement: 2
   roomArea: {fileID: 753201918008680246}
   allMeshes: {fileID: 368073584871054751}
   stepSize: 1

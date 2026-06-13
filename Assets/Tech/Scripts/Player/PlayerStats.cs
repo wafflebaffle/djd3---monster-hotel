@@ -123,7 +123,7 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
 
         gameObject.SetActive(false);
         SaveManager save = FindFirstObjectByType<SaveManager>();
-        if(save.HasSavedGame())
+        if(save.HasSavedGame()) save.DeleteSave();
             
         SceneManager.LoadScene(0);
     }
