@@ -345,7 +345,7 @@ public class AssetsGenerator : MonoBehaviour
                     Vector3 spawnPos = Vector3.zero;
                     foreach (Vector3 p in blockedPositions) spawnPos += p;
                     spawnPos /= blockedPositions.Count;
-                    spawnPos.y = position.y + toDispose.SizePerStep.y;
+                    spawnPos.y = position.y;
 
                     Instantiate(toDispose.Prefab, spawnPos, Quaternion.LookRotation(positionDict[position]), allMeshes.transform);
                     
