@@ -33,20 +33,22 @@ public class SaveManager : MonoBehaviour
 
     public void SaveGame()
     {
+        GameSave gameSave = new GameSave();
         List<SaveItem> saveItems = new List<SaveItem>();
+        SaveItem item = new SaveItem();
+
         foreach (var kvp in _saveables)
         {
             string jsonData = kvp.Value.GetSaveDataAsJson();
             if (!string.IsNullOrEmpty(jsonData))
             {
-                SaveItem item = new SaveItem();
                 item.id = kvp.Key;
                 item.dataJson = jsonData;
-                saveItems.Add(item);
+
+                gameSave.saveItems.Add(item);
             }
         }
-        GameSave gameSave = new GameSave();
-        gameSave.saveItems = saveItems;
+        
         string json = JsonUtility.ToJson(gameSave, _prettyPrint);
         File.WriteAllText(_saveFilePath, json);
         Debug.Log($"Game saved. {saveItems.Count} items.");
