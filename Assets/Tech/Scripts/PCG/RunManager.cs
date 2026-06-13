@@ -55,7 +55,7 @@ public class RunManager : MonoBehaviour, ISaveable
         }
         seed = runSeed;
         Seed = seed;
-        currentRun = new RunData(Seed);
+        currentRun = new RunData(Seed, currentRun.CurrentLevel); ;
         GenerateCurrentLevel();
     }
 
@@ -120,6 +120,8 @@ public class RunManager : MonoBehaviour, ISaveable
             Debug.LogError("LoadFromJson: FloorGenerator is not assigned in the Inspector!");
             return;
         }
+
+        currentRun = new RunData(Seed, currentRun.CurrentLevel);
 
         floorGenerator.ClearLevel();
         GenerateCurrentLevel();

@@ -8,7 +8,7 @@ public class RunData
     public int Seed => _seed;
     public int CurrentLevel => _currentLevel;
 
-    public RunData(int seed)
+    public RunData(int seed, int currentLevel)
     {
         _seed = seed;
         _currentLevel = 1;
