@@ -3,14 +3,38 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Manages player statistics, including health, damage, movement, buffs, and state persistence.
+/// </summary>
+/// <remarks>Implements interfaces for healing, taking damage, applying buffs, and saving or loading player state.
+/// Integrates with player movement, combat, and parry systems, and supports event-driven updates for health and
+/// buffs.</remarks>
 public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISaveable
 {
+    /// <summary>
+    /// Stores the statistics data for the associated entity.
+    /// </summary>
     [SerializeField] private StatsData stats;
+    /// <summary>
+    /// Controls the animation of the associated GameObject.
+    /// </summary>
     [SerializeField] private Animator animator;
+    /// <summary>
+    /// Specifies the trigger name used to initiate the take damage animation.
+    /// </summary>
     [SerializeField] private string triggerTakeDamage = "TakeDamage";
+    /// <summary>
+    /// Specifies the animation trigger name for the die event.
+    /// </summary>
     [SerializeField] private string triggerDie = "Die";
+    /// <summary>
+    /// Timer for death animation
+    /// </summary>
     [SerializeField] private float deathTimer = 1.0f;
 
+    /// <summary>
+    /// Represents the health value of the player.
+    /// </summary>
     private float _health;
     private PlayerMovement _playerMovement;
     private PlayerCombat _playerCombat;
@@ -73,6 +97,10 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
     }
 
 
+    /// <summary>
+    /// Method that increments player current health value
+    /// </summary>
+    /// <param name="heal"></param>
     public void Heal(float heal)
     {
         _health += heal;
@@ -83,6 +111,10 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
         }
     }
 
+    /// <summary>
+    /// Plays the animation for Death
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator PlayDeathAnimation()
     {
         animator.SetTrigger(triggerDie);
@@ -97,11 +129,19 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
     }
     
 
+    /// <summary>
+    /// Determines whether the player can be healed based on current and maximum health values.
+    /// </summary>
+    /// <returns>true if the current health is less than the maximum health; otherwise, false.</returns>
     public bool CanHeal()
     {
         return _health < stats.maxHealth;
     }
 
+    /// <summary>
+    /// Activates a buff effect for a specified duration.
+    /// </summary>
+    /// <param name="duration">Duration of the buff in seconds.</param>
     public void BeingBuff(float duration)
     {
         _isBuff = true;
@@ -109,6 +149,10 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
         _buffDuration = duration;
     }
 
+    /// <summary>
+    /// Removes the active buff from the player, restoring attack damage, attack cooldown, and movement speed to their
+    /// base values.
+    /// </summary>
     public void RemoveBuff()
     {
         _playerCombat.SetDamage(stats.attackDamage);
@@ -117,32 +161,55 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
         _isBuff = false;
     }
 
+    /// <summary>
+    /// Increases the maximum health by the specified amount.
+    /// </summary>
+    /// <param name="bonusHealth">The amount to add to the maximum health.</param>
     public void IncrementHealth(float bonusHealth)
     {
         stats.maxHealth += bonusHealth;
         DispatchHealthChanged();
     }
 
+    /// <summary>
+    /// Increases the player's attack damage by the specified bonus amount.
+    /// </summary>
+    /// <param name="bonusDamage">The additional damage to add to the player's current attack damage.</param>
     public void IncrementDamage(float bonusDamage)
     {
         _playerCombat.SetDamage(_playerCombat.AttackDamage+bonusDamage);
     }
 
+    /// <summary>
+    /// Multiplies the player's movement speed by a specified factor.
+    /// </summary>
+    /// <param name="value">The factor by which to multiply the current speed.</param>
     public void MultiplyVelocity(float value)
     {
         _playerMovement.SetSpeed(_playerMovement.Speed*value);
     }
 
+    /// <summary>
+    /// Multiplies the player's attack cooldown by the specified factor.
+    /// </summary>
+    /// <param name="value">The factor to apply to the current attack cooldown.</param>
     public void MultiplyAttackCooldown(float value)
     {
         _playerCombat.SetCooldown(_playerCombat.AttackCooldown*value);
     }
 
+    /// <summary>
+    /// Reduces the cooldown duration by the specified amount.
+    /// </summary>
+    /// <param name="timeToReduce">The amount of time to subtract from the current cooldown.</param>
     public void DecrementCooldown(float timeToReduce)
     {
         _parry.SetCooldown(_parry.Cooldown - timeToReduce);
     }
 
+    /// <summary>
+    /// Saves the current player statistics to a temporary storage object and triggers the statistics changed event.
+    /// </summary>
     public void SaveTempStats()
     {
         stats.maxHealth = MaxHealth;
@@ -162,6 +229,11 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
         _godMode = value;
     }
 
+    /// <summary>
+    /// Applies damage to the entity, updates health, and triggers parry or death logic as appropriate.
+    /// </summary>
+    /// <param name="damage">Amount of damage to apply.</param>
+    /// <param name="combat">Combat context associated with the damage event.</param>
     public void TakeDamage(float damage, Combat combat)
     {
         if (_parry != null && _parry.IsParrying)
@@ -185,11 +257,19 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
         }
     }
 
+    /// <summary>
+    /// Retrieves the unique identifier used for saving player statistics.
+    /// </summary>
+    /// <returns>The save ID string for player statistics.</returns>
     public string GetSaveID()
     {
         return "PlayerStats";
     }
 
+    /// <summary>
+    /// Serializes the current player's save data to a JSON string.
+    /// </summary>
+    /// <returns>A JSON string representation of the player's save data.</returns>
     public string GetSaveDataAsJson()
     {
         SaveData data = new SaveData
@@ -211,6 +291,10 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
         return JsonUtility.ToJson(data);
     }
 
+    /// <summary>
+    /// Loads player stats from a JSON string and updates the player's attributes accordingly.
+    /// </summary>
+    /// <param name="json">The JSON string containing the player stats.</param>
     public void LoadFromJson(string json)
     {
         SaveData data = JsonUtility.FromJson<SaveData>(json);
@@ -235,6 +319,10 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
         DispatchHealthChanged();
     }
 
+    /// <summary>
+    /// Represents the data required to save and restore player state, including health, movement, attack, shield, stun,
+    /// knockback, and buff parameters.
+    /// </summary>
     [Serializable]
     public struct SaveData
     {

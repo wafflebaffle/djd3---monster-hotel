@@ -1,14 +1,39 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Manages the execution and progression of game runs, including level generation, advancement, and game state
+/// persistence.
+/// </summary>
+/// <remarks>Integrates with FloorGenerator to create procedural levels and SaveManager to handle saving and
+/// loading of run data. Supports both random and fixed seeds for reproducible runs.</remarks>
 public class RunManager : MonoBehaviour, ISaveable
 {
+    /// <summary>
+    /// Current game seed shared across all systems.
+    /// </summary>
     public static int Seed {  get; private set; }
 
+    /// <summary>
+    /// Bool to determine if random seed will be used.
+    /// </summary>
     [SerializeField] private bool randomSeed = true;
+    /// <summary>
+    /// Represents the seed value used for random number generation.
+    /// </summary>
     [SerializeField] private int seed;
+    /// <summary>
+    /// Reference to the component responsible for generating the floor layout.
+    /// </summary>
+    /// <remarks>Used to configure and control procedural floor generation within the level.</remarks>
     [SerializeField] private FloorGenerator floorGenerator;
+    /// <summary>
+    /// Interger that limits the amout of levels that will be played before the end game.
+    /// </summary>
     [SerializeField] private int maxLevels;
+    /// <summary>
+    /// Represents the name of the final scene to be loaded.
+    /// </summary>
     [SerializeField] private string finalScene;
 
     private RunData currentRun;
