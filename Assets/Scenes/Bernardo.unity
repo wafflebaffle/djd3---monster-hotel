@@ -603,7 +603,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: c7620df45c0ac0d4e8a16e700881a3ca, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 53943a4f512970843a6716a822435186, type: 2}
+      objectReference: {fileID: 2100000, guid: 7c191ff7e5c213141a33ea2372d9029b, type: 2}
     - target: {fileID: 919132149155446097, guid: c7620df45c0ac0d4e8a16e700881a3ca, type: 3}
       propertyPath: m_Name
       value: FlowerPotOne (1)
@@ -5466,7 +5466,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: ac50998b117dfe04bb7fb168edf6093b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 53943a4f512970843a6716a822435186, type: 2}
+      objectReference: {fileID: 2100000, guid: 9839b74d728b59741a9a3e64266cc293, type: 2}
     - target: {fileID: 919132149155446097, guid: ac50998b117dfe04bb7fb168edf6093b, type: 3}
       propertyPath: m_Name
       value: FlowerPotTwo
@@ -6310,6 +6310,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: e012bcf6ee41ac14c8deabfd5a6ae007, type: 3}
   m_PrefabInstance: {fileID: 326917170}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &328461532
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 44dc8b361f9ca18429bccc13937db6b6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.223157
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 44dc8b361f9ca18429bccc13937db6b6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.3329
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 44dc8b361f9ca18429bccc13937db6b6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -13.017
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 44dc8b361f9ca18429bccc13937db6b6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.95543194
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 44dc8b361f9ca18429bccc13937db6b6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 44dc8b361f9ca18429bccc13937db6b6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.2952116
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 44dc8b361f9ca18429bccc13937db6b6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 44dc8b361f9ca18429bccc13937db6b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 44dc8b361f9ca18429bccc13937db6b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 34.34
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 44dc8b361f9ca18429bccc13937db6b6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 44dc8b361f9ca18429bccc13937db6b6, type: 3}
+      propertyPath: m_Name
+      value: TvRemote
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 44dc8b361f9ca18429bccc13937db6b6, type: 3}
 --- !u!1001 &330704324
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12128,7 +12185,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: ac50998b117dfe04bb7fb168edf6093b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 744dc28be0d0984499506615b6a42d0d, type: 2}
+      objectReference: {fileID: 2100000, guid: 9839b74d728b59741a9a3e64266cc293, type: 2}
     - target: {fileID: 919132149155446097, guid: ac50998b117dfe04bb7fb168edf6093b, type: 3}
       propertyPath: m_Name
       value: FlowerPotTwo
@@ -12157,7 +12214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2ff2c85838dbd534db127f6fc96f881b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.419
+      value: 0.491
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2ff2c85838dbd534db127f6fc96f881b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -12194,7 +12251,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 2ff2c85838dbd534db127f6fc96f881b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 53943a4f512970843a6716a822435186, type: 2}
+      objectReference: {fileID: 2100000, guid: d881def4c616eff4e9b575a9978b9d8e, type: 2}
     - target: {fileID: 919132149155446097, guid: 2ff2c85838dbd534db127f6fc96f881b, type: 3}
       propertyPath: m_Name
       value: BigTv
@@ -17700,7 +17757,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: ac50998b117dfe04bb7fb168edf6093b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 53943a4f512970843a6716a822435186, type: 2}
+      objectReference: {fileID: 2100000, guid: 9839b74d728b59741a9a3e64266cc293, type: 2}
     - target: {fileID: 919132149155446097, guid: ac50998b117dfe04bb7fb168edf6093b, type: 3}
       propertyPath: m_Name
       value: FlowerPotTwo (1)
@@ -19615,7 +19672,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: f9e931935fbd6a4488d57d73084f808c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: dbea081283663134e85675ff3f0745e4, type: 2}
+      objectReference: {fileID: 2100000, guid: a79e0a4cb5a8da743b592110a504df14, type: 2}
     - target: {fileID: 919132149155446097, guid: f9e931935fbd6a4488d57d73084f808c, type: 3}
       propertyPath: m_Name
       value: WardrobeOne
@@ -19743,7 +19800,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: a0b526c8bfdd4da4aa4b6465b923ac6b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: ba2643d7222271b409d2d3108d263a9a, type: 2}
+      objectReference: {fileID: 2100000, guid: 846592ad3dc1f5e47bec34d7ed1778f2, type: 2}
     - target: {fileID: 919132149155446097, guid: a0b526c8bfdd4da4aa4b6465b923ac6b, type: 3}
       propertyPath: m_Name
       value: BigLightSwitch
@@ -20265,7 +20322,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: ac50998b117dfe04bb7fb168edf6093b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 53943a4f512970843a6716a822435186, type: 2}
+      objectReference: {fileID: 2100000, guid: 9839b74d728b59741a9a3e64266cc293, type: 2}
     - target: {fileID: 919132149155446097, guid: ac50998b117dfe04bb7fb168edf6093b, type: 3}
       propertyPath: m_Name
       value: FlowerPotTwo (2)
@@ -22788,6 +22845,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: a0b526c8bfdd4da4aa4b6465b923ac6b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 846592ad3dc1f5e47bec34d7ed1778f2, type: 2}
     - target: {fileID: 919132149155446097, guid: a0b526c8bfdd4da4aa4b6465b923ac6b, type: 3}
       propertyPath: m_Name
       value: BigLightSwitch
@@ -26069,7 +26130,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: c7620df45c0ac0d4e8a16e700881a3ca, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 53943a4f512970843a6716a822435186, type: 2}
+      objectReference: {fileID: 2100000, guid: 7c191ff7e5c213141a33ea2372d9029b, type: 2}
     - target: {fileID: 919132149155446097, guid: c7620df45c0ac0d4e8a16e700881a3ca, type: 3}
       propertyPath: m_Name
       value: FlowerPotOne (2)
@@ -27854,7 +27915,7 @@ PrefabInstance:
     - target: {fileID: -1468662180276524799, guid: 59582d46a379a4e4cae8bf8e797a54ed, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: dbea081283663134e85675ff3f0745e4, type: 2}
+      objectReference: {fileID: 2100000, guid: dd54eef3426945e43b6fcc67fe060877, type: 2}
     - target: {fileID: 919132149155446097, guid: 59582d46a379a4e4cae8bf8e797a54ed, type: 3}
       propertyPath: m_Name
       value: FloorLamp
@@ -27862,7 +27923,7 @@ PrefabInstance:
     - target: {fileID: 4953232840523182856, guid: 59582d46a379a4e4cae8bf8e797a54ed, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: dbea081283663134e85675ff3f0745e4, type: 2}
+      objectReference: {fileID: 2100000, guid: 38153d7131f12e04fa4f9e3a7b5fc401, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -29719,7 +29780,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 9b7a992e786abca48a5d8167a7babd36, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 744dc28be0d0984499506615b6a42d0d, type: 2}
+      objectReference: {fileID: 2100000, guid: 846592ad3dc1f5e47bec34d7ed1778f2, type: 2}
     - target: {fileID: 919132149155446097, guid: 9b7a992e786abca48a5d8167a7babd36, type: 3}
       propertyPath: m_Name
       value: Magazines 1 (1)
@@ -30801,7 +30862,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: ac50998b117dfe04bb7fb168edf6093b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 744dc28be0d0984499506615b6a42d0d, type: 2}
+      objectReference: {fileID: 2100000, guid: 9839b74d728b59741a9a3e64266cc293, type: 2}
     - target: {fileID: 919132149155446097, guid: ac50998b117dfe04bb7fb168edf6093b, type: 3}
       propertyPath: m_Name
       value: FlowerPotTwo (1)
@@ -31987,7 +32048,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 9b7a992e786abca48a5d8167a7babd36, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 744dc28be0d0984499506615b6a42d0d, type: 2}
+      objectReference: {fileID: 2100000, guid: 846592ad3dc1f5e47bec34d7ed1778f2, type: 2}
     - target: {fileID: 919132149155446097, guid: 9b7a992e786abca48a5d8167a7babd36, type: 3}
       propertyPath: m_Name
       value: Magazines 1
@@ -38979,3 +39040,4 @@ SceneRoots:
   - {fileID: 2137831045}
   - {fileID: 2056506060}
   - {fileID: 1075536763}
+  - {fileID: 328461532}

@@ -14,6 +14,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: openPBR_shader21
     second: {fileID: 2100000, guid: d88cdb2ff1ff5544c919e6c13542fd30, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: openPBR_shader59
+    second: {fileID: 2100000, guid: d881def4c616eff4e9b575a9978b9d8e, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

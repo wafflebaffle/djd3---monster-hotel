@@ -8,12 +8,12 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: openPBR_shader1
-    second: {fileID: 2100000, guid: 5af3507e9c646374984da362f5215ede, type: 2}
+    second: {fileID: 2100000, guid: 38153d7131f12e04fa4f9e3a7b5fc401, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: standardSurface2
-    second: {fileID: 2100000, guid: 5af3507e9c646374984da362f5215ede, type: 2}
+    second: {fileID: 2100000, guid: dd54eef3426945e43b6fcc67fe060877, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
