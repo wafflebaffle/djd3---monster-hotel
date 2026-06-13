@@ -92,37 +92,19 @@ public class PlayerParry : MonoBehaviour
         _isParrying = true;
         Timer = 0f;
 
-        SetColor(Color.blue);
-        //som do parry
+        _stats.Animator.SetTrigger("Parry");
 
         if (audioSource && parryStartSound)
             audioSource.PlayOneShot(parryStartSound);
     }
     private void EndParry()
     {
-        _isParrying = false;
-        ResetColor();   
+        _isParrying = false; 
     }
 
     public void SetCooldown(float value)
     {
         _cooldown = value;
-    }
-
-    private void SetColor(Color color)
-    {
-        for (int i = 0; i < _renderers.Length; i++)
-        {
-            _renderers[i].material.color = color;
-        }
-    }
-
-    private void ResetColor()
-    {
-        for (int i = 0; i < _renderers.Length; i++)
-        {
-            _renderers[i].material.color = _originalColors[i];
-        }
     }
 
     public void SucessfulParry(Combat enemy)

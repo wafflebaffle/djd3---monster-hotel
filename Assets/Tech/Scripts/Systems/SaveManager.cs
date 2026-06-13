@@ -83,6 +83,11 @@ public class SaveManager : MonoBehaviour
     {
         return File.Exists(_saveFilePath);
     }
+    
+    public void DeleteSave()
+    {
+        File.Delete(_saveFilePath);
+    }
 
     [System.Serializable]
     private class SaveItem

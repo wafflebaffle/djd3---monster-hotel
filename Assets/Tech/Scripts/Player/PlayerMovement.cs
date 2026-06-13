@@ -9,10 +9,12 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController _controller;
     private InputAction _move;
     private Camera _cam;
+    private PlayerStats _stats;
 
     private void Start()
     {
         _controller = GetComponent<CharacterController>();
+        _stats = GetComponent<PlayerStats>();
         _cam = Camera.main;
         _move = InputSystem.actions.FindAction(moveInput);
     }
@@ -42,6 +44,8 @@ public class PlayerMovement : MonoBehaviour
 
         motion = motion.normalized;
         motion *= Speed*Time.deltaTime;
+
+        _stats.Animator.SetFloat("Velocity", motion.magnitude);
 
         if (Time.timeScale != 0) return motion;
         else return Vector3.zero;

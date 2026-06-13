@@ -710,6 +710,11 @@ Transform:
   - {fileID: 7126272995177545953}
   m_Father: {fileID: 5362301746204767134}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &660765050 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 247235387349220254, guid: dfc40db0944845a45a920a26219e50fa, type: 3}
+  m_PrefabInstance: {fileID: 834702664}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &715311558
 GameObject:
   m_ObjectHideFlags: 0
@@ -909,10 +914,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 247235387349220254, guid: dfc40db0944845a45a920a26219e50fa, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 4d19fb4996286b842b71c8ebe192b94f, type: 2}
+    - target: {fileID: 1608199338547244622, guid: dfc40db0944845a45a920a26219e50fa, type: 3}
+      propertyPath: attackAnim
+      value: 
+      objectReference: {fileID: 660765050}
     - target: {fileID: 1608199338547244622, guid: dfc40db0944845a45a920a26219e50fa, type: 3}
       propertyPath: attackAnimDuration
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4216769568168632577, guid: dfc40db0944845a45a920a26219e50fa, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 660765050}
     - target: {fileID: 4354308521891865480, guid: dfc40db0944845a45a920a26219e50fa, type: 3}
       propertyPath: m_Name
       value: Player

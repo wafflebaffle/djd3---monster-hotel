@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,9 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
 {
     [SerializeField] private StatsData stats;
     [SerializeField] private Animator animator;
+    [SerializeField] private string triggerTakeDamage = "TakeDamage";
+    [SerializeField] private string triggerDie = "Die";
+    [SerializeField] private float deathTimer = 1.0f;
 
     private float _health;
     private PlayerMovement _playerMovement;
@@ -79,13 +83,19 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
         }
     }
 
-    private void Death()
+    private IEnumerator PlayDeathAnimation()
     {
-        //Play death animation;
-        //for tests purposes
+        animator.SetTrigger(triggerDie);
+
+        yield return new WaitForSeconds(deathTimer);
+
         gameObject.SetActive(false);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SaveManager save = FindFirstObjectByType<SaveManager>();
+        if(save.HasSavedGame())
+            
+        SceneManager.LoadScene(0);
     }
+    
 
     public bool CanHeal()
     {
@@ -165,10 +175,13 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
 
         _health -= damage;
         DispatchHealthChanged();
+
+        animator.SetTrigger("");
+
         if (_health <= 0)
         {
             _health = 0;
-            Death();
+            StartCoroutine(PlayDeathAnimation());
         }
     }
 
