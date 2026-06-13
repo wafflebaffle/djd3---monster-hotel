@@ -27,6 +27,7 @@ public class RunManager : MonoBehaviour, ISaveable
     }
     private void Start()
     {
+        Debug.Log("This exists?: " + PlayerPrefs.GetInt("LoadExistingSave"));
         if (PlayerPrefs.HasKey("LoadExistingSave") && PlayerPrefs.GetInt("LoadExistingSave") == 1)
         {
             PlayerPrefs.DeleteKey("LoadExistingSave");
@@ -55,7 +56,7 @@ public class RunManager : MonoBehaviour, ISaveable
         }
         seed = runSeed;
         Seed = seed;
-        currentRun = new RunData(Seed, currentRun.CurrentLevel); ;
+        currentRun = new RunData(Seed);
         GenerateCurrentLevel();
     }
 
@@ -121,7 +122,7 @@ public class RunManager : MonoBehaviour, ISaveable
             return;
         }
 
-        currentRun = new RunData(Seed, currentRun.CurrentLevel);
+        currentRun = new RunData(Seed, data.level);
 
         floorGenerator.ClearLevel();
         GenerateCurrentLevel();

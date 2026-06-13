@@ -63,6 +63,7 @@ public class Pause_Menu : MonoBehaviour
         _isPaused = false;
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
+        Destroy(FindFirstObjectByType<SaveManager>().gameObject);
         SceneManager.LoadScene(0);
     }
 
