@@ -94,7 +94,7 @@ public class RunManager : MonoBehaviour, ISaveable
 
     public string GetSaveDataAsJson()
     {
-        SaveData data = new SaveData { runData = currentRun };
+        SaveData data = new SaveData { seed = currentRun.Seed, level = currentRun.CurrentLevel };
         return JsonUtility.ToJson(data);
     }
 
@@ -107,14 +107,13 @@ public class RunManager : MonoBehaviour, ISaveable
         }
 
         SaveData data = JsonUtility.FromJson<SaveData>(json);
-        if (data.runData == null)
+        if (data.seed == 0)
         {
             Debug.LogError("LoadFromJson: Failed to deserialize RunData from JSON.");
             return;
         }
 
-        currentRun = data.runData;
-        Seed = currentRun.Seed;
+        Seed = data.seed;
 
         if (floorGenerator == null)
         {
@@ -129,6 +128,7 @@ public class RunManager : MonoBehaviour, ISaveable
     [System.Serializable]
     private struct SaveData
     {
-        public RunData runData;
+        public int seed;
+        public int level;
     }
 }
