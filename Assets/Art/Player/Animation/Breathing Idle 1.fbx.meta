@@ -1,24 +1,9 @@
 fileFormatVersion: 2
-guid: 70fd066cb8360d4479d99bfd6cc6ce29
+guid: e3a8ef5a663cdef478d0afb088fe2a66
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: character_mat
-    second: {fileID: 2100000, guid: 6e85c061f50748444a7632fabb770bbb, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: character_mat.001
-    second: {fileID: 2100000, guid: 6e85c061f50748444a7632fabb770bbb, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: character_metal_mat
-    second: {fileID: 2100000, guid: 6e85c061f50748444a7632fabb770bbb, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -37,7 +22,7 @@ ModelImporter:
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
     importConstraints: 0
-    animationCompression: 3
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -83,7 +68,7 @@ ModelImporter:
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
@@ -98,32 +83,7 @@ ModelImporter:
   humanDescription:
     serializedVersion: 3
     human: []
-    skeleton:
-    - name: MainCharacter(Clone)
-      parentName: 
-      position: {x: -0.020455055, y: 0.00021571794, z: -10.071835}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: pants_GEO
-      parentName: MainCharacter(Clone)
-      position: {x: -0.00000009686714, y: -0.00021571794, z: 0.002404602}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: torso_GEO
-      parentName: MainCharacter(Clone)
-      position: {x: -0.00000009686714, y: -0.00021571794, z: 0.002404602}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: accessories_GEO
-      parentName: MainCharacter(Clone)
-      position: {x: -0.00000009686714, y: -0.00021571794, z: 0.002404602}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: head_GEO
-      parentName: MainCharacter(Clone)
-      position: {x: -0.00000009686714, y: -0.00021571794, z: 0.002404602}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
+    skeleton: []
     armTwist: 0.5
     foreArmTwist: 0.5
     upperLegTwist: 0.5
@@ -138,7 +98,7 @@ ModelImporter:
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
   autoGenerateAvatarMappingIfUnspecified: 1
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1

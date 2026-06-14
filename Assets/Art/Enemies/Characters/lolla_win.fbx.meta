@@ -1,29 +1,9 @@
 fileFormatVersion: 2
-guid: dcb0c9cd16cab7d4d82fa6c7e7f06692
+guid: 52f9925fe1e7d8c42ab426f8ce5c1594
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: brawl_shader_setup1_character_mat
-    second: {fileID: 2100000, guid: 571d7af422b2cee4faf4440651966891, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: brawl_shader_setup1_character_metal_mat
-    second: {fileID: 2100000, guid: e19f7c2b8598570469ade77e4aa40e9e, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: character_mat
-    second: {fileID: 2100000, guid: 1a9153af69f31744dab7c4a701131efa, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: character_metal_mat
-    second: {fileID: 2100000, guid: efb6698d7ff5eab45891a72dea6b87b4, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +68,7 @@ ModelImporter:
     secondaryUVMinLightmapResolution: 40
     secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
-    useFileScale: 0
+    useFileScale: 1
     strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
