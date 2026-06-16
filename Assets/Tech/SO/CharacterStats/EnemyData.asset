@@ -17,7 +17,7 @@ MonoBehaviour:
   moveSpeed: 1
   angularSpeed: 120
   attackDamage: 5
-  attackRange: 0.6
+  attackRange: 1
   attackCooldown: 1
   shieldCooldown: 0
   stunDuration: 0

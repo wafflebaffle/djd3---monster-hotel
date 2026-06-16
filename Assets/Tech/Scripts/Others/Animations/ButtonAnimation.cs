@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ButtonAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ButtonAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISelectHandler
 {
     [SerializeField] private string animationEnterName = "Expand";
     [SerializeField] private string animationExitName = "Shrink";
@@ -18,6 +18,11 @@ public class ButtonAnimation : MonoBehaviour, IPointerEnterHandler, IPointerExit
     }
 
     public void OnPointerExit(PointerEventData a)
+    {
+        _anim.SetTrigger(animationExitName);
+    }
+
+    public void OnSelect(BaseEventData eventData)
     {
         _anim.SetTrigger(animationExitName);
     }

@@ -72,14 +72,17 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
         SaveManager sm = FindFirstObjectByType<SaveManager>();
         if (sm != null) sm.RegisterSaveable(this);
 
+        _playerMovement = GetComponent<PlayerMovement>();
         _playerCombat = GetComponent<PlayerCombat>();
+        _parry = GetComponent<PlayerParry>();
+
+        if(sm.HasSavedGame()) return;
+
         _playerCombat.SetDamage(stats.attackDamage);
         _playerCombat.SetRange(stats.attackRange);
         _playerCombat.SetCooldown(stats.attackCooldown);
-        _playerMovement = GetComponent<PlayerMovement>();
         _playerMovement.SetSpeed(stats.moveSpeed);
         _health = stats.maxHealth;
-        _parry = GetComponent<PlayerParry>();
         _parry.SetCooldown(stats.shieldCooldown);
     }
 
@@ -284,9 +287,6 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
             shieldCooldown = _parry.Cooldown,
             stunDuration = stats.stunDuration,
             knockbackDistance = stats.knockbackDistance,
-            isBuff = _isBuff,
-            buffDuration = _buffDuration,
-            buffTimer = _buffTimer
         };
         return JsonUtility.ToJson(data);
     }
@@ -336,8 +336,5 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
         public float shieldCooldown;
         public float stunDuration;
         public float knockbackDistance;
-        public bool isBuff;
-        public float buffDuration;
-        public float buffTimer;
     }
 }
