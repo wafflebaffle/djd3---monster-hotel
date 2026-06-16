@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: UpgradeSpeed
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeSpeed
   <Name>k__BackingField: SpeedyGonzalez
-  multiplyVelocity: 1.1
+  multiplyVelocity: 1.2

@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: UpgradeDamage
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeDamage
   <Name>k__BackingField: PunchBetter
-  <AddDamage>k__BackingField: 10
+  addDamage: 10

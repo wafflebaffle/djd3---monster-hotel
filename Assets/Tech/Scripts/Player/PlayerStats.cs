@@ -76,7 +76,7 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
         _playerCombat = GetComponent<PlayerCombat>();
         _parry = GetComponent<PlayerParry>();
 
-        if(sm.HasSavedGame()) return;
+        if(sm != null && sm.HasSavedGame()) return;
 
         _playerCombat.SetDamage(stats.attackDamage);
         _playerCombat.SetRange(stats.attackRange);
