@@ -29,6 +29,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
+        if (_agent.isStopped) return;
         _enemy.Animator.SetFloat("Velocity", _agent.velocity.magnitude);
     }
 

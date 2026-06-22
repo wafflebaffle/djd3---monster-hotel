@@ -15,6 +15,7 @@ public class EnemyCombat : Combat
 
     private EnemyStats _enemy;
     private EnemyMovement _movement;
+    private Coroutine _attackRoutine;
 
     public bool HadAttack { get; private set; }
 
@@ -58,6 +59,7 @@ public class EnemyCombat : Combat
                 HadAttack = true;
             }
         }
+        _attackRoutine = null;
     }
 
     protected override void TryAttack()
@@ -75,8 +77,19 @@ public class EnemyCombat : Combat
             audioSource.PlayOneShot(attackSound);
         }
 
-        StartCoroutine(Attack());
+        _attackRoutine = StartCoroutine(Attack());
     }
+
+    public override void CancelAttack()
+    {
+        if (_attackRoutine != null)
+        {
+            StopCoroutine(_attackRoutine);
+            _attackRoutine = null;
+        }
+        HadAttack = false;
+    }
+
 
     public bool CanAttack()
     {

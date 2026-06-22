@@ -30,7 +30,7 @@ public class CleanerBehaviour : AIBehaviour
         _idle = new State("Idle", null, _movement.MoveRandom, null);
         _chase = new State("Chase", null, _movement.Move, null);
         _attack = new State("Attack", _combat.DoAttack, null, null);
-        _stun = new State("Stun", null, null, () => _sight.GetTarget(_sight.Target));
+        _stun = new State("Stun", null, null, null);
 
         Transition idleToChaseBySight = new Transition(() => _sight.GetTarget(), null, _chase);
         _idle.AddTransition(idleToChaseBySight);

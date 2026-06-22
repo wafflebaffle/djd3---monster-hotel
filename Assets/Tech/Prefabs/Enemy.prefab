@@ -154,6 +154,8 @@ MonoBehaviour:
   takeDamageAnimName: TakeDamage
   deathAnimName: Death
   deathAnimTime: 1
+  stunDuration: 0.4
+  aiBehaviour: {fileID: 5683766289459812019}
 --- !u!195 &9223028777846313002
 NavMeshAgent:
   m_ObjectHideFlags: 0

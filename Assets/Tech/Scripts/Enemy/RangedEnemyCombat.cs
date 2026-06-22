@@ -11,6 +11,7 @@ public class RangedEnemyCombat : Combat
     [SerializeField] private GameObject projectile;
     [SerializeField] private LayerMask player;
     private EnemyStats _enemy;
+    private Coroutine _attackRoutine;
     public bool HadAttack { get; private set; }
 
     private void Start()
@@ -36,6 +37,18 @@ public class RangedEnemyCombat : Combat
         HadAttack = true;
 
         yield return wfsCooldown;
+
+        _attackRoutine = null;
+    }
+
+    public override void CancelAttack()
+    {
+        if (_attackRoutine != null)
+        {
+            StopCoroutine(_attackRoutine);
+            _attackRoutine = null;
+        }
+        HadAttack = false;
     }
 
     protected override void TryAttack()
@@ -45,7 +58,7 @@ public class RangedEnemyCombat : Combat
 
         lastAttackTime = Time.time;
         attackAnim.SetTrigger(attackAnimName);
-        StartCoroutine(Attack());
+        _attackRoutine = StartCoroutine(Attack());
     }
 
     public bool CanAttack()

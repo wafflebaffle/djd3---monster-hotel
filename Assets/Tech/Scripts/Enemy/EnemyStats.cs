@@ -10,6 +10,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     [SerializeField] private string takeDamageAnimName = "TakeDamage";
     [SerializeField] private string deathAnimName = "Death";
     [SerializeField] private float deathAnimTime = 0.5f;
+    [SerializeField] private float stunDuration = 0.4f;
     public Animator Animator => enemyAnim;
     private Vector3 _startPos = new();
 
@@ -23,6 +24,10 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
 
     private bool _isStunned;
     public bool IsStunned => _isStunned;
+    private bool _isDead;
+    public bool IsDead => _isDead;
+
+    private AIBehaviour _aiBehaviour;
 
     //Propriedades
     public float CurrentHealth => _health;
@@ -53,6 +58,7 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
 
         _enemyMovement = GetComponent<EnemyMovement>();
         _enemySight = GetComponent<EnemySight>();
+        _aiBehaviour = GetComponent<AIBehaviour>();
         _enemyMovement.SetSpeed(stats.moveSpeed);
         _enemyMovement.SetAngularSpeed(stats.angularSpeed);
         _enemyCombat = GetComponent<Combat>();
@@ -71,24 +77,33 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
 
     public void TakeDamage(float damage, Combat combat)
     {
+        if (_isDead) return;
         if (combat is EnemyCombat or RangedEnemyCombat) return;
 
         _health -= damage;
-        enemyAnim.SetTrigger(takeDamageAnimName);
         _enemySight.SetTarget(combat.transform);
-        
-        DispatchHealthChanged();
-        if(_health <= 0)
+
+        if (_health <= 0)
         {
             _health = 0;
             Death();
+            return;
         }
+
+        enemyAnim.SetTrigger(takeDamageAnimName);
+        ApplyStun(stunDuration);
+        DispatchHealthChanged();
     }
     public void Death()
     {
-        //Play death animation;
-        enemyAnim.SetTrigger(deathAnimName);
+        Debug.Log("Death() foi chamado!");
+        if (_isDead) return;
+        _isDead = true;
 
+        _enemyMovement.StopMove();
+        if (_aiBehaviour) _aiBehaviour.enabled = false;
+
+        enemyAnim.SetTrigger(deathAnimName);
         StartCoroutine(Died());
     }
 
@@ -128,7 +143,9 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     
     public void ParryEffect(Vector3 direction, float stunTime = 0.5f, float knockbackDistance = 0.0f)
     {
-        ApplyStun();
+        if (_isDead) return;
+
+        ApplyStun(stunTime);
         SetColor(Color.blue);
 
         Vector3 targetPos = transform.position + direction * knockbackDistance;
@@ -139,13 +156,18 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
             t += Time.deltaTime * 6f;
             transform.position = Vector3.Lerp(transform.position, targetPos, t);
         }
-
-        Invoke("RemoveStun", stunTime);
     }
 
-    public void ApplyStun()
+    public void ApplyStun(float stunTime)
     {
+        if (_isDead) return;
+
+        CancelInvoke(nameof(RemoveStun));
+
         _isStunned = true;
+        _enemyCombat.CancelAttack();
+
+        Invoke(nameof(RemoveStun), stunTime);
     }
 
     public void RemoveStun()
