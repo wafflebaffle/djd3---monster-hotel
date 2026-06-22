@@ -433,6 +433,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStats
   stats: {fileID: 11400000, guid: 5f190b32d6bb6364ba0188950e4314d8, type: 2}
   animator: {fileID: 0}
+  triggerTakeDamage: TakeDamage
+  triggerDie: Die
+  deathTimer: 1
+  invulnerabilityDuration: 1
 --- !u!114 &1608199338547244622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -447,9 +451,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
   attackPoint: {fileID: 7268607678108091911}
   attackInput: Attack
-  attackAnim: {fileID: 0}
+  attackAnim: {fileID: 247235387349220254}
   attackAnimName: Punch
   attackAnimDuration: 0
+  hit1BoolName: hit1
+  hit2BoolName: hit2
+  comboResetTime: 1
   sfxGroup: {fileID: -5889397635432707386, guid: 94981ed0c93219142afc040d9064a919, type: 2}
   audioSource: {fileID: 6874916950957869879}
   attackSound: {fileID: 8300000, guid: 3a2220fc305712840aec0c716cfcb657, type: 3}

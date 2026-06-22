@@ -16,6 +16,14 @@ public class PlayerCombat : Combat
     [SerializeField] private string attackAnimName = "Punch";
     [SerializeField] private float attackAnimDuration = 1.0f;
 
+    [Header("Combo")]
+    [SerializeField] private string hit1BoolName = "hit1";
+    [SerializeField] private string hit2BoolName = "hit2";
+    [SerializeField] private float comboResetTime = 1.0f;
+
+    private bool isFirstPunch = true;
+    private float lastPunchTime;
+
     [Header("Audio")]
     [SerializeField] private AudioMixerGroup sfxGroup;
     [SerializeField] private AudioSource audioSource;
@@ -26,6 +34,7 @@ public class PlayerCombat : Combat
     {
         _attack = InputSystem.actions.FindAction(attackInput);
         _stats = GetComponent<PlayerStats>();
+        SetCooldown(attackAnimDuration);
 
         if (audioSource && sfxGroup)
         {
@@ -34,7 +43,11 @@ public class PlayerCombat : Combat
     }
     void Update()
     {
-        
+        if (!isFirstPunch && Time.time - lastPunchTime > comboResetTime)
+        {
+            isFirstPunch = true;
+        }
+
         if (_attack.WasPressedThisFrame())
         {
             TryAttack();
@@ -47,13 +60,28 @@ public class PlayerCombat : Combat
             return;
 
         lastAttackTime = Time.time;
+        lastPunchTime = Time.time;
+
+        attackAnim.SetBool(hit1BoolName, isFirstPunch);
+        attackAnim.SetBool(hit2BoolName, !isFirstPunch);
         attackAnim.SetTrigger(attackAnimName);
+
+        isFirstPunch = !isFirstPunch;
+
         if (audioSource && attackSound)
         {
             audioSource.pitch = Random.Range(0.95f, 1.05f);
             audioSource.PlayOneShot(attackSound);
         }
         StartCoroutine(Attack());
+        StartCoroutine(ResetPunchBoolsAfterAnim());
+    }
+
+    private IEnumerator ResetPunchBoolsAfterAnim()
+    {
+        yield return new WaitForSeconds(attackAnimDuration);
+        attackAnim.SetBool(hit1BoolName, false);
+        attackAnim.SetBool(hit2BoolName, false);
     }
 
     protected override IEnumerator Attack()

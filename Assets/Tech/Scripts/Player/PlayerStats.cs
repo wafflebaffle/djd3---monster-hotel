@@ -32,6 +32,8 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
     /// </summary>
     [SerializeField] private float deathTimer = 1.0f;
 
+    [SerializeField] private float invulnerabilityDuration = 1.0f;
+
     /// <summary>
     /// Represents the health value of the player.
     /// </summary>
@@ -39,6 +41,9 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
     private PlayerMovement _playerMovement;
     private PlayerCombat _playerCombat;
     private PlayerParry _parry;
+
+    private bool _isDead;
+    private bool _isInvulnerable;
 
     //CHEATS
     private bool _godMode;
@@ -113,24 +118,6 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
             _health = stats.maxHealth;
         }
     }
-
-    /// <summary>
-    /// Plays the animation for Death
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator PlayDeathAnimation()
-    {
-        animator.SetTrigger(triggerDie);
-
-        yield return new WaitForSeconds(deathTimer);
-
-        gameObject.SetActive(false);
-        SaveManager save = FindFirstObjectByType<SaveManager>();
-        if(save.HasSavedGame()) save.DeleteSave();
-            
-        SceneManager.LoadScene(0);
-    }
-    
 
     /// <summary>
     /// Determines whether the player can be healed based on current and maximum health values.
@@ -239,6 +226,8 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
     /// <param name="combat">Combat context associated with the damage event.</param>
     public void TakeDamage(float damage, Combat combat)
     {
+        if (_isDead || _isInvulnerable) return;
+
         if (_parry != null && _parry.IsParrying)
         {
             _parry.SucessfulParry(combat);
@@ -251,13 +240,63 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
         _health -= damage;
         DispatchHealthChanged();
 
-        animator.SetTrigger("");
+        CancelCurrentAction();
+        animator.SetTrigger("TakingDamage");
 
         if (_health <= 0)
         {
             _health = 0;
-            StartCoroutine(PlayDeathAnimation());
+            Die();
         }
+        else
+        {
+            StartCoroutine(InvulnerabilityRoutine());
+        }
+    }
+
+    private void CancelCurrentAction()
+    {
+        animator.ResetTrigger("Attack");
+        animator.SetFloat("Speed", 0f);
+    }
+
+    private IEnumerator InvulnerabilityRoutine()
+    {
+        _isInvulnerable = true;
+        yield return new WaitForSeconds(invulnerabilityDuration);
+        _isInvulnerable = false;
+    }
+
+    private void Die()
+    {
+        if (_isDead) return;
+        _isDead = true;
+
+        Collider col = GetComponent<Collider>();
+        if (col != null) col.enabled = false;
+
+        if (_playerMovement != null) _playerMovement.enabled = false;
+        if (_playerCombat != null) _playerCombat.enabled = false;
+        if (_parry != null) _parry.enabled = false;
+
+        animator.SetTrigger(triggerDie);
+        StartCoroutine(DisableAfterDeath());
+    }
+
+    private IEnumerator DisableAfterDeath()
+    {
+        yield return null;
+
+        float length = animator.GetCurrentAnimatorStateInfo(0).length;
+        yield return new WaitForSeconds(length);
+
+        gameObject.SetActive(false);
+
+        SaveManager save = FindFirstObjectByType<SaveManager>();
+        if (save != null && save.HasSavedGame())
+            save.DeleteSave();
+
+        SceneManager.LoadScene(0);
     }
 
     /// <summary>
