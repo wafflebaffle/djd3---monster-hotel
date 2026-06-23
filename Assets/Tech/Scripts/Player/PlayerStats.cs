@@ -34,6 +34,8 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
 
     [SerializeField] private float invulnerabilityDuration = 1.0f;
 
+    [SerializeField] private GameObject deathScreenUI;
+
     /// <summary>
     /// Represents the health value of the player.
     /// </summary>
@@ -296,7 +298,10 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
         if (save != null && save.HasSavedGame())
             save.DeleteSave();
 
-        SceneManager.LoadScene(0);
+        if (deathScreenUI != null)
+            deathScreenUI.SetActive(true);
+        else
+            Debug.LogError("PlayerStats: deathScreenUI não está assignado no Inspector!");
     }
 
     /// <summary>

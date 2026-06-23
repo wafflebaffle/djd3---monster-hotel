@@ -16,10 +16,14 @@ public class Pause_Menu : MonoBehaviour
     /// Represents the GameObject for the confirmation screen.
     /// </summary>
     [SerializeField] private GameObject areYouSure;
+    private bool makingSure;
     /// <summary>
     /// Represents the input action for canceling an operation.
     /// </summary>
     [SerializeField] private InputAction cancel;
+
+    [SerializeField] private GameObject[] buttons;
+    [SerializeField] private GameObject settingsMenu;
 
     /// <summary>
     /// Bool that controls if its paused
@@ -45,9 +49,13 @@ public class Pause_Menu : MonoBehaviour
     {
         if (cancel.WasPressedThisFrame())
         {
-            if (_isPaused)
+            if (_isPaused && !makingSure)
             {
                 Resume();
+            }
+            else if (_isPaused)
+            {
+                return;
             }
             else
             {
@@ -83,6 +91,8 @@ public class Pause_Menu : MonoBehaviour
     public void YouSure()
     {
         areYouSure.SetActive(true);
+        pauseMenu.SetActive(false);
+        makingSure = true;
     }
 
     /// <summary>
@@ -91,6 +101,8 @@ public class Pause_Menu : MonoBehaviour
     public void NotSure()
     {
         areYouSure.SetActive(false);
+        pauseMenu.SetActive(true);
+        makingSure = false;
     }
 
     /// <summary>
@@ -100,6 +112,7 @@ public class Pause_Menu : MonoBehaviour
     public void Exit()
     {
         _isPaused = false;
+        makingSure = false;
         pauseMenu.SetActive(false);
         Time.timeScale = 1f;
         Destroy(FindFirstObjectByType<SaveManager>().gameObject);
@@ -113,5 +126,23 @@ public class Pause_Menu : MonoBehaviour
     {
         SaveManager sm = FindFirstObjectByType<SaveManager>();
         if (sm != null) sm.SaveGame();
+    }
+
+    public void SettingsScreen()
+    {
+        foreach (GameObject button in buttons)
+        {
+            button.SetActive(false);
+        }
+        settingsMenu.SetActive(true);
+    }
+
+    public void ExitSetings()
+    {
+        settingsMenu.SetActive(false);
+        foreach (GameObject button in buttons)
+        {
+            button.SetActive(true);
+        }
     }
 }
