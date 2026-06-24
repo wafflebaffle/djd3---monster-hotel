@@ -123,6 +123,7 @@ MonoBehaviour:
   takeDamageAnimName: TakeDamage
   deathAnimName: Death
   deathAnimTime: 1
+  stunDuration: 0.4
 --- !u!195 &1291731536497930017
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -142,7 +143,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2.0000017
-  m_BaseOffset: 1.0000008
+  m_BaseOffset: 2
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!136 &5919424436027247705

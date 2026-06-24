@@ -155,7 +155,6 @@ MonoBehaviour:
   deathAnimName: Death
   deathAnimTime: 1
   stunDuration: 0.4
-  aiBehaviour: {fileID: 5683766289459812019}
 --- !u!195 &9223028777846313002
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -175,7 +174,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2.0000017
-  m_BaseOffset: 1.0000008
+  m_BaseOffset: 2
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &2335371125738568523
@@ -295,6 +294,10 @@ PrefabInstance:
     - target: {fileID: 3767213134446832736, guid: 70e076144e6c6d44d9e2bb5296528709, type: 3}
       propertyPath: m_Name
       value: ChupacabraModel
+      objectReference: {fileID: 0}
+    - target: {fileID: 4711916768323838902, guid: 70e076144e6c6d44d9e2bb5296528709, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

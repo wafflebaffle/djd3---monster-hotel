@@ -33,7 +33,11 @@ public class RangedEnemyCombat : Combat
 
         yield return wfs;
 
-        Instantiate(projectile, attackPoint);
+        Debug.Log("A instanciar projétil");
+        if (projectile == null) Debug.LogError("Prefab 'projectile' não atribuído!");
+        if (attackPoint == null) Debug.LogError("attackPoint não atribuído!");
+
+        Instantiate(projectile, attackPoint.position, attackPoint.rotation); // use posição+rotação
         HadAttack = true;
 
         yield return wfsCooldown;

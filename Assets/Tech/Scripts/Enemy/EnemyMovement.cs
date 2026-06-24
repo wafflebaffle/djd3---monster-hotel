@@ -55,26 +55,20 @@ public class EnemyMovement : MonoBehaviour
 
     public void Move()
     {
-        _agent.speed = Speed;
-
+        _agent.speed = Speed * pursuitVelocityMultiplier;
         _currentTarget = _enemy.GetTarget();
         Vector3 target;
-
-        _agent.speed = Speed*pursuitVelocityMultiplier;
         target = _currentTarget.position;
-
         _lastPos = transform.position;
         _agent.destination = target;
     }
 
     public void MoveWithDistance()
     {
-        _agent.speed = Speed * pursuitVelocityMultiplier;
-
+        _agent.speed = Speed; // * pursuitVelocityMultiplier; // TESTE
         _currentTarget = _enemy.GetTarget();
         Vector3 dir = (_lastTarget.Value - transform.position).normalized;
         _agent.destination = transform.position + dir * _enemy.AttackRange;
-
         _lastPos = transform.position;
     }
 
@@ -103,7 +97,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void Flee()
     {
-        _agent.speed = Speed * pursuitVelocityMultiplier;
+        _agent.speed = Speed; // * pursuitVelocityMultiplier; // TESTE
         Vector3 dir = (_lastTarget.Value - transform.position).normalized;
         _lastPos = transform.position;
         _agent.destination = _lastTarget.Value - dir * _enemy.AttackRange;
