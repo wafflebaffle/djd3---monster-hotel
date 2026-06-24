@@ -224,17 +224,17 @@ public class AssetsGenerator : MonoBehaviour
     private void DisposePerPoint(List<Assets> assetList, Dictionary<Vector3, Vector3> positionDict, bool hasDirection)
     {
         if (assetList == null || assetList.Count == 0) return;
-        
+
         List<Vector3> positionsList = new List<Vector3>(positionDict.Keys);
 
         // Fisher-Yates shuffle, was recomended by ClaudAI.
         for (int i = 0; i < positionsList.Count; i++)
         {
             int randomIndex = rnd.Next(i, positionsList.Count);
-            (positionsList[i], positionsList[randomIndex]) = 
+            (positionsList[i], positionsList[randomIndex]) =
                 (positionsList[randomIndex], positionsList[i]);
         }
-        
+
         foreach (Vector3 position in positionsList)
         {
             if (assetList.Count == 0) break;
@@ -253,7 +253,7 @@ public class AssetsGenerator : MonoBehaviour
             _remainingAssets--;
 
             if (toDispose == null) continue;
-            
+
             if (hasDirection)
             {
                 Vector3 dir = positionDict[position];
@@ -269,19 +269,16 @@ public class AssetsGenerator : MonoBehaviour
                 {
                     if (Mathf.Abs(dir.x) > 0)
                     {
+                        int halfZ = stepsZ / 2;
+
                         for (int a = 0; a < stepsX; a++)
                         {
                             Vector3 blockPos = position + new Vector3(a * dir.x * stepSize, 0, 0);
-                            
-                            if (!_positions.TryGetValue(blockPos, out bool isOccupied) || isOccupied)
-                            {
-                                canPlace = false;
-                                break;
-                            }
-                            
-                            for (int b = 0; b < stepsZ; b++)
+
+                            for (int b = -halfZ; b <= stepsZ - halfZ - 1; b++)
                             {
                                 Vector3 widthPos = blockPos + new Vector3(0, 0, b * stepSize);
+
                                 if (!_positions.TryGetValue(widthPos, out bool widthOccupied) || widthOccupied)
                                 {
                                     canPlace = false;
@@ -294,19 +291,16 @@ public class AssetsGenerator : MonoBehaviour
                     }
                     else
                     {
+                        int halfX = stepsX / 2;
+
                         for (int b = 0; b < stepsZ; b++)
                         {
                             Vector3 blockPos = position + new Vector3(0, 0, b * dir.z * stepSize);
-                            
-                            if (!_positions.TryGetValue(blockPos, out bool isOccupied) || isOccupied)
-                            {
-                                canPlace = false;
-                                break;
-                            }
-                            
-                            for (int a = 0; a < stepsX; a++)
+
+                            for (int a = -halfX; a <= stepsX - halfX - 1; a++)
                             {
                                 Vector3 widthPos = blockPos + new Vector3(a * stepSize, 0, 0);
+
                                 if (!_positions.TryGetValue(widthPos, out bool widthOccupied) || widthOccupied)
                                 {
                                     canPlace = false;
@@ -328,7 +322,7 @@ public class AssetsGenerator : MonoBehaviour
                                 a * dir.x * stepSize,
                                 0,
                                 b * dir.z * stepSize);
-                            
+
                             if (!_positions.TryGetValue(blockPos, out bool isOccupied) || isOccupied)
                             {
                                 canPlace = false;
@@ -339,7 +333,7 @@ public class AssetsGenerator : MonoBehaviour
                         if (!canPlace) break;
                     }
                 }
-                    
+
                 if (canPlace && blockedPositions.Count > 0)
                 {
                     Vector3 spawnPos = Vector3.zero;
@@ -348,7 +342,7 @@ public class AssetsGenerator : MonoBehaviour
                     spawnPos.y = position.y;
 
                     Instantiate(toDispose.Prefab, spawnPos, Quaternion.LookRotation(positionDict[position]), allMeshes.transform);
-                    
+
                     foreach (Vector3 p in blockedPositions)
                         _positions[p] = true;
                 }
