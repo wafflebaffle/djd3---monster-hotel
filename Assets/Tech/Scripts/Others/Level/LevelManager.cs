@@ -13,8 +13,16 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private AudioClip music1;
 
     [SerializeField] private RunManager runManager;
+
+    private bool _levelCleared;
+
     private int _enemiesAlive;
-    private void EnemyHasSpawn() => _enemiesAlive++;
+    private void EnemyHasSpawn()
+    {
+        _enemiesAlive++;
+        if (!mesh.enabled) mesh.enabled = true;
+        if (_levelCleared) _levelCleared = false;
+    }
     private void EnemyHasDied()
     {
         _enemiesAlive--;
@@ -46,20 +54,22 @@ public class LevelManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (_enemiesAlive <= 0)
+        if (_levelCleared) return;
+        if (_enemiesAlive > 0) return;
+
+        if (other.TryGetComponent(out PlayerStats player))
         {
-            if (other.TryGetComponent(out PlayerStats player))
+            _levelCleared = true;
+
+            if (runManager.CurrentLevel >= runManager.MaxLevels)
             {
-                if (runManager.CurrentLevel >= runManager.MaxLevels)
-                {
-                    runManager.EndGame();
-                }
-                else
-                {
-                    player.RemoveBuff();
-                    upgradePanel.SetPlayer(player);
-                    upgradePanel.gameObject.SetActive(true);
-                }
+                runManager.EndGame();
+            }
+            else
+            {
+                player.RemoveBuff();
+                upgradePanel.SetPlayer(player);
+                upgradePanel.gameObject.SetActive(true);
             }
         }
     }

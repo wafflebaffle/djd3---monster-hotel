@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
-using UnityEngine.AI;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.Rendering.Universal;
 
 public class AssetsGenerator : MonoBehaviour 
 {
@@ -35,6 +36,9 @@ public class AssetsGenerator : MonoBehaviour
     // Reference for the NavMeshSurface, to bake it and got points from it;
     private NavMeshSurface _surfaceAI;
 
+    private Room _room;
+    [SerializeField] private float entranceExclusionRadius = 1.5f;
+
     /// <summary>
     /// It set ups the NavMeshSurface and bake it, instance the random using our universal seed, get the points on the room
     /// and dispose all assets.
@@ -42,6 +46,7 @@ public class AssetsGenerator : MonoBehaviour
     /// <returns> Returns a WaitForSeconds of 1 second, since the room doesn't start directly on the right position. </returns>
     private IEnumerator Start()
     {
+
         yield return new WaitForSeconds(0.5f);
 
         _surfaceAI = GetComponent<NavMeshSurface>();
@@ -49,11 +54,13 @@ public class AssetsGenerator : MonoBehaviour
 
         rnd = new System.Random(RunManager.Seed);
         _roomsBounds = roomArea.bounds;
+        _room = GetComponentInParent<Room>();
 
-        foreach(Assets asset in assets)
+        foreach (Assets asset in assets)
             asset.RemainingCount = asset.MaxCount;
 
         GetPositions();
+        MarkEntranceExclusionZone();
 
         foreach (Vector3 point in _points)
         {
@@ -64,6 +71,23 @@ public class AssetsGenerator : MonoBehaviour
         DisposeAssets();
 
         allMeshes.SetActive(false);
+    }
+
+    private void MarkEntranceExclusionZone()
+    {
+        if (_room == null || _room.Entrance == null) return;
+
+        Vector3 entrancePos = _room.Entrance.position;
+
+        foreach (Vector3 point in _points)
+        {
+            float flatDistance = Vector2.Distance(
+                new Vector2(point.x, point.z),
+                new Vector2(entrancePos.x, entrancePos.z));
+
+            if (flatDistance <= entranceExclusionRadius)
+                _unavailablePoints.Add(point);
+        }
     }
 
     /// <summary>
@@ -360,26 +384,6 @@ public class AssetsGenerator : MonoBehaviour
                 _positions[position] = true;
             }
         }
-    }
-
-    /// <summary>
-    /// To try dispose an asset on the designed position.
-    /// </summary>
-    /// <param name="thoseAssets"> List of all possible assets to place there </param>
-    /// <returns> Returns the asset to dispose </returns>
-    private Assets DisposeAsset(List<Assets> thoseAssets)
-    {
-        if (thoseAssets == null || thoseAssets.Count == 0)
-        return null;
-
-        List<Assets> availableAssets = thoseAssets.FindAll(a => a.RemainingCount > 0);
-        if (availableAssets.Count == 0)
-        {
-            thoseAssets.Clear();
-            return null;            
-        }
-
-        return availableAssets[rnd.Next(0, availableAssets.Count)];
     }
 
     /// <summary>
