@@ -45,6 +45,7 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
     private PlayerParry _parry;
 
     private bool _isDead;
+    public bool IsDead => _isDead;
     private bool _isInvulnerable;
 
     //CHEATS
@@ -280,6 +281,9 @@ public class PlayerStats : MonoBehaviour, IHealable, IDamageable, IBuffable, ISa
         if (_playerMovement != null) _playerMovement.enabled = false;
         if (_playerCombat != null) _playerCombat.enabled = false;
         if (_parry != null) _parry.enabled = false;
+
+        PlayerRotation rotation = GetComponent<PlayerRotation>();
+        if (rotation != null) rotation.enabled = false;
 
         animator.SetTrigger(triggerDie);
         StartCoroutine(DisableAfterDeath());

@@ -20,11 +20,13 @@ public class Projectile : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+        if (_owner != null && collision.gameObject.transform.IsChildOf(_owner.transform))
+            return;
+
         if (collision.gameObject.TryGetComponent<IDamageable>(out IDamageable target))
         {
             target.TakeDamage(_owner.AttackDamage, _owner);
         }
-
         Destroy(gameObject);
     }
 }

@@ -28,20 +28,14 @@ public class RangedEnemyCombat : Combat
     {
         YieldInstruction wfs = new WaitForSeconds(attackAnimDuration);
         YieldInstruction wfsCooldown = new WaitForSeconds(attackAnimDuration);
-
         HadAttack = false;
-
         yield return wfs;
-
         Debug.Log("A instanciar projétil");
         if (projectile == null) Debug.LogError("Prefab 'projectile' não atribuído!");
         if (attackPoint == null) Debug.LogError("attackPoint não atribuído!");
-
-        Instantiate(projectile, attackPoint.position, attackPoint.rotation);
+        Instantiate(projectile, attackPoint.position, attackPoint.rotation, transform);
         HadAttack = true;
-
         yield return wfsCooldown;
-
         _attackRoutine = null;
     }
 

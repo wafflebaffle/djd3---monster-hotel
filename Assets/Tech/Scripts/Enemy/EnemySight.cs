@@ -25,16 +25,20 @@ public class EnemySight : MonoBehaviour
     }
 
     public bool GetTarget(Transform submitTarget = null)
-    {   
+    {
         Transform target = submitTarget;
 
-        if(_canFollowPlayer)
+        if (_saveTarget != null && IsTargetDead(_saveTarget))
         {
-            if(target != null)
+            _saveTarget = null;
+            _timer = 0;
+        }
 
-            _timer += Time.deltaTime;
+        if (_canFollowPlayer)
+        {
+            if (target != null)
+                _timer += Time.deltaTime;
             target = SeekTarget();
-
             if (target != null)
             {
                 _saveTarget = target;
@@ -56,8 +60,13 @@ public class EnemySight : MonoBehaviour
             _timer = 0;
             _saveTarget = null;
         }
-
         return target;
+    }
+
+    private bool IsTargetDead(Transform target)
+    {
+        PlayerStats stats = target.GetComponent<PlayerStats>();
+        return stats != null && stats.IsDead;
     }
 
     public void SetTarget(Transform target)
@@ -75,6 +84,7 @@ public class EnemySight : MonoBehaviour
         foreach (Collider targetCollider in potentialTargets)
         {
             Transform targetTransform = targetCollider.transform;
+            if (IsTargetDead(targetTransform)) continue;
             Vector3 directionToTarget = (targetTransform.position - sightTrans.position).normalized;
             float distanceToTarget = Vector3.Distance(sightTrans.position, targetTransform.position);
             
