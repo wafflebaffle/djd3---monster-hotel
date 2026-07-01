@@ -30,6 +30,8 @@ public class PlayerCombat : Combat
     [SerializeField] private AudioClip attackSound;
     [SerializeField] private AudioClip hitSound;
 
+    public bool IsAttacking { get; private set; }
+
     void Start()
     {
         _attack = InputSystem.actions.FindAction(attackInput);
@@ -62,6 +64,8 @@ public class PlayerCombat : Combat
         lastAttackTime = Time.time;
         lastPunchTime = Time.time;
 
+        IsAttacking = true;
+
         attackAnim.SetBool(hit1BoolName, isFirstPunch);
         attackAnim.SetBool(hit2BoolName, !isFirstPunch);
         attackAnim.SetTrigger(attackAnimName);
@@ -82,6 +86,7 @@ public class PlayerCombat : Combat
         yield return new WaitForSeconds(attackAnimDuration);
         attackAnim.SetBool(hit1BoolName, false);
         attackAnim.SetBool(hit2BoolName, false);
+        IsAttacking = false;
     }
 
     protected override IEnumerator Attack()

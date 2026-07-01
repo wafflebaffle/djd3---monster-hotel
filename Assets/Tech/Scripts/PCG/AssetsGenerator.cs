@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Rendering.Universal;
 
 public class AssetsGenerator : MonoBehaviour 
 {
@@ -39,6 +38,8 @@ public class AssetsGenerator : MonoBehaviour
     private Room _room;
     [SerializeField] private float entranceExclusionRadius = 1.5f;
 
+    private Dictionary<Assets, Vector3> _footprintCache = new();
+
     /// <summary>
     /// It set ups the NavMeshSurface and bake it, instance the random using our universal seed, get the points on the room
     /// and dispose all assets.
@@ -57,7 +58,10 @@ public class AssetsGenerator : MonoBehaviour
         _room = GetComponentInParent<Room>();
 
         foreach (Assets asset in assets)
+        {
             asset.RemainingCount = asset.MaxCount;
+            _footprintCache[asset] = GetFootprintSteps(asset);
+        }
 
         GetPositions();
         MarkEntranceExclusionZone();
@@ -69,6 +73,8 @@ public class AssetsGenerator : MonoBehaviour
 
         OrganizePositions();
         DisposeAssets();
+
+        _surfaceAI.BuildNavMesh();
 
         allMeshes.SetActive(false);
     }
@@ -286,8 +292,9 @@ public class AssetsGenerator : MonoBehaviour
                 List<Vector3> blockedPositions = new List<Vector3>();
                 bool canPlace = true;
 
-                int stepsX = Mathf.Max(1, (int)toDispose.SizePerStep.x);
-                int stepsZ = Mathf.Max(1, (int)toDispose.SizePerStep.z);
+                Vector3 footprint = _footprintCache.TryGetValue(toDispose, out Vector3 fp) ? fp : Vector3.one;
+                int stepsX = (int)footprint.x;
+                int stepsZ = (int)footprint.z;
 
                 if (isCardinal)
                 {
@@ -380,10 +387,69 @@ public class AssetsGenerator : MonoBehaviour
             }
             else
             {
-                Instantiate(toDispose.Prefab, position, Quaternion.identity, allMeshes.transform);
-                _positions[position] = true;
+                Vector3 footprint = _footprintCache.TryGetValue(toDispose, out Vector3 fp) ? fp : Vector3.one;
+                int stepsX = (int)footprint.x;
+                int stepsZ = (int)footprint.z;
+
+                int halfX = stepsX / 2;
+                int halfZ = stepsZ / 2;
+
+                List<Vector3> blockedPositions = new List<Vector3>();
+                bool canPlace = true;
+
+                for (int a = -halfX; a <= stepsX - halfX - 1; a++)
+                {
+                    for (int b = -halfZ; b <= stepsZ - halfZ - 1; b++)
+                    {
+                        Vector3 blockPos = position + new Vector3(a * stepSize, 0, b * stepSize);
+
+                        if (!_positions.TryGetValue(blockPos, out bool isOccupied) || isOccupied || IsUnavailable(blockPos))
+                        {
+                            canPlace = false;
+                            break;
+                        }
+                        blockedPositions.Add(blockPos);
+                    }
+                    if (!canPlace) break;
+                }
+
+                if (canPlace && blockedPositions.Count > 0)
+                {
+                    Vector3 spawnPos = Vector3.zero;
+                    foreach (Vector3 p in blockedPositions) spawnPos += p;
+                    spawnPos /= blockedPositions.Count;
+                    spawnPos.y = position.y;
+
+                    Instantiate(toDispose.Prefab, spawnPos, Quaternion.identity, allMeshes.transform);
+
+                    foreach (Vector3 p in blockedPositions)
+                        _positions[p] = true;
+                }
+                else
+                {
+                    toDispose.RemainingCount++;
+                    _remainingAssets++;
+                    if (!assetList.Contains(toDispose))
+                        assetList.Add(toDispose);
+                }
             }
         }
+    }
+
+    private Vector3 GetFootprintSteps(Assets asset)
+    {
+        Renderer renderer = asset.Prefab.GetComponentInChildren<Renderer>();
+        if (renderer == null)
+        {
+            int fallbackX = Mathf.Max(1, (int)asset.SizePerStep.x);
+            int fallbackZ = Mathf.Max(1, (int)asset.SizePerStep.z);
+            return new Vector3(fallbackX, 0, fallbackZ);
+        }
+
+        Vector3 size = renderer.bounds.size;
+        int stepsX = Mathf.CeilToInt(size.x / stepSize);
+        int stepsZ = Mathf.CeilToInt(size.z / stepSize);
+        return new Vector3(Mathf.Max(1, stepsX), 0, Mathf.Max(1, stepsZ));
     }
 
     /// <summary>

@@ -10674,24 +10674,6 @@ MonoBehaviour:
     chanceToSpawn: 0.2
     SizePerStep: {x: 4, y: 0, z: 4}
     PreferencePlacement: 1
-  - Prefab: {fileID: 8608404789749081609, guid: fad6374084bba474ea37cb4c84928a90, type: 3}
-    MaxCount: 1
-    RemainingCount: 1
-    chanceToSpawn: 0.2
-    SizePerStep: {x: 4, y: 0, z: 4}
-    PreferencePlacement: 0
-  - Prefab: {fileID: 6554484229017848873, guid: 3ac1f311354f57942882d16a6e299a09, type: 3}
-    MaxCount: 1
-    RemainingCount: 1
-    chanceToSpawn: 0.2
-    SizePerStep: {x: 5, y: 0, z: 5}
-    PreferencePlacement: 0
-  - Prefab: {fileID: 8270348907462355912, guid: be7cb236b51a09f499d79cd2d766274d, type: 3}
-    MaxCount: 2
-    RemainingCount: 1
-    chanceToSpawn: 0.2
-    SizePerStep: {x: 2, y: 0, z: 2}
-    PreferencePlacement: 0
   - Prefab: {fileID: 5966207963488011899, guid: f419e73645737dd46a2cac527788c96d, type: 3}
     MaxCount: 1
     RemainingCount: 1
@@ -10741,13 +10723,12 @@ MonoBehaviour:
   - {fileID: 2079633105453200507}
   - {fileID: 2115371998060829896}
   - {fileID: 5850383658290963288}
-  meshParent: {fileID: 8572426263546668000}
+  meshParent: {fileID: 368073584871054751}
+  roomArea: {fileID: 753201918008680246}
   overlapRadius: 0.4
-  blockingLayers:
-    serializedVersion: 2
-    m_Bits: 0
   chanceToSpawnAny: 0.667
-  spawnDelay: 0.6
+  spawnDelay: 1
+  overlapCheckHeight: 1
 --- !u!1 &8607292086093457547
 GameObject:
   m_ObjectHideFlags: 0

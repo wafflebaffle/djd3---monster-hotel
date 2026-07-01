@@ -15,7 +15,6 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     private Vector3 _startPos = new();
 
     private Renderer[] _renderers;
-    private Color[] _originalColors;
 
     private float _health;
     private EnemyMovement _enemyMovement;
@@ -66,13 +65,6 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
         _enemyCombat.SetRange(stats.attackRange);
         _enemyCombat.SetCooldown(stats.attackCooldown);
         _health = stats.maxHealth;
-
-        _renderers = GetComponentsInChildren<Renderer>();
-        _originalColors = new Color[_renderers.Length];
-        for (int i = 0; i < _renderers.Length; i++)
-        {
-            _originalColors[i] = _renderers[i].material.color;
-        }
     }
 
     public void TakeDamage(float damage, Combat combat)
@@ -125,28 +117,12 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     public float DistanceToTarget()
     { return _enemyMovement.DistanceToTarget(); }
 
-    private void SetColor(Color color)
-    {
-        for (int i = 0; i < _renderers.Length; i++)
-        {
-            _renderers[i].material.color = color;
-        }
-    }
-
-    private void ResetColor()
-    {
-        for (int i = 0; i < _renderers.Length; i++)
-        {
-            _renderers[i].material.color = _originalColors[i];
-        }
-    }
     
     public void ParryEffect(Vector3 direction, float stunTime = 0.5f, float knockbackDistance = 0.0f)
     {
         if (_isDead) return;
 
         ApplyStun(stunTime);
-        SetColor(Color.blue);
 
         Vector3 targetPos = transform.position + direction * knockbackDistance;
 
@@ -173,6 +149,5 @@ public class EnemyStats : MonoBehaviour, IDamageable, IParryable
     public void RemoveStun()
     {
         _isStunned = false;
-        ResetColor();
     }
 }

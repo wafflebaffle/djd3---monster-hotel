@@ -7,12 +7,13 @@ public class ConsumableSpawner : MonoBehaviour
     [SerializeField] private List<ConsumableData> consumables;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] private GameObject meshParent;
+    [SerializeField] private Collider roomArea;
     [SerializeField] private float overlapRadius = 0.4f;
-    [SerializeField] private LayerMask blockingLayers;
 
     [Range(0f, 1f)]
     [SerializeField] private float chanceToSpawnAny = 0.6f;
-    [SerializeField] private float spawnDelay = 0.7f;
+    [SerializeField] private float spawnDelay = 1f;
+    [SerializeField] private float overlapCheckHeight = 0.5f;
 
     private System.Random _rnd;
 
@@ -60,8 +61,19 @@ public class ConsumableSpawner : MonoBehaviour
         foreach (Transform point in spawnPoints)
         {
             if (point == null) continue;
-            if (Physics.OverlapSphere(point.position, overlapRadius, blockingLayers).Length == 0)
-                available.Add(point);
+
+            Vector3 testPos = point.position + Vector3.up * overlapCheckHeight;
+            Collider[] hits = Physics.OverlapSphere(testPos, overlapRadius);
+
+            bool blocked = false;
+            foreach (Collider hit in hits)
+            {
+                if (hit == roomArea) continue; 
+                blocked = true;
+                break;
+            }
+
+            if (!blocked) available.Add(point);
         }
         return available;
     }
@@ -75,18 +87,6 @@ public class ConsumableSpawner : MonoBehaviour
             meshParent.SetActive(true);
     }
 
-#if UNITY_EDITOR
-    private void OnDrawGizmosSelected()
-    {
-        if (spawnPoints == null) return;
-        foreach (Transform point in spawnPoints)
-        {
-            if (point == null) continue;
-            Gizmos.color = new Color(0f, 1f, 0f, 0.3f);
-            Gizmos.DrawWireSphere(point.position, overlapRadius);
-        }
-    }
-#endif
 }
 
 [System.Serializable]
